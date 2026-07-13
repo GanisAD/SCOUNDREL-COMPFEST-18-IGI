@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://qktecrlgg11n"]
+
+[ext_resource type="Script" uid="uid://o3nhtkmtep1o" path="res://Script/Card/CardUI.gd" id="1_nktu4"]
+[ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_ee0gf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_van61"]
+size = Vector2(40, 54)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ee0gf"]
+font_size = 4
+font_color = Color(0, 0, 0, 1)
+
+[node name="Card" type="Control" unique_id=658835839]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nktu4")
+
+[node name="DropPointDetector" type="Area2D" parent="." unique_id=1491313676]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector" unique_id=1400804419]
+position = Vector2(20, 27)
+shape = SubResource("RectangleShape2D_van61")
+
+[node name="CardFrame" type="ColorRect" parent="." unique_id=447107939]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 54.0
+
+[node name="IconRect" type="TextureRect" parent="." unique_id=1399012799]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 11.0
+offset_right = 129.0
+offset_bottom = 139.0
+scale = Vector2(0.29572442, 0.19345145)
+texture = ExtResource("2_ee0gf")
+
+[node name="NameLabel" type="Label" parent="." unique_id=406248701]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 3.0
+offset_right = 29.0
+offset_bottom = 10.0
+text = "[BLANK]"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="CostLabel" type="Label" parent="." unique_id=152293278]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 4.0
+offset_bottom = 17.0
+text = "1
+"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="State" type="Label" parent="." unique_id=556931744]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 48.0
+offset_right = 46.0
+offset_bottom = 71.0
+text = "[BLANK STATE]"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="." unique_id=600485357]
+layout_mode = 0
+offset_top = 37.0
+offset_right = 40.0
+offset_bottom = 49.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 2
+theme_override_font_sizes/bold_font_size = 16
+theme_override_font_sizes/bold_italics_font_size = 16
+theme_override_font_sizes/italics_font_size = 16
+theme_override_font_sizes/mono_font_size = 16
+text = "This Card do something that doing something on something, you figure that out"
+horizontal_alignment = 1

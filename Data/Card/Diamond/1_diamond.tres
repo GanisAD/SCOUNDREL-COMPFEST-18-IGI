@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://kj5sgo5bo0dn"]
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://kj5sgo5bo0dn"]
 
-[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/CardData.gd" id="1_7o8pk"]
+[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_7o8pk"]
 
 [resource]
 script = ExtResource("1_7o8pk")

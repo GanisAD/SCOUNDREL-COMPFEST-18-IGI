@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ddht8ffq3554u"]
+
+[node name="Combat" type="Node2D" unique_id=257909120]
+
+[node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -14,6 +14,10 @@ config/name="ALTAR-52"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+EventBus="*uid://4wbw7vl7kc54"
+
 [display]
 
 window/stretch/mode="canvas_items"
