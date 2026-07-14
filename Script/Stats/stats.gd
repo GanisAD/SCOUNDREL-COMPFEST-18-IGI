@@ -13,7 +13,7 @@ var health: int : set = set_health
 var block: int : set = set_block 
 
 func set_health(value: int) -> void:
-	health = clamp(value, 0, max_health) 
+	health = clamp(value, 10, max_health) 
 	stats_changed.emit() # UI akan langsung mendeteksi sinyal ini 
 
 func set_block(value: int) -> void:

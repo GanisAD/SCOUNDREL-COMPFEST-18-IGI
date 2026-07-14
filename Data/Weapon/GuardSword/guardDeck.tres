@@ -1,8 +1,13 @@
 [gd_resource type="Resource" script_class="CardPile" format=3 uid="uid://o3vhb2j0n08v"]
 
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_kpbvr"]
+[ext_resource type="Resource" uid="uid://kj5sgo5bo0dn" path="res://Data/Weapon/GuardSword/Card/Attack/slash.tres" id="2_55cqg"]
 [ext_resource type="Script" uid="uid://biv3qhf8i5vce" path="res://Script/pile/cardPile.gd" id="2_xqmuu"]
+[ext_resource type="Resource" uid="uid://dew0c8a6mltws" path="res://Data/Weapon/GuardSword/Card/Block/shield.tres" id="3_qxhap"]
+[ext_resource type="Resource" uid="uid://yklxp2bw7yh8" path="res://Data/Weapon/GuardSword/Card/Buff/strenght.tres" id="4_wxkb2"]
+[ext_resource type="Resource" uid="uid://bofqu3145g3kp" path="res://Data/Weapon/GuardSword/Card/Debuff/weakend.tres" id="5_1qhi2"]
 
 [resource]
 script = ExtResource("2_xqmuu")
+cards = Array[ExtResource("1_kpbvr")]([ExtResource("2_55cqg"), ExtResource("3_qxhap"), ExtResource("4_wxkb2"), ExtResource("5_1qhi2")])
 metadata/_custom_type_script = "uid://biv3qhf8i5vce"

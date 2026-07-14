@@ -15,6 +15,9 @@ func _ready() -> void:
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	Events.player_hand_discarded.connect(player_handler.start_turn)
 	
+	battle_stats.set_health(battle_stats.max_health)
+	battle_stats.set_mana(battle_stats.max_mana)
+	
 	# Orkestrator memantau kematian pemain secara langsung
 	battle_stats.stats_changed.connect(_on_player_stats_changed.bind(battle_stats))
 	

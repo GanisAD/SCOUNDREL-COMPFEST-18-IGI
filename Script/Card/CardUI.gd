@@ -25,10 +25,10 @@ var original_index: int = 0
 # ==========================================
 # REFERENSI NODE VISUAL
 # ==========================================
-@onready var cost_label: Label = %CostLabel
-@onready var name_label: Label = %NameLabel
-@onready var description_label: RichTextLabel = %DescriptionLabel
-@onready var icon_rect: TextureRect = %IconRect
+@onready var cost_label: Label = $CostLabel
+@onready var name_label: Label = $NameLabel
+@onready var description_label: RichTextLabel = $DescriptionLabel
+@onready var icon_rect: TextureRect = $IconRect
 @onready var drop_point_detector: Area2D = $DropPointDetector
 
 func _ready() -> void:

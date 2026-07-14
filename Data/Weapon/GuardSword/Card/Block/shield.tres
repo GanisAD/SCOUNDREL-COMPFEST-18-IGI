@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://dew0c8a6mltws"]
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://dew0c8a6mltws"]
 
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_1ej5k"]
 
 [resource]
 script = ExtResource("1_1ej5k")
+name = "Shield"
+description = "it Defend you from the opponent attack"
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://yklxp2bw7yh8"]
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://yklxp2bw7yh8"]
 
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_b5fmi"]
 
 [resource]
 script = ExtResource("1_b5fmi")
+name = "Strenght"
+description = "It give's you bonus damage for this turn."
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

@@ -2,7 +2,8 @@ extends Node
 class_name PlayerHandler 
 
 # Jeda waktu (dalam detik) antar penarikan kartu agar kartu tidak muncul sekaligus 
-const HAND_DRAW_INTERVAL := 0.25 
+const HAND_DRAW_INTERVAL := 0.25
+const HAND_DISCARD_INTERVAL := 0.1 
 
 # Dependensi ke Node Hand (HBoxContainer) untuk merender kartu secara visual 
 @export var hand: Node 
@@ -31,6 +32,10 @@ func start_turn() -> void:
 	# Mereset status pertahanan (Block) dan Mana pemain 
 	character_stats.block = 0 
 	character_stats.reset_mana() # Asumsi fungsi kustom untuk mereset Mana kembali penuh 
+	
+	# Reset perhitungan kartu agar indeks pelepasan kartu (reparenting) tidak bug
+	if hand.get("cards_played_this_turn") != null:
+		hand.cards_played_this_turn = 0
 	
 	# Menarik kartu secara berkala sesuai dengan jumlah kartu per turn milik karakter 
 	draw_cards(character_stats.cards_per_turn) 
@@ -63,6 +68,37 @@ func draw_cards(amount: int) -> void:
 			Events.player_hand_drawn.emit() 
 	)
 
+func end_turn() -> void:
+	# Jika Anda memiliki fungsi disable di hand.gd, panggil di sini
+	# agar pemain tidak bisa menarik kartu saat animasi buang kartu berjalan.
+	# hand.disable_hand() 
+	
+	discard_cards()
+
+# Logika untuk membuang kartu satu per satu dengan jeda animasi (Juice/Game Feel)
+func discard_cards() -> void:
+	var tween := create_tween()
+	
+	# Ambil semua kartu visual yang masih tersisa di node Hand
+	var cards_in_hand = hand.get_children()
+	
+	for child in cards_in_hand:
+		var card_ui = child # Cast sebagai node CardUI Anda
+		if card_ui:
+			# Pindahkan data Resource kartu ke dalam tumpukan buangan
+			tween.tween_callback(discard_pile.add_card.bind(card_ui.card))
+			
+			# Hapus node visual kartu dari layar
+			tween.tween_callback(card_ui.queue_free)
+			
+			# Beri jeda sedikit antar pembuangan kartu agar terlihat seperti Slay the Spire
+			tween.tween_interval(HAND_DISCARD_INTERVAL)
+
+	# Setelah semua kartu selesai dibuang, pancarkan sinyal
+	tween.finished.connect(
+		func():
+			Events.player_hand_discarded.emit()
+	)
 # Logika pengocokan ulang kartu buangan kembali ke dek tarik jika habis 
 func reshuffle_deck_from_discard() -> void:
 	# Jika tumpukan kartu tarik belum habis, lewati proses ini segera 

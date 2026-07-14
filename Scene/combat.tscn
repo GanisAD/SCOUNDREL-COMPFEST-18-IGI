@@ -4,6 +4,11 @@
 [ext_resource type="Script" uid="uid://c6lkr7jqlr6dh" path="res://Script/Combat/hand.gd" id="1_6nktc"]
 [ext_resource type="Script" uid="uid://cj3gsfx5rbgnt" path="res://Script/Combat/playerHandler.gd" id="1_qxtda"]
 [ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
+[ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/Combat/battle_ui.gd" id="4_miqix"]
+[ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
+font_size = 5
 
 [node name="Combat" type="Node2D" unique_id=257909120]
 script = ExtResource("1_2bktl")
@@ -16,13 +21,38 @@ hand = NodePath("../BattleUI/Hand")
 [node name="Node" type="Node" parent="." unique_id=1334140955]
 
 [node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
+follow_viewport_scale = -4.745
+script = ExtResource("4_miqix")
 
 [node name="PlayerStatsPanel" type="Panel" parent="BattleUI" unique_id=1139493257]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 5.0
+offset_top = 8.0
+offset_right = 75.0
+offset_bottom = 27.0
+
+[node name="HPLabel" type="Label" parent="BattleUI/PlayerStatsPanel" unique_id=330469658]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 18.0
+offset_bottom = 9.0
+text = "Hp : 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="BlockLabel" type="Label" parent="BattleUI/PlayerStatsPanel" unique_id=1878832758]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 9.0
+offset_right = 25.0
+offset_bottom = 17.0
+text = "Block : 0"
+label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 34.0
+offset_top = 108.0
+offset_right = 217.90909
+offset_bottom = 125.0
 alignment = 1
 script = ExtResource("1_6nktc")
+card_ui_scene = ExtResource("6_2rx4k")
