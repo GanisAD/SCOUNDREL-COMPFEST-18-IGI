@@ -11,12 +11,16 @@ signal hover_ended(card_ui: CardUI)
 signal clicked(card_ui: CardUI)
 signal released(card_ui: CardUI)
 
+signal reparent_requested(card_ui: CardUI)
+
 # ==========================================
 # INJEKSI DATA RESOURCE
 # ==========================================
 # Kita menggunakan setter fungsi untuk otomatis memperbarui UI
 # setiap kali data 'card' baru disuntikkan ke node ini.
 @export var card: Card : set = _set_card
+
+var original_index: int = 0
 
 # ==========================================
 # REFERENSI NODE VISUAL
@@ -28,6 +32,8 @@ signal released(card_ui: CardUI)
 @onready var drop_point_detector: Area2D = $DropPointDetector
 
 func _ready() -> void:
+	original_index = get_index()
+
 	# Pastikan node bisa merespons interaksi mouse
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)

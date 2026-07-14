@@ -19,8 +19,8 @@ func _ready() -> void:
 	_stop_aiming()
 	
 	# Mendaftarkan diri ke "stasiun radio" Event Bus
-	EventBus.card_aim_started.connect(_on_card_aim_started)
-	EventBus.card_aim_ended.connect(_on_card_aim_ended)
+	Events.card_aim_started.connect(_on_card_aim_started)
+	Events.card_aim_ended.connect(_on_card_aim_ended)
 	
 	# Setup deteksi musuh
 	target_detector.area_entered.connect(_on_enemy_entered)

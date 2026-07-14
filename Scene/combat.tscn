@@ -1,9 +1,28 @@
 [gd_scene format=3 uid="uid://ddht8ffq3554u"]
 
+[ext_resource type="Script" uid="uid://bvyfktp4ncskk" path="res://Script/Combat/combat.gd" id="1_2bktl"]
+[ext_resource type="Script" uid="uid://c6lkr7jqlr6dh" path="res://Script/Combat/hand.gd" id="1_6nktc"]
+[ext_resource type="Script" uid="uid://cj3gsfx5rbgnt" path="res://Script/Combat/playerHandler.gd" id="1_qxtda"]
+[ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
+
 [node name="Combat" type="Node2D" unique_id=257909120]
+script = ExtResource("1_2bktl")
+character_stats = ExtResource("2_xmftx")
+
+[node name="PlayerHandler" type="Node" parent="." unique_id=972464850 node_paths=PackedStringArray("hand")]
+script = ExtResource("1_qxtda")
+hand = NodePath("../BattleUI/Hand")
+
+[node name="Node" type="Node" parent="." unique_id=1334140955]
 
 [node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
+[node name="PlayerStatsPanel" type="Panel" parent="BattleUI" unique_id=1139493257]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+script = ExtResource("1_6nktc")

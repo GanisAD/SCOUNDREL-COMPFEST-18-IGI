@@ -22,6 +22,12 @@ signal tooltip_hide_requested
 # ==========================================
 # EVENT STATUS PEMAIN & MUSUH (Untuk Nanti)
 # ==========================================
-# signal player_hand_drawn
-# signal enemy_turn_started
-# signal player_mana_changed(new_mana: int)
+signal player_hand_drawn
+signal enemy_turn_started
+signal player_mana_changed(new_mana: int)
+
+## Dipanggil saat pemain mulai menyeret kartu (transisi ke status Dragging)
+signal card_drag_started(card_ui: CardUI) 
+
+## Dipanggil saat pemain melepaskan atau membatalkan seretan kartu
+signal card_drag_ended(card_ui: CardUI)

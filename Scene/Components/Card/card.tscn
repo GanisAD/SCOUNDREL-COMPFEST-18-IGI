@@ -80,3 +80,13 @@ theme_override_font_sizes/italics_font_size = 16
 theme_override_font_sizes/mono_font_size = 16
 text = "This Card do something that doing something on something, you figure that out"
 horizontal_alignment = 1
+
+[node name="CardStateMachine" type="Node" parent="." unique_id=1039312150]
+
+[node name="CardBaseState" type="Node" parent="CardStateMachine" unique_id=1208972615]
+
+[node name="CardClickedState" type="Node" parent="CardStateMachine" unique_id=1607068351]
+
+[node name="CardDraggingState" type="Node" parent="CardStateMachine" unique_id=728878800]
+
+[node name="CardReleasedState" type="Node" parent="CardStateMachine" unique_id=2138322848]
