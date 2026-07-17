@@ -21,10 +21,16 @@ func _on_card_played(_card: Card) -> void:
 	cards_played_this_turn += 1
 
 func _on_card_reparent_requested(card_ui: CardUI) -> void:
+	# 1. Tarik langsung kartu kembali menjadi child dari Hand container ini
 	card_ui.reparent(self)
-	var new_index: int = card_ui.original_index - cards_played_this_turn
-	new_index = clampi(new_index, 0, get_child_count() - 1)
-	move_child.call_deferred(card_ui, new_index)
+	
+	# 2. Kembalikan ke posisi indeks aslinya secara instan tanpa call_deferred
+	# Batasi agar indeks tidak keluar dari jumlah child yang ada saat ini
+	var target_index: int = clampi(card_ui.original_index, 0, get_child_count() - 1)
+	move_child(card_ui, target_index)
+	
+	# 3. Menyusun ulang kartu agar tidak bertumpuk pada satu tempat
+	queue_sort()
 
 # =========================================================
 # FUNGSI BARU: MENANGANI KARTU YANG MASUK DI TENGAH PERMAINAN

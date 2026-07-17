@@ -9,16 +9,16 @@ func enter() -> void:
 	# Minta tangan (HBoxContainer) untuk menarik/reparent kartu ini kembali ke layout
 	card_ui.reparent_requested.emit(card_ui)
 	
+	card_ui.position = Vector2.ZERO
+	card_ui.pivot_offset = Vector2.ZERO
+	
 	# Reset visual untuk kebutuhan debugging/state game
 	card_ui.color.color = Color.WEB_GREEN
 	card_ui.state.text = "BASE"
-	
-	# Reset pivot offset agar kalkulasi pergerakan tidak bergeser
-	card_ui.pivot_offset = Vector2.ZERO
 
 func on_gui_input(event: InputEvent) -> void:
 	# Jika pemain menekan tombol klik kiri mouse pada kartu
-	if event.is_action_pressed("left_mouse"):
+	if event.is_action_pressed("left_click"):
 		# Set offset titik kursor pada kartu agar tidak melompat ke pojok kiri atas
 		card_ui.pivot_offset = card_ui.get_global_mouse_position() - card_ui.global_position
 		# Minta transisi ke status CLICKED
