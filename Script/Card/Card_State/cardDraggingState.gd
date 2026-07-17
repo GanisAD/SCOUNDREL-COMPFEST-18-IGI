@@ -23,14 +23,14 @@ func enter() -> void:
 func on_input(event: InputEvent) -> void:
 	var mouse_motion := event is InputEventMouseMotion
 	# Jika dilepas atau di-klik ulang tombol kiri mouse
-	var confirm := event.is_action_released("left_click") or event.is_action_pressed("left_mouse")
+	# var confirm := event.is_action_released("left_click") or event.is_action_pressed("left_click")
 	
 	# 1. Update posisi kartu secara presisi mengikuti kursor mouse saat bergerak
 	if mouse_motion:
 		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.pivot_offset
 		
 	# 2. Pembatalan: Jika klik kanan ditekan, batalkan drag dan kembalikan ke BASE
-	if event.is_action_pressed("right_mouse"):
+	if event.is_action_pressed("right_click"):
 		transition_requested.emit(self.state, CardState.State.BASE)
 		
 	# 3. Konfirmasi: Jika tombol kiri dilepas DAN ambang batas waktu aman terpenuhi
