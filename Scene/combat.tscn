@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy.tscn" id="7_kgncc"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_145ap"]
+font_size = 7
+
 [sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
 font_size = 5
 
@@ -30,6 +33,15 @@ position = Vector2(132, 67)
 [node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
 follow_viewport_scale = -4.745
 script = ExtResource("4_miqix")
+
+[node name="TurnLabel" type="Label" parent="BattleUI" unique_id=904510305]
+visible = false
+offset_left = 31.0
+offset_top = 42.0
+offset_right = 47.0
+offset_bottom = 53.0
+text = "Turn"
+label_settings = SubResource("LabelSettings_145ap")
 
 [node name="PlayerStatsUI" type="Panel" parent="BattleUI" unique_id=1139493257]
 offset_left = 5.0
@@ -64,3 +76,11 @@ offset_bottom = 125.0
 alignment = 1
 script = ExtResource("1_6nktc")
 card_ui_scene = ExtResource("6_2rx4k")
+
+[node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
+offset_left = 205.0
+offset_top = 97.0
+offset_right = 231.0
+offset_bottom = 112.0
+theme_override_font_sizes/font_size = 4
+text = "End Turn"

@@ -108,9 +108,9 @@ func do_turn() -> void:
 	else:
 		# Jika Player tidak ditemukan (untuk test isolasi musuh), musuh hanya akan menambah Block
 		print(stats.enemy_name, " bertahan karena tidak ada target!")
-		tween.tween_property(sprite_2d, "scale", Vector2(1.2, 1.2), 0.15)
+		#tween.tween_property(sprite_2d, "scale", Vector2(1.2, 1.2), 0.15)
 		tween.tween_callback(func(): stats.block += 5)
-		tween.tween_property(sprite_2d, "scale", Vector2(1.0, 1.0), 0.15)
+		#tween.tween_property(sprite_2d, "scale", Vector2(1.0, 1.0), 0.15)
 	
 	# Tahan eksekusi fungsi do_turn() sampai seluruh animasi Tween selesai
 	await tween.finished

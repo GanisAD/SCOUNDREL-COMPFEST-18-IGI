@@ -13,9 +13,14 @@ var character_stats: CharacterStats
 var draw_pile: CardPile 
 var discard_pile: CardPile 
 
+func _ready() -> void:
+	# PENTING: Daftarkan node ini ke group agar sistem efek kartu musuh
+	# bisa mendeteksinya sebagai target yang sah.
+	add_to_group("player")
+
 # Fungsi utama untuk memulai simulasi pertempuran 
 func start_battle(stats: CharacterStats) -> void:
-	character_stats = stats 
+	character_stats = stats
 	
 	# Membuat deep copy dari dek awal agar perubahan di dalam battle tidak merusak dek asli 
 	draw_pile = character_stats.deck.duplicate(true) 
@@ -39,6 +44,20 @@ func start_turn() -> void:
 	
 	# Menarik kartu secara berkala sesuai dengan jumlah kartu per turn milik karakter 
 	draw_cards(character_stats.cards_per_turn) 
+
+func take_damage(amount: int) -> void:
+	if not character_stats or character_stats.health <= 0:
+		return
+		
+	# Lemparkan kalkulasi matematika damage ke resource stats
+	character_stats.take_damage(amount)
+	
+	# Di sini tempat terbaik untuk memicu efek 1st-person feedback!
+	# Contoh: CameraShake.trigger() atau HitFlash.play()
+	
+	# Periksa kondisi kekalahan (Game Over)
+	if character_stats.health <= 0:
+		Events.player_died.emit() # Beritahu Battle Node bahwa pemain kalah
 
 # Logika inti untuk menarik satu kartu 
 func draw_card() -> void:
