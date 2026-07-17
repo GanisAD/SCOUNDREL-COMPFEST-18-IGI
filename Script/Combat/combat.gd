@@ -10,7 +10,7 @@ func _ready() -> void:
 	var battle_stats = character_stats.duplicate(true)
 	
 	# Distribusi data sekarang HANYA ke Handler dan UI
-	battle_ui.character_stats = battle_stats
+	battle_ui.initialize_player(battle_stats)
 	
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	Events.player_hand_discarded.connect(player_handler.start_turn)

@@ -6,4 +6,6 @@
 script = ExtResource("1_1ej5k")
 name = "Shield"
 description = "it Defend you from the opponent attack"
+type = 1
+target = 0
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

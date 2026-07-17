@@ -6,4 +6,6 @@
 script = ExtResource("1_b5fmi")
 name = "Strenght"
 description = "It give's you bonus damage for this turn."
+type = 2
+target = 0
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

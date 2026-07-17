@@ -6,4 +6,5 @@
 script = ExtResource("1_yrf86")
 name = "Weakend"
 description = "It weaks your opponent, susciptable more to attacks"
+type = 1
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"
