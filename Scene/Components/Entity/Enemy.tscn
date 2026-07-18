@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://pfhymlbd8c6s"]
+
+[ext_resource type="Script" uid="uid://cb174yrmvit1" path="res://Script/Entity/enemy.gd" id="1_ls6l5"]
+[ext_resource type="Texture2D" uid="uid://lbugtm3281vu" path="res://Resources/Entity/Enemy/skeleton-raw.png" id="1_rtd58"]
+[ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Stats/EnemyStats.gd" id="2_kth1x"]
+[ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="4_ce4ot"]
+
+[sub_resource type="Resource" id="Resource_ce4ot"]
+script = ExtResource("2_kth1x")
+metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
+size = Vector2(22, 29)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
+font_size = 2
+
+[node name="Enemy" type="Area2D" unique_id=1894014694]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ls6l5")
+stats = SubResource("Resource_ce4ot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865966253]
+position = Vector2(-2, -4.5)
+shape = SubResource("RectangleShape2D_xg0st")
+
+[node name="Arrow" type="Sprite2D" parent="." unique_id=1688386588]
+scale = Vector2(0.9999998, 0.9999999)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=275826392]
+scale = Vector2(0.05916666, 0.059166662)
+texture = ExtResource("1_rtd58")
+
+[node name="StatsUI" type="Panel" parent="." unique_id=675003883]
+offset_left = 10.0
+offset_top = -19.0
+offset_right = 46.0
+offset_bottom = -11.0
+script = ExtResource("4_ce4ot")
+
+[node name="HPLabel" type="Label" parent="StatsUI" unique_id=696253520]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 13.0
+offset_bottom = 4.0
+text = "HP : 0"
+label_settings = SubResource("LabelSettings_xg0st")
+
+[node name="BlockLabel" type="Label" parent="StatsUI" unique_id=70894896]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 13.0
+offset_bottom = 7.0
+text = "Block : 0"
+label_settings = SubResource("LabelSettings_xg0st")

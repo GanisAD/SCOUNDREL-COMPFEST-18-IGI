@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://ddht8ffq3554u"]
+
+[ext_resource type="Script" uid="uid://bvyfktp4ncskk" path="res://Script/Combat/combat.gd" id="1_2bktl"]
+[ext_resource type="Script" uid="uid://c6lkr7jqlr6dh" path="res://Script/Combat/hand.gd" id="1_6nktc"]
+[ext_resource type="Script" uid="uid://cj3gsfx5rbgnt" path="res://Script/Combat/playerHandler.gd" id="1_qxtda"]
+[ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
+[ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/Combat/battle_ui.gd" id="4_miqix"]
+[ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
+[ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
+[ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
+[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="6_mmg4p"]
+[ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy.tscn" id="7_kgncc"]
+[ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
+size = Vector2(256, 85)
+
+[sub_resource type="LabelSettings" id="LabelSettings_145ap"]
+font_size = 7
+
+[sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
+font_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
+font_size = 4
+
+[node name="Combat" type="Node2D" unique_id=257909120]
+script = ExtResource("1_2bktl")
+character_stats = ExtResource("2_xmftx")
+
+[node name="PlayerHandler" type="Node" parent="." unique_id=972464850 node_paths=PackedStringArray("hand")]
+script = ExtResource("1_qxtda")
+hand = NodePath("../BattleUI/Hand")
+
+[node name="EnemyHandler" type="Node" parent="." unique_id=1334140955]
+script = ExtResource("5_70aft")
+
+[node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
+position = Vector2(132, 67)
+stats = ExtResource("6_mmg4p")
+
+[node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea" unique_id=1679395891]
+position = Vector2(128, 42.5)
+shape = SubResource("RectangleShape2D_xg0st")
+debug_color = Color(0, 0.64668244, 0.23860168, 0.41960785)
+
+[node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
+follow_viewport_scale = -4.745
+script = ExtResource("4_miqix")
+
+[node name="TurnLabel" type="Label" parent="BattleUI" unique_id=904510305]
+visible = false
+offset_left = 31.0
+offset_top = 42.0
+offset_right = 47.0
+offset_bottom = 53.0
+text = "Turn"
+label_settings = SubResource("LabelSettings_145ap")
+
+[node name="PlayerStatsUI" type="Panel" parent="BattleUI" unique_id=1139493257]
+offset_left = 5.0
+offset_top = 8.0
+offset_right = 75.0
+offset_bottom = 27.0
+script = ExtResource("6_70aft")
+
+[node name="HPLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=330469658]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 18.0
+offset_bottom = 9.0
+text = "Hp : 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="BlockLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=1878832758]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 9.0
+offset_right = 25.0
+offset_bottom = 17.0
+text = "Block : 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
+offset_left = 10.0
+offset_top = 87.0
+offset_right = 50.0
+offset_bottom = 101.0
+
+[node name="DrawPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=1347943961]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 42.0
+offset_bottom = 8.0
+text = "Draw Pile : 0"
+label_settings = SubResource("LabelSettings_xg0st")
+script = ExtResource("9_1blk7")
+format_text = "Draw Pile : %d"
+
+[node name="DiscardPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=704032874]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 42.0
+offset_bottom = 13.0
+text = "Discard Pile: 0"
+label_settings = SubResource("LabelSettings_xg0st")
+script = ExtResource("9_1blk7")
+
+[node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
+offset_left = 33.0
+offset_top = 114.0
+offset_right = 216.90909
+offset_bottom = 131.0
+alignment = 1
+script = ExtResource("1_6nktc")
+card_ui_scene = ExtResource("6_2rx4k")
+
+[node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
+offset_left = 205.0
+offset_top = 97.0
+offset_right = 231.0
+offset_bottom = 112.0
+theme_override_font_sizes/font_size = 4
+text = "End Turn"

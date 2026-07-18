@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://kj5sgo5bo0dn"]
+
+[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_7o8pk"]
+[ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Card/Effect/effect.gd" id="1_fn2i3"]
+[ext_resource type="Script" uid="uid://ccso1xnryn254" path="res://Script/Card/Effect/damageEffect.gd" id="2_wbvqp"]
+
+[sub_resource type="Resource" id="Resource_ce4ot"]
+script = ExtResource("2_wbvqp")
+amount = 6
+metadata/_custom_type_script = "uid://ccso1xnryn254"
+
+[resource]
+script = ExtResource("1_7o8pk")
+name = "Slahs"
+description = "It slays it's opponent"
+effects = Array[ExtResource("1_fn2i3")]([SubResource("Resource_ce4ot")])
+metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

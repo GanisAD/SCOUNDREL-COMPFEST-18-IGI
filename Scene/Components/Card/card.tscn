@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://qktecrlgg11n"]
+
+[ext_resource type="Script" uid="uid://o3nhtkmtep1o" path="res://Script/Card/CardUI.gd" id="1_nktu4"]
+[ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_ee0gf"]
+[ext_resource type="Script" uid="uid://dit50rsayuwbm" path="res://Script/Card/Card_State/CardStateMachine.gd" id="3_es4f8"]
+[ext_resource type="Script" uid="uid://c5u2o14rp5l2r" path="res://Script/Card/Card_State/cardBaseState.gd" id="4_m54pu"]
+[ext_resource type="Script" uid="uid://crbilwg8youec" path="res://Script/Card/Card_State/cardClickedState.gd" id="5_45fov"]
+[ext_resource type="Script" uid="uid://ds6lru1o822mt" path="res://Script/Card/Card_State/cardDraggingState.gd" id="6_5lqrl"]
+[ext_resource type="Script" uid="uid://bjr50a7ubx25a" path="res://Script/Card/Card_State/cardReleasedState.gd" id="7_twrih"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_van61"]
+size = Vector2(31, 42)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ee0gf"]
+font_size = 2
+font_color = Color(0, 0, 0, 1)
+
+[node name="Card" type="Control" unique_id=658835839]
+custom_minimum_size = Vector2(40, 54)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -216.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nktu4")
+
+[node name="DropPointDetector" type="Area2D" parent="." unique_id=1491313676]
+collision_layer = 0
+collision_mask = 6
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector" unique_id=1400804419]
+position = Vector2(15.5, 21)
+shape = SubResource("RectangleShape2D_van61")
+
+[node name="CardFrame" type="ColorRect" parent="." unique_id=447107939]
+layout_mode = 0
+offset_right = 31.0
+offset_bottom = 41.850002
+
+[node name="IconRect" type="TextureRect" parent="." unique_id=1399012799]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 76.01206
+offset_bottom = 80.01206
+scale = Vector2(0.29572442, 0.19345145)
+texture = ExtResource("2_ee0gf")
+expand_mode = 1
+
+[node name="NameLabel" type="Label" parent="." unique_id=406248701]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 3.0
+offset_right = 19.0
+offset_bottom = 7.0
+text = "[BLANK]"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="CostLabel" type="Label" parent="." unique_id=152293278]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 3.0
+offset_bottom = 4.0
+text = "1"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="StateLabel" type="Label" parent="." unique_id=556931744]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 37.0
+offset_right = 23.0
+offset_bottom = 41.0
+text = "[BLANK STATE]"
+label_settings = SubResource("LabelSettings_ee0gf")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="." unique_id=600485357]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 31.0
+offset_bottom = 36.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 2
+theme_override_font_sizes/bold_font_size = 2
+theme_override_font_sizes/bold_italics_font_size = 2
+theme_override_font_sizes/italics_font_size = 2
+theme_override_font_sizes/mono_font_size = 2
+text = "This Card do something that doing something on something, you figure that out"
+horizontal_alignment = 1
+
+[node name="CardStateMachine" type="Node" parent="." unique_id=1039312150 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_es4f8")
+initial_state = NodePath("CardBaseState")
+
+[node name="CardBaseState" type="Node" parent="CardStateMachine" unique_id=1208972615]
+script = ExtResource("4_m54pu")
+
+[node name="CardClickedState" type="Node" parent="CardStateMachine" unique_id=1607068351]
+script = ExtResource("5_45fov")
+state = 1
+
+[node name="CardDraggingState" type="Node" parent="CardStateMachine" unique_id=728878800]
+script = ExtResource("6_5lqrl")
+state = 2
+
+[node name="CardReleasedState" type="Node" parent="CardStateMachine" unique_id=2138322848]
+script = ExtResource("7_twrih")
+state = 4
