@@ -2,7 +2,7 @@ class_name CardState
 extends Node
 
 # 1. Definisikan Enum untuk semua status yang ada
-enum State { BASE, CLICKED, DRAGGING, AIMING, RELEASED }
+enum State { BASE, HOVER, CLICKED, DRAGGING, AIMING, RELEASED }
 
 # 2. Sinyal transisi yang akan ditangkap oleh CardStateMachine
 @warning_ignore("unused_signal")

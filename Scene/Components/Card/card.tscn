@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_ee0gf"]
 [ext_resource type="Script" uid="uid://dit50rsayuwbm" path="res://Script/Card/Card_State/CardStateMachine.gd" id="3_es4f8"]
 [ext_resource type="Script" uid="uid://c5u2o14rp5l2r" path="res://Script/Card/Card_State/cardBaseState.gd" id="4_m54pu"]
+[ext_resource type="Script" uid="uid://b7fqdsfdc2pop" path="res://Script/Card/Card_State/cardHoverState.gd" id="5_5lqrl"]
 [ext_resource type="Script" uid="uid://crbilwg8youec" path="res://Script/Card/Card_State/cardClickedState.gd" id="5_45fov"]
 [ext_resource type="Script" uid="uid://ds6lru1o822mt" path="res://Script/Card/Card_State/cardDraggingState.gd" id="6_5lqrl"]
 [ext_resource type="Script" uid="uid://bjr50a7ubx25a" path="res://Script/Card/Card_State/cardReleasedState.gd" id="7_twrih"]
@@ -98,14 +99,18 @@ initial_state = NodePath("CardBaseState")
 [node name="CardBaseState" type="Node" parent="CardStateMachine" unique_id=1208972615]
 script = ExtResource("4_m54pu")
 
+[node name="CardHoverState" type="Node" parent="CardStateMachine" unique_id=1315964870]
+script = ExtResource("5_5lqrl")
+state = 1
+
 [node name="CardClickedState" type="Node" parent="CardStateMachine" unique_id=1607068351]
 script = ExtResource("5_45fov")
-state = 1
+state = 2
 
 [node name="CardDraggingState" type="Node" parent="CardStateMachine" unique_id=728878800]
 script = ExtResource("6_5lqrl")
-state = 2
+state = 3
 
 [node name="CardReleasedState" type="Node" parent="CardStateMachine" unique_id=2138322848]
 script = ExtResource("7_twrih")
-state = 4
+state = 5
