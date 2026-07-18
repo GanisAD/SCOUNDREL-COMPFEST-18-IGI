@@ -16,10 +16,6 @@ func enter() -> void:
 	card_ui.color.color = Color.WEB_GREEN
 	card_ui.state.text = "BASE"
 
-func on_gui_input(event: InputEvent) -> void:
-	# Jika pemain menekan tombol klik kiri mouse pada kartu
-	if event.is_action_pressed("left_click"):
-		# Set offset titik kursor pada kartu agar tidak melompat ke pojok kiri atas
-		card_ui.pivot_offset = card_ui.get_global_mouse_position() - card_ui.global_position
-		# Minta transisi ke status CLICKED
-		transition_requested.emit(self.state, CardState.State.CLICKED)
+func on_mouse_entered() -> void:
+	# Jika mouse masuk saat kartu sedang diam, pindah ke status HOVER
+	transition_requested.emit(self.state, CardState.State.HOVER)

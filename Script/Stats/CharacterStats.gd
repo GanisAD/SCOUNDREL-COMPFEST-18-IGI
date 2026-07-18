@@ -6,6 +6,12 @@ class_name CharacterStats
 @export var cards_per_turn: int = 5 
 @export var deck: CardPile #Dependensi ke tumpukan dek awal pemain 
 
+@export_group("Player Damage Modifier")
+## Jumlah stack Strength yang dimiliki (Default 0)
+@export var strength_stacks: int = 0
+## Jumlah stack Weakened yang dimiliki (Default 0)
+@export var weakened_stacks: int = 0
+
 var mana: int : set = set_mana 
 
 func set_mana(value: int) -> void:

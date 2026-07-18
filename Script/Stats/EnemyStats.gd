@@ -4,6 +4,10 @@ extends Stats
 # Properti spesifik yang hanya dimiliki oleh musuh
 @export var enemy_name: String = "Unknown Enemy"
 
+@export var strength_stacks: int = 0
+## Jumlah stack Weakened yang dimiliki (Default 0)
+@export var weakened_stacks: int = 0
+
 # (Opsional) Tempat penampung untuk sistem AI/Intent di masa depan
 # @export var ai: EnemyAI 
 

@@ -20,22 +20,16 @@ func enter() -> void:
 		func(): minimum_drag_time_elapsed = true
 	)
 
+# DI DALAM card_dragging_state.gd
 func on_input(event: InputEvent) -> void:
-	var mouse_motion := event is InputEventMouseMotion
-	# Jika dilepas atau di-klik ulang tombol kiri mouse
-	# var confirm := event.is_action_released("left_click") or event.is_action_pressed("left_click")
-	
-	# 1. Update posisi kartu secara presisi mengikuti kursor mouse saat bergerak
-	if mouse_motion:
+	# 1. Update posisi kartu mengikuti kursor
+	if event is InputEventMouseMotion:
 		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.pivot_offset
 		
-	# 2. Pembatalan: Jika klik kanan ditekan, batalkan drag dan kembalikan ke BASE
+	# 2. Deteksi Batal (Klik Kanan)
 	if event.is_action_pressed("right_click"):
 		transition_requested.emit(self.state, CardState.State.BASE)
 		
-	# 3. Konfirmasi: Jika tombol kiri dilepas DAN ambang batas waktu aman terpenuhi
+	# 3. Deteksi Lepas Klik Kiri
 	elif event.is_action_released("left_click"):
-		# Tandai event sebagai handled agar input tidak bocor ke game/kartu lain
-		#get_viewport().set_input_as_handled()
-		# Pindah ke status RELEASED untuk pengecekan akhir
 		transition_requested.emit(self.state, CardState.State.RELEASED)
