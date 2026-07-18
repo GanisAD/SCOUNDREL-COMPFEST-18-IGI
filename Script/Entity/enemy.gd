@@ -91,8 +91,6 @@ func do_turn() -> void:
 	var tween = create_tween()
 	
 	if target_player:
-		print(stats.enemy_name, " menyerang Player!")
-		
 		# 1. Animasi maju menyerang ke arah kiri (posisi player)
 		tween.tween_property(sprite_2d, "global_position", global_position + Vector2(-40, 0), 0.2)\
 			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -100,8 +98,10 @@ func do_turn() -> void:
 		# 2. Callback untuk memberikan damage di tengah animasi tubrukan
 		tween.tween_callback(func():
 			if is_instance_valid(target_player):
+				var receiver_stats = target_player.character_stats
+				var attacker_stats = stats
 				# Contoh musuh memberikan 6 damage statis untuk fase testing
-				target_player.take_damage(6)
+				target_player.take_damage(DamageCalculator.calculate_damage(6, attacker_stats, receiver_stats))
 		)
 		
 		# 3. Animasi kembali mundur ke posisi semula
