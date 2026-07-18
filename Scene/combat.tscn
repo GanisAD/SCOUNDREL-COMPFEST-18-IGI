@@ -10,6 +10,9 @@
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy.tscn" id="7_kgncc"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
+size = Vector2(256, 95)
+
 [sub_resource type="LabelSettings" id="LabelSettings_145ap"]
 font_size = 7
 
@@ -29,6 +32,15 @@ script = ExtResource("5_70aft")
 
 [node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
 position = Vector2(132, 67)
+
+[node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea" unique_id=1679395891]
+position = Vector2(128, 47.5)
+shape = SubResource("RectangleShape2D_xg0st")
+debug_color = Color(0, 0.64668244, 0.23860168, 0.41960785)
 
 [node name="BattleUI" type="CanvasLayer" parent="." unique_id=1987067507]
 follow_viewport_scale = -4.745

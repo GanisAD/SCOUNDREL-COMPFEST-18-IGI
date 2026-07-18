@@ -13,6 +13,7 @@ signal died(enemy: Enemy)
 @onready var stats_ui = $StatsUI  # Menghubungkan ke UI HP & Block musuh
 
 func _ready() -> void:
+	add_to_group("enemies")
 	# 1. Gandakan resource stats agar data HP musuh ini tidak berbagi dengan musuh lain
 	if stats:
 		stats = stats.create_instance() as EnemyStats

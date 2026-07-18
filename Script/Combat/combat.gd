@@ -41,6 +41,7 @@ func _start_player_turn() -> void:
 	enemy_handler.update_enemy_intents()
 	
 	battle_ui.show_turn_banner("PLAYER TURN")
+	battle_ui._on_player_turn_started()
 	
 	# 2. Player Reset Mana & Tarik Kartu
 	player_handler.start_turn()

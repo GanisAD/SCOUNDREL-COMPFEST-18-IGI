@@ -17,6 +17,7 @@ enum Target {SELF, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE}
 @export var type: Type = Type.ATTACK
 @export var target: Target = Target.SINGLE_ENEMY
 @export var cost: int = 1
+@export var exhaust: bool = false
 
 # ==========================================
 # FUNGSI UTILITAS & VALIDASI

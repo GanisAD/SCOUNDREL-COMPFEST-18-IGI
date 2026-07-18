@@ -16,6 +16,8 @@ size = Vector2(22, 29)
 font_size = 2
 
 [node name="Enemy" type="Area2D" unique_id=1894014694]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_ls6l5")
 stats = SubResource("Resource_kth1x")
 
