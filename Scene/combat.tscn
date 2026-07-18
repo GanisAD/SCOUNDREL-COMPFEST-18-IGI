@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
 [ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="6_mmg4p"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy.tscn" id="7_kgncc"]
+[ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(256, 85)
@@ -19,6 +20,9 @@ font_size = 7
 
 [sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
 font_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
+font_size = 4
 
 [node name="Combat" type="Node2D" unique_id=257909120]
 script = ExtResource("1_2bktl")
@@ -81,6 +85,33 @@ offset_right = 25.0
 offset_bottom = 17.0
 text = "Block : 0"
 label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
+offset_left = 10.0
+offset_top = 87.0
+offset_right = 50.0
+offset_bottom = 101.0
+
+[node name="DrawPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=1347943961]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 42.0
+offset_bottom = 8.0
+text = "Draw Pile : 0"
+label_settings = SubResource("LabelSettings_xg0st")
+script = ExtResource("9_1blk7")
+format_text = "Draw Pile : %d"
+
+[node name="DiscardPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=704032874]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 6.0
+offset_right = 42.0
+offset_bottom = 13.0
+text = "Discard Pile: 0"
+label_settings = SubResource("LabelSettings_xg0st")
+script = ExtResource("9_1blk7")
 
 [node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
 offset_left = 33.0

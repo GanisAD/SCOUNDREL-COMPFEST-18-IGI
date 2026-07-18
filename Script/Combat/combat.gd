@@ -7,6 +7,10 @@ class_name Combat
 @onready var player_handler: PlayerHandler = $PlayerHandler
 @onready var enemy_handler: EnemyHandler = $EnemyHandler # Pastikan referensi ini ada
 
+@onready var draw_pile_label: CardPileUI = $BattleUI/CardPileUI/DrawPileLabel
+@onready var discard_pile_label: CardPileUI = $BattleUI/CardPileUI/DiscardPileLabel
+
+
 func _ready() -> void:
 	var battle_stats = character_stats.duplicate(true)
 	battle_ui.initialize_player(battle_stats)
@@ -16,11 +20,16 @@ func _ready() -> void:
 	battle_stats.set_mana(battle_stats.max_mana)
 	battle_stats.stats_changed.connect(_on_player_stats_changed.bind(battle_stats))
 	
+	player_handler.start_battle(battle_stats)
+	
+	draw_pile_label.target_pile = player_handler.draw_pile
+	discard_pile_label.target_pile = player_handler.discard_pile
+	
 	# 2. RANTAI EVENT TURN MANAGER YANG BENAR
 	# a. Pemain selesai -> Player Handler buang kartu
 	Events.player_turn_ended.connect(player_handler.end_turn)
 	
-	# b. Kartu selesai dibuang -> Giliran Musuh Dimulai (BUG FIX!)
+	# b. Kartu selesai dibuang -> Giliran Musuh Dimulai
 	Events.player_hand_discarded.connect(enemy_handler.start_enemy_turn)
 	
 	# c. Musuh selesai beraksi -> Giliran Pemain Dimulai kembali (Pakai Sinyal Lokal EnemyHandler)
@@ -29,8 +38,7 @@ func _ready() -> void:
 	# 3. KONDISI MENANG / KALAH
 	enemy_handler.all_enemies_defeated.connect(_on_victory)
 	
-	# Mulai Pertarungan
-	player_handler.start_battle(battle_stats)
+	# Mulai turn
 	_start_player_turn() # Panggil siklus giliran pertama
 
 # --- SIKLUS GILIRAN ---

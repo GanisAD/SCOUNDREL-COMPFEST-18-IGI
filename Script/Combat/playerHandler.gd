@@ -31,7 +31,7 @@ func start_battle(stats: CharacterStats) -> void:
 	discard_pile = CardPile.new() 
 	
 	# Panggil fungsi untuk memulai giliran pertama 
-	start_turn() 
+	#start_turn() 
 
 # Fungsi untuk memulai giliran baru pemain 
 func start_turn() -> void:
@@ -93,7 +93,6 @@ func _on_card_played(card: Card) -> void:
 	if card:
 		# Masukkan data resource kartu tersebut ke tumpukan buangan agar bisa dikocok ulang nanti 
 		discard_pile.add_card(card) 
-		print("Logika Berhasil: Kartu '" + card.name + "' masuk ke Discard Pile.")
 
 func end_turn() -> void:
 	# Jika Anda memiliki fungsi disable di hand.gd, panggil di sini
