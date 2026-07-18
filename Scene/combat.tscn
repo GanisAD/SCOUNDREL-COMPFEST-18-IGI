@@ -8,10 +8,11 @@
 [ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
 [ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
+[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="6_mmg4p"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy.tscn" id="7_kgncc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
-size = Vector2(256, 95)
+size = Vector2(256, 85)
 
 [sub_resource type="LabelSettings" id="LabelSettings_145ap"]
 font_size = 7
@@ -32,13 +33,14 @@ script = ExtResource("5_70aft")
 
 [node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
 position = Vector2(132, 67)
+stats = ExtResource("6_mmg4p")
 
 [node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea" unique_id=1679395891]
-position = Vector2(128, 47.5)
+position = Vector2(128, 42.5)
 shape = SubResource("RectangleShape2D_xg0st")
 debug_color = Color(0, 0.64668244, 0.23860168, 0.41960785)
 
@@ -81,10 +83,10 @@ text = "Block : 0"
 label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
-offset_left = 34.0
-offset_top = 108.0
-offset_right = 217.90909
-offset_bottom = 125.0
+offset_left = 33.0
+offset_top = 114.0
+offset_right = 216.90909
+offset_bottom = 131.0
 alignment = 1
 script = ExtResource("1_6nktc")
 card_ui_scene = ExtResource("6_2rx4k")

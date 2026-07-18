@@ -45,7 +45,6 @@ func on_mouse_exited() -> void:
 func _on_transition_requested(from: CardState.State, to: CardState.State) -> void:
 	# Keamanan: Tolak transisi jika state yang meminta bukan state yang sedang aktif
 	if from != current_state.state:
-		print("TRANSISI DITOLAK! Meminta dari: ", from, " tapi mesin sedang di: ", current_state.state)
 		return
 		
 	# Ambil referensi state tujuan dari dictionary
@@ -59,4 +58,3 @@ func _on_transition_requested(from: CardState.State, to: CardState.State) -> voi
 		
 	new_state.enter()
 	current_state = new_state
-	print("Setelah Transisi : ", current_state)

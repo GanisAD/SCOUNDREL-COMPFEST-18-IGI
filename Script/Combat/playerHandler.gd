@@ -17,6 +17,7 @@ func _ready() -> void:
 	# PENTING: Daftarkan node ini ke group agar sistem efek kartu musuh
 	# bisa mendeteksinya sebagai target yang sah.
 	add_to_group("player")
+	Events.card_played.connect(_on_card_played)
 
 # Fungsi utama untuk memulai simulasi pertempuran 
 func start_battle(stats: CharacterStats) -> void:
@@ -87,6 +88,13 @@ func draw_cards(amount: int) -> void:
 			Events.player_hand_drawn.emit() 
 	)
 
+func _on_card_played(card: Card) -> void:
+	# Pastikan data kartu yang dilempar oleh sinyal itu valid
+	if card:
+		# Masukkan data resource kartu tersebut ke tumpukan buangan agar bisa dikocok ulang nanti 
+		discard_pile.add_card(card) 
+		print("Logika Berhasil: Kartu '" + card.name + "' masuk ke Discard Pile.")
+
 func end_turn() -> void:
 	# Jika Anda memiliki fungsi disable di hand.gd, panggil di sini
 	# agar pemain tidak bisa menarik kartu saat animasi buang kartu berjalan.
@@ -96,6 +104,10 @@ func end_turn() -> void:
 
 # Logika untuk membuang kartu satu per satu dengan jeda animasi (Juice/Game Feel)
 func discard_cards() -> void:
+	if hand.get_child_count() == 0:
+		Events.player_hand_discarded.emit()
+		return
+	
 	var tween := create_tween()
 	
 	# Ambil semua kartu visual yang masih tersisa di node Hand
