@@ -12,9 +12,6 @@ metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(22, 29)
 
-[sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
-font_size = 2
-
 [node name="Enemy" type="Area2D" unique_id=1894014694]
 collision_layer = 4
 collision_mask = 0
@@ -22,36 +19,36 @@ script = ExtResource("1_ls6l5")
 stats = SubResource("Resource_ce4ot")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865966253]
-position = Vector2(-2, -4.5)
+position = Vector2(-10.999999, -79.99999)
+scale = Vector2(18.382132, 18.382132)
 shape = SubResource("RectangleShape2D_xg0st")
 
 [node name="Arrow" type="Sprite2D" parent="." unique_id=1688386588]
-scale = Vector2(0.9999998, 0.9999999)
+position = Vector2(272, 0)
+scale = Vector2(-21.964033, -24.097158)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=275826392]
-scale = Vector2(0.05916666, 0.059166662)
 texture = ExtResource("1_rtd58")
 
-[node name="StatsUI" type="Panel" parent="." unique_id=675003883]
-offset_left = 10.0
-offset_top = -19.0
-offset_right = 46.0
-offset_bottom = -11.0
+[node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
+offset_left = 213.0
+offset_top = 33.0
+offset_right = 487.0
+offset_bottom = 102.0
 script = ExtResource("4_ce4ot")
 
-[node name="HPLabel" type="Label" parent="StatsUI" unique_id=696253520]
+[node name="HPLabel" type="Label" parent="StatsUI" unique_id=1896388731]
 layout_mode = 0
-offset_left = 2.0
-offset_right = 13.0
-offset_bottom = 4.0
-text = "HP : 0"
-label_settings = SubResource("LabelSettings_xg0st")
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 56.0
+offset_bottom = 32.0
+text = "Hp : 0"
 
-[node name="BlockLabel" type="Label" parent="StatsUI" unique_id=70894896]
+[node name="BlockLabel" type="Label" parent="StatsUI" unique_id=698211035]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 3.0
-offset_right = 13.0
-offset_bottom = 7.0
+offset_left = 9.0
+offset_top = 34.0
+offset_right = 73.0
+offset_bottom = 57.0
 text = "Block : 0"
-label_settings = SubResource("LabelSettings_xg0st")

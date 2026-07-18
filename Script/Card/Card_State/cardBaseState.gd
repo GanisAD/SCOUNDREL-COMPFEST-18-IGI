@@ -13,7 +13,7 @@ func enter() -> void:
 	card_ui.pivot_offset = Vector2.ZERO
 	
 	# Reset visual untuk kebutuhan debugging/state game
-	card_ui.color.color = Color.WEB_GREEN
+	#card_ui.color.color = Color.WEB_GREEN
 	card_ui.state.text = "BASE"
 
 func on_mouse_entered() -> void:

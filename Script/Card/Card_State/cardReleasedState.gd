@@ -6,7 +6,7 @@ var played := false
 func enter() -> void:
 	played = false
 	card_ui.state.text = "RELEASED"
-	card_ui.color.color = Color.BROWN
+	#card_ui.color.color = Color.BROWN
 	
 	_evaluate_release.call_deferred()
 	

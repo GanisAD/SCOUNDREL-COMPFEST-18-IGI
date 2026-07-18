@@ -6,7 +6,7 @@ const HOVER_LIFT_AMOUNT := -30.0
 
 func enter() -> void:
 	card_ui.state.text = "HOVER"
-	card_ui.color.color = Color.GREEN_YELLOW
+	#card_ui.color.color = Color.GREEN_YELLOW
 	
 	# 1. VISUAL POLISH: Buat parallel tween agar perbesaran dan pergeseran jalan bersamaan
 	var tween := get_tree().create_tween().set_parallel(true)

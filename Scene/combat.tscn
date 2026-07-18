@@ -13,16 +13,16 @@
 [ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
-size = Vector2(256, 85)
+size = Vector2(1928, 748)
 
 [sub_resource type="LabelSettings" id="LabelSettings_145ap"]
 font_size = 7
 
 [sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
-font_size = 5
+font_size = 30
 
 [sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
-font_size = 4
+font_size = 19
 
 [node name="Combat" type="Node2D" unique_id=257909120]
 script = ExtResource("1_2bktl")
@@ -36,7 +36,7 @@ hand = NodePath("../BattleUI/Hand")
 script = ExtResource("5_70aft")
 
 [node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
-position = Vector2(132, 67)
+position = Vector2(946, 511)
 stats = ExtResource("6_mmg4p")
 
 [node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
@@ -44,7 +44,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardDropArea" unique_id=1679395891]
-position = Vector2(128, 42.5)
+position = Vector2(964, 374)
 shape = SubResource("RectangleShape2D_xg0st")
 debug_color = Color(0, 0.64668244, 0.23860168, 0.41960785)
 
@@ -62,42 +62,42 @@ text = "Turn"
 label_settings = SubResource("LabelSettings_145ap")
 
 [node name="PlayerStatsUI" type="Panel" parent="BattleUI" unique_id=1139493257]
-offset_left = 5.0
-offset_top = 8.0
-offset_right = 75.0
-offset_bottom = 27.0
+offset_left = 21.0
+offset_top = 34.0
+offset_right = 277.0
+offset_bottom = 111.0
 script = ExtResource("6_70aft")
 
 [node name="HPLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=330469658]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 1.0
-offset_right = 18.0
-offset_bottom = 9.0
+offset_left = 3.0
+offset_top = -2.0
+offset_right = 85.0
+offset_bottom = 40.0
 text = "Hp : 0"
 label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="BlockLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=1878832758]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 9.0
-offset_right = 25.0
-offset_bottom = 17.0
+offset_left = 5.0
+offset_top = 31.0
+offset_right = 125.0
+offset_bottom = 73.0
 text = "Block : 0"
 label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
-offset_left = 10.0
-offset_top = 87.0
-offset_right = 50.0
-offset_bottom = 101.0
+offset_left = 38.0
+offset_top = 759.0
+offset_right = 269.0
+offset_bottom = 818.0
 
 [node name="DrawPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=1347943961]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 1.0
-offset_right = 42.0
-offset_bottom = 8.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 119.0
+offset_bottom = 31.0
 text = "Draw Pile : 0"
 label_settings = SubResource("LabelSettings_xg0st")
 script = ExtResource("9_1blk7")
@@ -105,27 +105,28 @@ format_text = "Draw Pile : %d"
 
 [node name="DiscardPileLabel" type="Label" parent="BattleUI/CardPileUI" unique_id=704032874]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 6.0
-offset_right = 42.0
-offset_bottom = 13.0
+offset_left = 7.0
+offset_top = 25.0
+offset_right = 136.0
+offset_bottom = 52.0
 text = "Discard Pile: 0"
 label_settings = SubResource("LabelSettings_xg0st")
 script = ExtResource("9_1blk7")
 
 [node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
-offset_left = 33.0
-offset_top = 114.0
-offset_right = 216.90909
-offset_bottom = 131.0
+offset_left = 323.0
+offset_top = 772.00006
+offset_right = 447.62714
+offset_bottom = 789.00006
+scale = Vector2(9.837344, 9.837344)
 alignment = 1
 script = ExtResource("1_6nktc")
 card_ui_scene = ExtResource("6_2rx4k")
 
 [node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
-offset_left = 205.0
-offset_top = 97.0
-offset_right = 231.0
-offset_bottom = 112.0
-theme_override_font_sizes/font_size = 4
+offset_left = 1614.0
+offset_top = 757.0
+offset_right = 1795.0
+offset_bottom = 803.0
+theme_override_font_sizes/font_size = 30
 text = "End Turn"
