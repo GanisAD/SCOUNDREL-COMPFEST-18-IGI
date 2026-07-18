@@ -1,6 +1,12 @@
 [gd_resource type="Resource" script_class="Card" format=3 uid="uid://yklxp2bw7yh8"]
 
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_b5fmi"]
+[ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Card/Effect/effect.gd" id="1_ovf7n"]
+[ext_resource type="Script" uid="uid://l48gs16cakvs" path="res://Script/Card/Effect/strenghtEffect.gd" id="2_14mjh"]
+
+[sub_resource type="Resource" id="Resource_dr6gs"]
+script = ExtResource("2_14mjh")
+metadata/_custom_type_script = "uid://l48gs16cakvs"
 
 [resource]
 script = ExtResource("1_b5fmi")
@@ -8,4 +14,5 @@ name = "Strenght"
 description = "It give's you bonus damage for this turn."
 type = 2
 target = 0
+effects = Array[ExtResource("1_ovf7n")]([SubResource("Resource_dr6gs")])
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

@@ -61,6 +61,7 @@ func take_damage(amount: int) -> void:
 	if not stats:
 		return
 		
+	
 	stats.take_damage(amount)
 	
 	# Berikan efek feedback visual instan saat terkena serangan

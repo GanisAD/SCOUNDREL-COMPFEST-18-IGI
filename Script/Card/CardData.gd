@@ -19,6 +19,10 @@ enum Target {SELF, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE}
 @export var cost: int = 1
 @export var exhaust: bool = false
 
+@export_group("Efek Kartu")
+## Array ini menampung custom resource Effect (Damage, Block, dll.)
+@export var effects: Array[Effect] = []
+
 # ==========================================
 # FUNGSI UTILITAS & VALIDASI
 # ==========================================
@@ -30,8 +34,11 @@ func is_single_targeted() -> bool:
 
 ## Fungsi virtual yang nantinya akan di-override oleh kartu spesifik
 ## atau ditangani oleh sistem efek (Effect Handler) saat kartu dilepaskan.
-func apply_effects(_targets: Array[Node], _player: Node) -> void:
-	# Logika spesifik kartu (seperti memberikan damage atau draw kartu)
-	# akan dieksekusi di sini nantinya.
-	pass
-	
+func apply_effects(targets: Array[Node], player: Node) -> void:
+	if effects.is_empty():
+		print("Peringatan: Kartu ", name, " tidak memiliki efek yang dikonfigurasi!")
+		return
+		
+	for effect in effects:
+		if effect:
+			effect.execute(targets, player)
