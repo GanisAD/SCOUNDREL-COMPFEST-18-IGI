@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Intent" format=3 uid="uid://clkwesslalr20"]
+
+[ext_resource type="Script" uid="uid://bfri07uj0xdav" path="res://Script/Entity/Enemy/intent.gd" id="1_23jsp"]
+
+[resource]
+script = ExtResource("1_23jsp")
+metadata/_custom_type_script = "uid://bfri07uj0xdav"
