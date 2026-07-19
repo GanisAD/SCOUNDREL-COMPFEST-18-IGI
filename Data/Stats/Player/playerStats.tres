@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_ghh5q")
+cards_per_turn = 4
 deck = ExtResource("1_isspk")
-max_health = 100
+max_health = 60
 metadata/_custom_type_script = "uid://dbby0g0xnmbpl"
