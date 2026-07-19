@@ -116,10 +116,8 @@ script = ExtResource("9_1blk7")
 [node name="Hand" type="HBoxContainer" parent="BattleUI" unique_id=352572441]
 offset_left = 323.0
 offset_top = 772.00006
-offset_right = 447.62714
-offset_bottom = 789.00006
-scale = Vector2(9.837344, 9.837344)
-alignment = 1
+offset_right = 1577.0
+offset_bottom = 955.0
 script = ExtResource("1_6nktc")
 card_ui_scene = ExtResource("6_2rx4k")
 

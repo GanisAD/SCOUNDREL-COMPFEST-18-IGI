@@ -14,15 +14,15 @@
 size = Vector2(15.3761425, 21.247715)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ee0gf"]
-font_size = 10
+font_size = 20
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5lqrl"]
-font_size = 22
+font_size = 36
 font_color = Color(0, 0, 0, 1)
 
 [node name="Card" type="Control" unique_id=658835839]
-custom_minimum_size = Vector2(150, 200)
+custom_minimum_size = Vector2(300, 400)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +44,7 @@ scale = Vector2(8.073766, 8.073766)
 shape = SubResource("RectangleShape2D_van61")
 
 [node name="CardFrame" type="TextureRect" parent="." unique_id=11258415]
-custom_minimum_size = Vector2(150, 200)
+custom_minimum_size = Vector2(300, 400)
 layout_mode = 0
 offset_right = 150.0
 offset_bottom = 200.0
@@ -53,29 +53,28 @@ expand_mode = 1
 
 [node name="IconRect" type="TextureRect" parent="." unique_id=1399012799]
 layout_mode = 0
-offset_left = 41.0
-offset_top = 41.0
-offset_right = 70.081345
-offset_bottom = 74.05697
-scale = Vector2(2.5102005, 1.6420759)
+offset_left = 75.0
+offset_top = 65.0
+offset_right = 221.0
+offset_bottom = 203.0
 texture = ExtResource("3_5lqrl")
 expand_mode = 1
 
 [node name="NameLabel" type="Label" parent="." unique_id=406248701]
 layout_mode = 0
-offset_left = 54.0
-offset_top = 115.0
-offset_right = 94.0
-offset_bottom = 129.0
+offset_left = 112.0
+offset_top = 229.0
+offset_right = 195.0
+offset_bottom = 259.0
 text = "[BLANK]"
 label_settings = SubResource("LabelSettings_ee0gf")
 
 [node name="CostLabel" type="Label" parent="." unique_id=152293278]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 23.0
-offset_bottom = 41.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 45.0
+offset_bottom = 74.0
 text = "1"
 label_settings = SubResource("LabelSettings_5lqrl")
 
@@ -91,12 +90,12 @@ label_settings = SubResource("LabelSettings_ee0gf")
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="." unique_id=600485357]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 132.0
-offset_right = 129.0
-offset_bottom = 187.0
+offset_left = 55.0
+offset_top = 264.0
+offset_right = 256.0
+offset_bottom = 371.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 theme_override_font_sizes/bold_italics_font_size = 16
 theme_override_font_sizes/italics_font_size = 16

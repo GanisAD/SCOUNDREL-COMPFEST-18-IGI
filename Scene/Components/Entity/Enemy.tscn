@@ -10,7 +10,7 @@ script = ExtResource("2_kth1x")
 metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
-size = Vector2(22, 29)
+size = Vector2(13.932101, 20.034155)
 
 [node name="Enemy" type="Area2D" unique_id=1894014694]
 collision_layer = 4
@@ -19,7 +19,7 @@ script = ExtResource("1_ls6l5")
 stats = SubResource("Resource_ce4ot")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865966253]
-position = Vector2(-10.999999, -79.99999)
+position = Vector2(-20, -61.000008)
 scale = Vector2(18.382132, 18.382132)
 shape = SubResource("RectangleShape2D_xg0st")
 
@@ -28,6 +28,7 @@ position = Vector2(272, 0)
 scale = Vector2(-21.964033, -24.097158)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=275826392]
+scale = Vector2(0.7, 0.7)
 texture = ExtResource("1_rtd58")
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
