@@ -24,7 +24,7 @@ func is_performable() -> bool:
 # 2. Eksekusi Buff dan Efek Visual Permanen
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
 	# Tambahkan stats strength (asumsi variabel di stats bernama strength)
-	enemy.stats.strength += strength_amount
+	enemy.stats.strength_stacks += strength_amount
 	already_used = true
 	
 	# Memicu efek visual transisi warna di objek Enemy

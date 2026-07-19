@@ -4,11 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://lbugtm3281vu" path="res://Resources/Entity/Enemy/skeleton-raw.png" id="1_rtd58"]
 [ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Stats/EnemyStats.gd" id="2_kth1x"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="4_ce4ot"]
-[ext_resource type="Texture2D" uid="uid://l5dd6upj5687" path="res://Resources/Card/Icon/sword wo bg.png" id="4_j5lal"]
+[ext_resource type="Script" uid="uid://b5ytpvid0iejd" path="res://Script/UI/intent_ui.gd" id="4_j5lal"]
 [ext_resource type="Script" uid="uid://bh60cpy5uy2yt" path="res://Script/Entity/Enemy/enemy_action_picker.gd" id="5_ayxb1"]
+[ext_resource type="Texture2D" uid="uid://l5dd6upj5687" path="res://Resources/Card/Icon/sword wo bg.png" id="5_m4gqk"]
 [ext_resource type="Script" uid="uid://cy6rkfoqhnhgi" path="res://Script/Entity/Enemy/Action/enemy_attack.gd" id="6_1xqxk"]
 [ext_resource type="Script" uid="uid://cpwqtekw0l7s1" path="res://Script/Entity/Enemy/Action/enemy_block.gd" id="7_1xqxk"]
 [ext_resource type="Script" uid="uid://i08bkieiqxwq" path="res://Script/Entity/Enemy/Action/enemy_strenght_buff.gd" id="8_7rs3b"]
+[ext_resource type="Resource" uid="uid://cruxt8ofgn1eq" path="res://Script/Entity/Enemy/Intent/attackIntent.tres" id="8_qpvyo"]
+[ext_resource type="Resource" uid="uid://t17ikvgvlyfs" path="res://Script/Entity/Enemy/Intent/blockIntent.tres" id="10_m4gqk"]
+[ext_resource type="Resource" uid="uid://clkwesslalr20" path="res://Script/Entity/Enemy/Intent/strenghtIntent.tres" id="12_w2qd8"]
 
 [sub_resource type="Resource" id="Resource_ce4ot"]
 script = ExtResource("2_kth1x")
@@ -36,13 +40,23 @@ scale = Vector2(-21.964033, -24.097158)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("1_rtd58")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=831787028]
-offset_left = 226.0
-offset_top = -64.0
-offset_right = 302.0
-offset_bottom = 22.0
-texture = ExtResource("4_j5lal")
+[node name="IntentUI" type="HBoxContainer" parent="." unique_id=634082391]
+offset_left = -104.0
+offset_top = -314.0
+offset_right = 80.0
+offset_bottom = -254.0
+alignment = 1
+script = ExtResource("4_j5lal")
+
+[node name="Icon" type="TextureRect" parent="IntentUI" unique_id=1691157347]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+texture = ExtResource("5_m4gqk")
 expand_mode = 1
+
+[node name="Label" type="Label" parent="IntentUI" unique_id=647259547]
+layout_mode = 2
+text = "6"
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
 offset_left = 213.0
@@ -72,10 +86,13 @@ script = ExtResource("5_ayxb1")
 
 [node name="EnemyAttack" type="Node" parent="EnemyActionPicker" unique_id=225846787]
 script = ExtResource("6_1xqxk")
+intent = ExtResource("8_qpvyo")
 
 [node name="EnemyBlock" type="Node" parent="EnemyActionPicker" unique_id=193863620]
 script = ExtResource("7_1xqxk")
+intent = ExtResource("10_m4gqk")
 
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
+intent = ExtResource("12_w2qd8")

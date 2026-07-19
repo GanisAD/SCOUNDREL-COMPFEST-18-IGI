@@ -50,7 +50,7 @@ func _update_visuals() -> void:
 # [MODIFIKASI] Dipanggil otomatis saat sinyal stats_changed aktif
 func _on_stats_changed() -> void:
 	if stats_ui and stats:
-		stats_ui.update_hud(stats)
+		stats_ui.update_hud()
 	
 	# [TAMBAHAN] Reactive Intent: Cek ulang AI jika HP berkurang, 
 	# siapa tahu memicu Conditional Action (seperti Mega Block) secara real-time!
