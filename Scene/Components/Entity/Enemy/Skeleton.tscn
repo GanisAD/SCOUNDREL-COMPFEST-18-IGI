@@ -54,7 +54,7 @@ layout_mode = 2
 texture = ExtResource("5_m4gqk")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="IntentUI" unique_id=647259547]
+[node name="Number" type="Label" parent="IntentUI" unique_id=647259547]
 layout_mode = 2
 text = "6"
 
@@ -95,4 +95,5 @@ intent = ExtResource("10_m4gqk")
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
+min_hp_percentage = 0.5
 intent = ExtResource("12_w2qd8")

@@ -21,7 +21,8 @@ func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
 	var original_pos = enemy.global_position
 	
 	# Efek visual musuh menerjang maju ke arah player
-	tween.tween_property(enemy, "global_position", player.global_position - Vector2(50, 0), 0.2)
+	# Menggunakan Vector2.LEFT untuk menggeser sumbu X ke arah kiri
+	tween.tween_property(enemy, "global_position", enemy.global_position + (Vector2.LEFT * 50), 0.2)
 	tween.tween_property(enemy, "global_position", original_pos, 0.2).set_delay(0.1)
 	
 	# 3. Selesaikan Aksi: Tunggu tween selesai baru pancarkan sinyal tamat

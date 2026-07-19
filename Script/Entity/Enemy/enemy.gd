@@ -116,27 +116,35 @@ func _play_block_effect() -> void:
 # --- TURNS & AI LOGIC (CO-ROUTINE FRIENDLY) ---
 
 # [MODIFIKASI TOTAL] Menggunakan arsitektur EnemyAction baru
+# enemy.gd
 func do_turn() -> void:
-	# 1. Pastikan picker AI dan aksi giliran ini valid
 	if not enemy_action_picker or not current_action:
 		return
 		
-	# 2. Cari target player aktif
 	var players = get_tree().get_nodes_in_group("player")
 	var target_player = players[0] if not players.is_empty() else null
 	
-	if not target_player:
-		print(stats.enemy_name, " tidak menemukan target player!")
-		return
-		
-	# 3. Eksekusi aksi yang telah dipilih. Logika animasi maju-mundur/efek 
-	# sekarang ditangani di dalam skrip EnemyAction masing-masing.
+	# --- MEKANISME FAILSAFE MENGGUNAKAN REFERENCE ---
+	# Menggunakan Dictionary agar lambda bisa memodifikasi nilainya secara eksternal
+	var flags = { "action_done": false }
+	var failsafe_timer = get_tree().create_timer(1.5)
+	
+	# Hubungkan sinyal selesai yang asli ke lambda
+	current_action.enemy_action_completed.connect(func():
+		flags["action_done"] = true
+	)
+	
+	# Eksekusi aksi musuh
 	current_action.perform_action(self, target_player)
 	
-	# 4. Tahan giliran sampai objek EnemyAction memancarkan sinyal selesai
-	await current_action.enemy_action_completed
+	# Tunggu mana yang lebih cepat: Aksi selesai secara normal, ATAU waktu failsafe habis
+	while not flags["action_done"]:
+		await get_tree().process_frame
+		if failsafe_timer.time_left <= 0:
+			print("WARNING: Aksi musuh ", stats.enemy_name, " macet! Failsafe dipicu.")
+			break
 	
-	# [OPSIONAL] Sembunyikan atau bersihkan intent setelah beraksi
+	# --- PEMBERSIHAN ---
 	if intent_ui:
 		intent_ui.hide()
 

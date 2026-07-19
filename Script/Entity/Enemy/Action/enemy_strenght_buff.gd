@@ -3,7 +3,7 @@ class_name EnemyStrengthBuff
 extends EnemyAction
 
 @export var strength_amount: int = 2
-@export var min_hp_percentage: int = 50
+@export var min_hp_percentage: float = 50
 
 # Flag untuk memastikan buff ini hanya terjadi sekali
 var already_used: bool = false
