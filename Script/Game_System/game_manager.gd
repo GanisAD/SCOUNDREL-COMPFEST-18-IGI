@@ -30,13 +30,13 @@ func enter_room(room_data: RoomData) -> void:
 		return
 		
 	# Tentukan pindah scene berdasarkan tipe ruangan
-	match current_room_data.room_type:
-		RoomType.Type.CLUB:
-			# Berpindah ke scene pertarungan utama
-			get_tree().change_scene_to_file("res://scenes/battle.tscn")
-		_:
-			# Tipe ruangan lain (Diamond, Heart, Spade) ke scene event/loot
-			get_tree().change_scene_to_file("res://scenes/room_event.tscn")
+	#match current_room_data.room_type:
+		#RoomType.Type.CLUB:
+			## Berpindah ke scene pertarungan utama
+			#get_tree().change_scene_to_file("res://Scene/combat.tscn")
+		#_:
+	# Tipe ruangan lain (Diamond, Heart, Spade) ke scene event/loot
+	get_tree().change_scene_to_file("res://Scene/Components/room_event.tscn")
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:

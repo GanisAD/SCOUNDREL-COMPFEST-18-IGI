@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://djn5aj5ngdyqa"]
 
-[ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/bg.png" id="1_21of8"]
-[ext_resource type="Script" uid="uid://b10ix646rbsbe" path="res://Script/Exploration/room.gd" id="1_rbu8w"]
+[ext_resource type="Script" uid="uid://b10ix646rbsbe" path="res://Script/Exploration/room.gd" id="1_6twpi"]
+[ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/bg.png" id="2_vek6d"]
 
 [node name="Room" type="Node2D" unique_id=1794246926]
-script = ExtResource("1_rbu8w")
+script = ExtResource("1_6twpi")
 
 [node name="Control" type="Control" parent="." unique_id=1270012249]
 layout_mode = 3
@@ -24,4 +24,4 @@ offset_left = 38.0
 offset_top = 42.0
 offset_right = 1958.0
 offset_bottom = 1122.0
-texture = ExtResource("1_21of8")
+texture = ExtResource("2_vek6d")
