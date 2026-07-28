@@ -5,6 +5,8 @@ extends Node
 @export var elevator: Elevator
 @export var doors: Array[Door] = []
 
+@onready var floor_label : Label = $floorLabel
+
 var current_floor: int = 1
 
 func _ready() -> void:
@@ -13,11 +15,16 @@ func _ready() -> void:
 		elevator.elevator_used.connect(_on_elevator_used)
 
 func _on_elevator_used() -> void:
-	current_floor += 1
-	print("Pindah ke Floor: ", current_floor)
 	
-	# Panggil fungsi reroll di semua pintu
+	current_floor += 1
+	update_floor_ui()
 	reroll_all_doors()
+
+func update_floor_ui() -> void:
+	if floor_label:
+		floor_label.text = "Current floor : %d" % current_floor
+	else:
+		push_error("DungeonManager: floor_label TIDAK DITEMUKAN / NULL!")
 
 func reroll_all_doors() -> void:
 	for door in doors:

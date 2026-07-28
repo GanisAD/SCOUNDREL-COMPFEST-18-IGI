@@ -4,8 +4,13 @@
 [ext_resource type="Script" uid="uid://cepulgyterui0" path="res://Script/Exploration/dungeon_manager.gd" id="1_n3gve"]
 [ext_resource type="Script" uid="uid://d3v8x6t5ps4ms" path="res://Script/Exploration/elevator.gd" id="3_lsfxy"]
 
-[node name="Explore" type="Node2D" unique_id=554458340]
+[sub_resource type="LabelSettings" id="LabelSettings_n3gve"]
+font_size = 49
+
+[node name="Explore" type="Node2D" unique_id=554458340 node_paths=PackedStringArray("elevator", "doors")]
 script = ExtResource("1_n3gve")
+elevator = NodePath("Elevator")
+doors = [NodePath("HBoxContainer/Door"), NodePath("HBoxContainer/Door2"), NodePath("HBoxContainer/Door3"), NodePath("HBoxContainer/Door4")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=200171025]
 offset_left = 4.0
@@ -34,3 +39,11 @@ offset_bottom = 1008.0
 theme_override_font_sizes/font_size = 42
 text = "Next Floor"
 script = ExtResource("3_lsfxy")
+
+[node name="floorLabel" type="Label" parent="." unique_id=1990206801]
+offset_left = 2.0
+offset_top = 45.0
+offset_right = 357.0
+offset_bottom = 113.0
+text = "Current Floor : 1"
+label_settings = SubResource("LabelSettings_n3gve")

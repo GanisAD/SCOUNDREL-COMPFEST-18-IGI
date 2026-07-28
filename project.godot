@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameManager="*uid://ci4rstpxo42rx"
 Events="*uid://4wbw7vl7kc54"
 
 [display]

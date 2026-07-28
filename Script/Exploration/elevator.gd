@@ -1,9 +1,13 @@
 # elevator.gd
 class_name Elevator
-extends Button # Atau Area2D jika berupa objek fisik di dunia 2D
+extends Button
 
 signal elevator_used
 
+func _ready() -> void:
+	# Menghubungkan sinyal klik bawaan Button ke pemancar sinyal elevator_used
+	pressed.connect(_on_pressed)
+
 func _on_pressed() -> void:
-	# Memancarkan sinyal saat pemain menekan tombol lift
+	print("Elevator: Tombol dipencet!")
 	elevator_used.emit()

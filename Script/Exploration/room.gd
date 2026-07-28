@@ -5,6 +5,13 @@ extends Node
 ## Referensi RoomData aktif yang sedang dimuat di ruangan ini
 var current_room_data: RoomData
 
+func _ready() -> void:
+	# Ambil data ruangan yang disimpan di GameManager
+	var active_room = GameManager.current_room_data
+	
+	if active_room:
+		setup_room(active_room)
+
 ## Dipanggil saat pemain berpindah ke ruangan baru
 func setup_room(room_data: RoomData) -> void:
 	current_room_data = room_data

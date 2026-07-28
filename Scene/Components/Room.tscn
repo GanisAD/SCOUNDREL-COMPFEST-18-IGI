@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://djn5aj5ngdyqa"]
 
 [ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/bg.png" id="1_21of8"]
+[ext_resource type="Script" uid="uid://b10ix646rbsbe" path="res://Script/Exploration/room.gd" id="1_rbu8w"]
 
 [node name="Room" type="Node2D" unique_id=1794246926]
+script = ExtResource("1_rbu8w")
 
 [node name="Control" type="Control" parent="." unique_id=1270012249]
 layout_mode = 3
