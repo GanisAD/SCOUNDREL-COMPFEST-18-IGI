@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://djn5aj5ngdyqa"]
+
+[ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/bg.png" id="1_21of8"]
+
+[node name="Room" type="Node2D" unique_id=1794246926]
+
+[node name="Control" type="Control" parent="." unique_id=1270012249]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1515759714]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 42.0
+offset_right = 1958.0
+offset_bottom = 1122.0
+texture = ExtResource("1_21of8")

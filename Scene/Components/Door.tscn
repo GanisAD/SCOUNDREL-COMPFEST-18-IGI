@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b4i4ujg8mxuqk"]
+
+[ext_resource type="Texture2D" uid="uid://cpfim6w13pk16" path="res://Resources/Door/door.jpg" id="1_jddv1"]
+[ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_wor5m"]
+
+[node name="Door" type="Control" unique_id=1355465168]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="DoorFrame" type="TextureRect" parent="." unique_id=1509663597]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 400.0
+texture = ExtResource("1_jddv1")
+expand_mode = 1
+
+[node name="IconFrame" type="TextureRect" parent="." unique_id=2110281948]
+layout_mode = 0
+offset_left = 111.0
+offset_top = -27.0
+offset_right = 188.0
+offset_bottom = 50.0
+texture = ExtResource("2_wor5m")
+expand_mode = 1

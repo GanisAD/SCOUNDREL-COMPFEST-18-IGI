@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CharacterStats" format=3 uid="uid://daylwn61mgfv2"]
 
-[ext_resource type="Script" uid="uid://dbby0g0xnmbpl" path="res://Script/Stats/CharacterStats.gd" id="1_ghh5q"]
+[ext_resource type="Script" uid="uid://dbby0g0xnmbpl" path="res://Script/Entity/Stats/CharacterStats.gd" id="1_ghh5q"]
 [ext_resource type="Resource" uid="uid://o3vhb2j0n08v" path="res://Data/Weapon/GuardSword/guardDeck.tres" id="1_isspk"]
 
 [resource]
