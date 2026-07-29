@@ -7,22 +7,22 @@ extends Node
 
 @onready var floor_label : Label = $floorLabel
 
-var current_floor: int = 1
-
 func _ready() -> void:
 	# Hubungkan sinyal dari elevator ke fungsi reroll
 	if elevator:
 		elevator.elevator_used.connect(_on_elevator_used)
+	
+	update_floor_ui()
 
 func _on_elevator_used() -> void:
 	
-	current_floor += 1
+	GameManager.current_floor += 1
 	update_floor_ui()
 	reroll_all_doors()
 
 func update_floor_ui() -> void:
 	if floor_label:
-		floor_label.text = "Current floor : %d" % current_floor
+		floor_label.text = "Current Floor : %d" % GameManager.current_floor
 	else:
 		push_error("DungeonManager: floor_label TIDAK DITEMUKAN / NULL!")
 

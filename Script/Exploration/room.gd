@@ -1,13 +1,17 @@
 # room.gd
 class_name Room
-extends Node
+extends Control
 
 ## Referensi RoomData aktif yang sedang dimuat di ruangan ini
 var current_room_data: RoomData
+@onready var forfeit : Forfeit = $ForfeitButton
 
 func _ready() -> void:
 	# Ambil data ruangan yang disimpan di GameManager
 	var active_room = GameManager.current_room_data
+	
+	if forfeit:
+		forfeit.forfeit_used.connect(_on_forfeit_used)
 	
 	if active_room:
 		setup_room(active_room)
@@ -50,8 +54,11 @@ func handle_monster_room() -> void:
 	if not monster_pool.is_empty():
 		var chosen_encounter = monster_pool.pick_random()
 		print("Pertarungan Dimulai dengan: ", chosen_encounter)
-		# TODO: Panggil / Transisi ke BattleScene dengan membawa data encounter ini
+		#get_tree().change_scene_to_file("res://Scene/combat.tscn")
 
 func handle_tradeoff_room() -> void:
 	# Fitur sekunder (Spade)
 	pass
+
+func _on_forfeit_used() -> void:
+	GameManager.return_to_dungeon_overworld()

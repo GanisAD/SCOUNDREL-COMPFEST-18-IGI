@@ -41,4 +41,4 @@ func enter_room(room_data: RoomData) -> void:
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null
-	get_tree().change_scene_to_file("res://scenes/dungeon_overworld.tscn")
+	get_tree().change_scene_to_file("res://Scene/explore.tscn")
