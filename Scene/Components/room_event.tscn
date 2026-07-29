@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://b10ix646rbsbe" path="res://Script/Exploration/room.gd" id="1_6twpi"]
 [ext_resource type="Script" uid="uid://qc4wk6o1kxtl" path="res://Script/Exploration/Room/forfeit_button.gd" id="2_6twpi"]
 [ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/Room/bg.png" id="2_vek6d"]
+[ext_resource type="Texture2D" uid="uid://bbjyes1c7yh74" path="res://Resources/Room/altar-diamond.png" id="4_pjeqn"]
+[ext_resource type="Script" uid="uid://ce80wgc1k54br" path="res://Script/Exploration/Room/altar.gd" id="4_qu8co"]
 
 [node name="room" type="Control" unique_id=1270012249]
 layout_mode = 3
@@ -29,6 +31,15 @@ offset_top = -1080.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("2_vek6d")
+
+[node name="AltarSprite" type="TextureRect" parent="." unique_id=791418672]
+layout_mode = 0
+offset_left = -1116.0
+offset_top = -797.0
+offset_right = -716.0
+offset_bottom = -297.0
+texture = ExtResource("4_pjeqn")
+script = ExtResource("4_qu8co")
 
 [node name="ForfeitButton" type="Button" parent="." unique_id=1629896233]
 layout_mode = 0

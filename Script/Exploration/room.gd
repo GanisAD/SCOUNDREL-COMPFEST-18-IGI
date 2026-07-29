@@ -5,6 +5,7 @@ extends Control
 ## Referensi RoomData aktif yang sedang dimuat di ruangan ini
 var current_room_data: RoomData
 @onready var forfeit : Forfeit = $ForfeitButton
+@onready var altar : Altar = $AltarSprite
 
 func _ready() -> void:
 	# Ambil data ruangan yang disimpan di GameManager
@@ -19,18 +20,20 @@ func _ready() -> void:
 ## Dipanggil saat pemain berpindah ke ruangan baru
 func setup_room(room_data: RoomData) -> void:
 	current_room_data = room_data
-	print("Memasuki Ruangan: ", current_room_data.room_name)
 	
 	# Memicu logika acak isi ruangan berdasarkan tipe ruangan
+	if not altar:
+		return
+	
 	match current_room_data.room_type:
 		RoomType.Type.DIAMOND:
-			handle_weapon_room()
+			altar.altar_used.connect(handle_weapon_room)
 		RoomType.Type.HEART:
-			handle_potion_room()
+			altar.altar_used.connect(handle_potion_room)
 		RoomType.Type.CLUB:
-			handle_monster_room()
+			altar.altar_used.connect(handle_monster_room)
 		RoomType.Type.SPADE:
-			handle_tradeoff_room()
+			altar.altar_used.connect(handle_tradeoff_room)
 
 ## Mengacak senjata dari possible_item_pool
 func handle_weapon_room() -> void:
@@ -54,7 +57,7 @@ func handle_monster_room() -> void:
 	if not monster_pool.is_empty():
 		var chosen_encounter = monster_pool.pick_random()
 		print("Pertarungan Dimulai dengan: ", chosen_encounter)
-		#get_tree().change_scene_to_file("res://Scene/combat.tscn")
+		get_tree().change_scene_to_file("res://Scene/combat.tscn")
 
 func handle_tradeoff_room() -> void:
 	# Fitur sekunder (Spade)
