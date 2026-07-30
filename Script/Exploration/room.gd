@@ -40,16 +40,14 @@ func handle_weapon_room() -> void:
 	var item_pool = current_room_data.possible_item_pool
 	if not item_pool.is_empty():
 		var chosen_weapon = item_pool.pick_random()
-		print("Loot Senjata Didapatkan: ", chosen_weapon)
-		# TODO: Tampilkan UI hadiah senjata atau tambahkan ke inventaris pemain
+		_on_loot_button_pressed(chosen_weapon)
 
 ## Mengacak potion dari possible_item_pool
 func handle_potion_room() -> void:
 	var item_pool = current_room_data.possible_item_pool
 	if not item_pool.is_empty():
 		var chosen_potion = item_pool.pick_random()
-		print("Loot Potion Didapatkan: ", chosen_potion)
-		# TODO: Tampilkan UI pilihan potion / langsung sembuhkan HP
+		_on_loot_button_pressed(chosen_potion)
 
 ## Mengacak musuh dari possible_monster_encounters
 func handle_monster_room() -> void:
@@ -65,3 +63,8 @@ func handle_tradeoff_room() -> void:
 
 func _on_forfeit_used() -> void:
 	GameManager.return_to_dungeon_overworld()
+
+func _on_loot_button_pressed(item: ItemData) -> void:
+	# Memanggil sinyal atau langsung ke PlayerHandler
+	print("Test bisa")
+	PlayerHandler.add_item_to_inventory(item)

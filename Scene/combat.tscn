@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bvyfktp4ncskk" path="res://Script/Combat/combat.gd" id="1_2bktl"]
 [ext_resource type="Script" uid="uid://c6lkr7jqlr6dh" path="res://Script/Combat/hand.gd" id="1_6nktc"]
-[ext_resource type="Script" uid="uid://cj3gsfx5rbgnt" path="res://Script/Combat/playerHandler.gd" id="1_qxtda"]
 [ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
-[ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/Combat/battle_ui.gd" id="4_miqix"]
+[ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/UI/battle_ui.gd" id="4_miqix"]
 [ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
 [ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
@@ -27,10 +26,6 @@ font_size = 19
 [node name="Combat" type="Node2D" unique_id=257909120]
 script = ExtResource("1_2bktl")
 character_stats = ExtResource("2_xmftx")
-
-[node name="PlayerHandler" type="Node" parent="." unique_id=972464850 node_paths=PackedStringArray("hand")]
-script = ExtResource("1_qxtda")
-hand = NodePath("../BattleUI/Hand")
 
 [node name="EnemyHandler" type="Node" parent="." unique_id=1334140955]
 script = ExtResource("5_70aft")

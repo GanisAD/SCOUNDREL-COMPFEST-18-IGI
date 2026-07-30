@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ALTAR-52"
-run/main_scene="uid://ddht8ffq3554u"
+run/main_scene="uid://dovanrrf4dukk"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*uid://ci4rstpxo42rx"
 Events="*uid://4wbw7vl7kc54"
+PlayerHandler="*uid://cirj7q3jgxcu2"
 
 [display]
 

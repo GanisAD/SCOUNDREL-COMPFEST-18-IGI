@@ -1,15 +1,18 @@
 extends Node
-class_name PlayerHandler 
+#class_name PlayerHandler 
 
 # Jeda waktu (dalam detik) antar penarikan kartu agar kartu tidak muncul sekaligus 
 const HAND_DRAW_INTERVAL := 0.25
 const HAND_DISCARD_INTERVAL := 0.1 
 
 # Dependensi ke Node Hand (HBoxContainer) untuk merender kartu secara visual 
-@export var hand: Node 
+@export var inventory_data: InventoryData
+ 
+var hand: Node
 
 # Variabel untuk menampung data statistik dan tumpukan kartu 
 var character_stats: CharacterStats 
+var equipped_weapon: WeaponData
 var draw_pile: CardPile 
 var discard_pile: CardPile 
 
@@ -17,16 +20,29 @@ func _ready() -> void:
 	# PENTING: Daftarkan node ini ke group agar sistem efek kartu musuh
 	# bisa mendeteksinya sebagai target yang sah.
 	add_to_group("player")
+	_auto_equip_first_weapon()
 	Events.card_played.connect(_on_card_played)
 
 # Fungsi utama untuk memulai simulasi pertempuran 
 func start_battle(stats: CharacterStats) -> void:
 	character_stats = stats
 	
-	# Membuat deep copy dari dek awal agar perubahan di dalam battle tidak merusak dek asli 
-	draw_pile = character_stats.deck.duplicate(true) 
-	draw_pile.shuffle() # Mengocok tumpukan kartu di awal permainan 
+	if not hand:
+		push_error("Gagal start battle: Node Hand belum terdaftar di PlayerHandler!")
+		return
 	
+	if not equipped_weapon :
+		push_error("Gagal memulai battle: Player belum equip senjata")
+		if not equipped_weapon.weapon_deck :
+			push_error("Gagal memulai battle: senjata tidak memiliki deck!")
+			return
+	
+	draw_pile = equipped_weapon.weapon_deck.duplicate(true) as CardPile
+	
+	# Membuat deep copy dari dek awal agar perubahan di dalam battle tidak merusak dek asli 
+	#draw_pile = character_stats.deck.duplicate(true) 
+	
+	draw_pile.shuffle() # Mengocok tumpukan kartu di awal permainan 
 	# Menyiapkan tumpukan buangan yang masih kosong 
 	discard_pile = CardPile.new() 
 	
@@ -142,3 +158,21 @@ func reshuffle_deck_from_discard() -> void:
 		
 	# Kocok ulang tumpukan tarik yang baru agar urutannya acak kembali 
 	draw_pile.shuffle()
+
+# --- Weapon Equip
+
+func equip_weapon(weapon: WeaponData) -> void:
+	equipped_weapon = weapon
+	print("Player memasang senjata: ", weapon.name)
+
+func _auto_equip_first_weapon() -> void:
+	if inventory_data and inventory_data.slots.size() > 0:
+		for slot in inventory_data.slots:
+			if slot and slot.item_data is WeaponData:
+				equip_weapon(slot.item_data as WeaponData)
+				break
+
+func add_item_to_inventory(item: ItemData, quantity: int = 1) -> bool:
+	if inventory_data:
+		return inventory_data.add_item(item, quantity)
+	return false

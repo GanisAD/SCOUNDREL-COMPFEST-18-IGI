@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://be745maxwolpw"]
+
+[ext_resource type="Script" uid="uid://bq60yclouik42" path="res://Script/Inventory/Item/weapon_data.gd" id="1_l44e4"]
+[ext_resource type="Resource" uid="uid://b1yos4jtuc5mv" path="res://Data/Weapon/BareHand/bareDeck.tres" id="2_pm7e0"]
+
+[resource]
+script = ExtResource("1_l44e4")
+weapon_type = "Hand"
+base_damage_bonus = 3
+weapon_deck = ExtResource("2_pm7e0")
+id = "2"
+name = "Bare Hand"
+description = "It just your hand"
+metadata/_custom_type_script = "uid://bq60yclouik42"

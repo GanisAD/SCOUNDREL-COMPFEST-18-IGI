@@ -4,7 +4,7 @@ class_name Combat
 @export var character_stats: CharacterStats
 
 @onready var battle_ui: CanvasLayer = $BattleUI
-@onready var player_handler: PlayerHandler = $PlayerHandler
+#@onready var PlayerHandler: PlayerHandler = $PlayerHandler
 @onready var enemy_handler: EnemyHandler = $EnemyHandler # Pastikan referensi ini ada
 
 @onready var draw_pile_label: CardPileUI = $BattleUI/CardPileUI/DrawPileLabel
@@ -20,14 +20,14 @@ func _ready() -> void:
 	battle_stats.set_mana(battle_stats.max_mana)
 	battle_stats.stats_changed.connect(_on_player_stats_changed.bind(battle_stats))
 	
-	player_handler.start_battle(battle_stats)
+	PlayerHandler.start_battle(battle_stats)
 	
-	draw_pile_label.target_pile = player_handler.draw_pile
-	discard_pile_label.target_pile = player_handler.discard_pile
+	draw_pile_label.target_pile = PlayerHandler.draw_pile
+	discard_pile_label.target_pile = PlayerHandler.discard_pile
 	
 	# 2. RANTAI EVENT TURN MANAGER YANG BENAR
 	# a. Pemain selesai -> Player Handler buang kartu
-	Events.player_turn_ended.connect(player_handler.end_turn)
+	Events.player_turn_ended.connect(PlayerHandler.end_turn)
 	
 	# b. Kartu selesai dibuang -> Giliran Musuh Dimulai
 	Events.player_hand_discarded.connect(enemy_handler.start_enemy_turn)
@@ -52,7 +52,7 @@ func _start_player_turn() -> void:
 	battle_ui._on_player_turn_started()
 	
 	# 2. Player Reset Mana & Tarik Kartu
-	player_handler.start_turn()
+	PlayerHandler.start_turn()
 
 # --- WIN / LOSE STATE ---
 

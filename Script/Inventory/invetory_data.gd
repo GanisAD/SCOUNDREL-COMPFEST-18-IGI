@@ -17,12 +17,14 @@ func add_item(item: ItemData, quantity: int = 1) -> bool:
 
 	# 2. Jika tidak bisa di-stack/slot lama penuh, cari slot kosong pertama
 	for i in range(slots.size()):
-		if slots[i] == null:
-			var new_slot = SlotData.new()
-			new_slot.item_data = item
-			new_slot.quantity = quantity
-			slots[i] = new_slot
+		if slots[i] == null or slots[i].item_data == null:
+			if slots[i] == null:
+				slots[i] = SlotData.new()
+				
+			slots[i].item_data = item
+			slots[i].quantity = quantity
 			inventory_updated.emit(self)
+			print("Item baru berhasil ditambahkan: ", slots[i].item_data.name)
 			return true
 
 	return false # Inventory Penuh
