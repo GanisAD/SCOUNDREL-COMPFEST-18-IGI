@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bbjyes1c7yh74" path="res://Resources/Room/altar-diamond.png" id="4_pjeqn"]
 [ext_resource type="Script" uid="uid://ce80wgc1k54br" path="res://Script/Exploration/Room/altar.gd" id="4_qu8co"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_rloqt"]
+font_size = 64
+
 [node name="room" type="Control" unique_id=1270012249]
 layout_mode = 3
 anchors_preset = 3
@@ -51,3 +54,39 @@ theme_override_font_sizes/font_size = 73
 text = "Forfeit
 "
 script = ExtResource("2_6twpi")
+
+[node name="EventPanel" type="Panel" parent="." unique_id=1736617073]
+layout_mode = 0
+offset_left = -1535.0
+offset_top = 102.0
+offset_right = -284.0
+offset_bottom = 697.0
+
+[node name="PromptLabel" type="Label" parent="EventPanel" unique_id=1944255206]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 162.0
+offset_right = 1100.0
+offset_bottom = 250.0
+text = "Do you want to do this action ?"
+label_settings = SubResource("LabelSettings_rloqt")
+
+[node name="YesButton" type="Button" parent="EventPanel" unique_id=1200961008]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 395.0
+offset_right = 528.0
+offset_bottom = 476.0
+theme_override_font_sizes/font_size = 53
+text = "Yes
+"
+
+[node name="NoButton" type="Button" parent="EventPanel" unique_id=1534547217]
+layout_mode = 0
+offset_left = 709.0
+offset_top = 397.0
+offset_right = 1098.0
+offset_bottom = 478.0
+theme_override_font_sizes/font_size = 53
+text = "No
+"
