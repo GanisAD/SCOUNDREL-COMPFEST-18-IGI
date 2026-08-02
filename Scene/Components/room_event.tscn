@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/Room/bg.png" id="2_vek6d"]
 [ext_resource type="Texture2D" uid="uid://bbjyes1c7yh74" path="res://Resources/Room/altar-diamond.png" id="4_pjeqn"]
 [ext_resource type="Script" uid="uid://ce80wgc1k54br" path="res://Script/Exploration/Room/altar.gd" id="4_qu8co"]
+[ext_resource type="Script" uid="uid://b00hexssfi3fm" path="res://Script/UI/prompt_panel_ui.gd" id="6_u15md"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rloqt"]
 font_size = 64
@@ -55,14 +56,16 @@ text = "Forfeit
 "
 script = ExtResource("2_6twpi")
 
-[node name="EventPanel" type="Panel" parent="." unique_id=1736617073]
+[node name="PromptPanel" type="Panel" parent="." unique_id=1736617073]
 layout_mode = 0
-offset_left = -1535.0
-offset_top = 102.0
-offset_right = -284.0
-offset_bottom = 697.0
+offset_left = -1538.0
+offset_top = -840.0
+offset_right = -287.0
+offset_bottom = -245.0
+script = ExtResource("6_u15md")
 
-[node name="PromptLabel" type="Label" parent="EventPanel" unique_id=1944255206]
+[node name="PromptLabel" type="Label" parent="PromptPanel" unique_id=1944255206]
+custom_maximum_size = Vector2(1000, 250)
 layout_mode = 0
 offset_left = 148.0
 offset_top = 162.0
@@ -70,8 +73,10 @@ offset_right = 1100.0
 offset_bottom = 250.0
 text = "Do you want to do this action ?"
 label_settings = SubResource("LabelSettings_rloqt")
+horizontal_alignment = 1
+autowrap_mode = 2
 
-[node name="YesButton" type="Button" parent="EventPanel" unique_id=1200961008]
+[node name="YesButton" type="Button" parent="PromptPanel" unique_id=1200961008]
 layout_mode = 0
 offset_left = 139.0
 offset_top = 395.0
@@ -81,7 +86,7 @@ theme_override_font_sizes/font_size = 53
 text = "Yes
 "
 
-[node name="NoButton" type="Button" parent="EventPanel" unique_id=1534547217]
+[node name="NoButton" type="Button" parent="PromptPanel" unique_id=1534547217]
 layout_mode = 0
 offset_left = 709.0
 offset_top = 397.0
@@ -90,3 +95,6 @@ offset_bottom = 478.0
 theme_override_font_sizes/font_size = 53
 text = "No
 "
+
+[connection signal="pressed" from="PromptPanel/YesButton" to="PromptPanel" method="_on_btn_yes_pressed"]
+[connection signal="pressed" from="PromptPanel/NoButton" to="PromptPanel" method="_on_btn_no_pressed"]

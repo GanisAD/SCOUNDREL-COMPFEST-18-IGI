@@ -20,12 +20,14 @@ func _ready() -> void:
 	# PENTING: Daftarkan node ini ke group agar sistem efek kartu musuh
 	# bisa mendeteksinya sebagai target yang sah.
 	add_to_group("player")
-	_auto_equip_first_weapon()
 	Events.card_played.connect(_on_card_played)
 
 # Fungsi utama untuk memulai simulasi pertempuran 
 func start_battle(stats: CharacterStats) -> void:
+	
 	character_stats = stats
+	
+	equipped_weapon = get_equipped_weapon()
 	
 	if not hand:
 		push_error("Gagal start battle: Node Hand belum terdaftar di PlayerHandler!")
@@ -161,16 +163,10 @@ func reshuffle_deck_from_discard() -> void:
 
 # --- Weapon Equip
 
-func equip_weapon(weapon: WeaponData) -> void:
-	equipped_weapon = weapon
-	print("Player memasang senjata: ", weapon.name)
-
-func _auto_equip_first_weapon() -> void:
-	if inventory_data and inventory_data.slots.size() > 0:
-		for slot in inventory_data.slots:
-			if slot and slot.item_data is WeaponData:
-				equip_weapon(slot.item_data as WeaponData)
-				break
+func get_equipped_weapon() -> WeaponData:
+	if inventory_data:
+		return inventory_data.weapon_slot
+	return null
 
 func add_item_to_inventory(item: ItemData, quantity: int = 1) -> bool:
 	if inventory_data:
