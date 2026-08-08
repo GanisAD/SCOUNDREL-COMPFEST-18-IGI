@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b4i4ujg8mxuqk" path="res://Scene/Components/Door.tscn" id="1_huski"]
 [ext_resource type="Script" uid="uid://cepulgyterui0" path="res://Script/Exploration/dungeon_manager.gd" id="1_n3gve"]
 [ext_resource type="Script" uid="uid://d3v8x6t5ps4ms" path="res://Script/Exploration/elevator.gd" id="3_lsfxy"]
+[ext_resource type="Texture2D" uid="uid://cyq1g32wtxqsf" path="res://Resources/Door/door-bg.png" id="4_lsfxy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n3gve"]
 font_size = 49
@@ -12,10 +13,17 @@ script = ExtResource("1_n3gve")
 elevator = NodePath("Elevator")
 doors = [NodePath("HBoxContainer/Door"), NodePath("HBoxContainer/Door2"), NodePath("HBoxContainer/Door3"), NodePath("HBoxContainer/Door4")]
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1165598489]
+offset_top = 3.0
+offset_right = 1920.0
+offset_bottom = 1083.0
+texture = ExtResource("4_lsfxy")
+metadata/_edit_use_anchors_ = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=200171025]
 offset_left = 4.0
 offset_top = 401.0
-offset_right = 44.0
+offset_right = 1618.0
 offset_bottom = 441.0
 theme_override_constants/separation = 538
 

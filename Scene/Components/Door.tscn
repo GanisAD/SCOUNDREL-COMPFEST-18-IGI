@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b4i4ujg8mxuqk"]
 
-[ext_resource type="Texture2D" uid="uid://cpfim6w13pk16" path="res://Resources/Door/door.jpg" id="1_jddv1"]
 [ext_resource type="Script" uid="uid://clwsydhwm8ahp" path="res://Script/Exploration/door.gd" id="1_n0ia5"]
 [ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="2_q8uni"]
 [ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_wor5m"]
 [ext_resource type="Resource" uid="uid://q4y4jmlebogg" path="res://Data/Room/club.tres" id="3_dtdkr"]
 [ext_resource type="Resource" uid="uid://q08ausaafx2d" path="res://Data/Room/diamond.tres" id="4_ba50q"]
+[ext_resource type="Texture2D" uid="uid://cwg852pqbbfch" path="res://Resources/Door/door.png" id="5_q8uni"]
 
 [node name="Door" type="Control" unique_id=1355465168]
 layout_mode = 3
@@ -18,8 +18,8 @@ custom_minimum_size = Vector2(300, 400)
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 400.0
-texture = ExtResource("1_jddv1")
-expand_mode = 1
+texture = ExtResource("5_q8uni")
+expand_mode = 2
 
 [node name="IconFrame" type="TextureRect" parent="." unique_id=2110281948]
 layout_mode = 0
