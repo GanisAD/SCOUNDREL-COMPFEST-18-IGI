@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://b8o7qpf7f6xw4"]
+
+[ext_resource type="Script" uid="uid://bq60yclouik42" path="res://Script/Inventory/Item/weapon_data.gd" id="1_laa42"]
+[ext_resource type="Resource" uid="uid://o3vhb2j0n08v" path="res://Data/Weapon/GuardSword/guardDeck.tres" id="2_7tdgi"]
+
+[resource]
+script = ExtResource("1_laa42")
+weapon_deck = ExtResource("2_7tdgi")
+id = "1"
+name = "Guard Sword"
+description = "Sword that been commonly used by the guard of this dungeon. It still weight the fighting spirit from it's previous owner."
+metadata/_custom_type_script = "uid://bq60yclouik42"

@@ -27,7 +27,7 @@ var targets: Array[Area2D] = []
 @onready var card_state_machine: CardStateMachine = $CardStateMachine
 
 # Menambahkan variabel pembantu (opsional) yang sering diakses oleh state anak
-@onready var color: ColorRect = $CardFrame# Jika ada komponen visual warna untuk debug
+#@onready var color: TextureRect = $CardFrame# Jika ada komponen visual warna untuk debug
 @onready var state: Label = $StateLabel # Jika ada komponen visual text untuk debug
 
 func _ready() -> void:

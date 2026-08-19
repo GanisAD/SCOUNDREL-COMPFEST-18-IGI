@@ -4,7 +4,7 @@ extends CardState
 func enter() -> void:
 	# Perbarui info teks debug
 	card_ui.state.text = "CLICKED"
-	card_ui.color.color = Color.ORANGE
+	#card_ui.color.color = Color.ORANGE
 	
 	# Aktifkan monitoring Area2D kartu untuk mendeteksi DropArea di battlefield
 	card_ui.drop_point_detector.monitoring = true

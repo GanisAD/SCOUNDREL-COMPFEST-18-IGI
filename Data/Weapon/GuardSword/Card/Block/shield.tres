@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_1ej5k"]
 [ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Card/Effect/effect.gd" id="1_tn82o"]
 [ext_resource type="Script" uid="uid://dcfa41a3i6aty" path="res://Script/Card/Effect/blockEffect.gd" id="2_3ylqc"]
+[ext_resource type="Texture2D" uid="uid://b5o7y6dqdcyvy" path="res://Resources/Card/Icon/shield 2.png" id="3_3ylqc"]
 
 [sub_resource type="Resource" id="Resource_d54dn"]
 script = ExtResource("2_3ylqc")
@@ -13,6 +14,7 @@ metadata/_custom_type_script = "uid://dcfa41a3i6aty"
 script = ExtResource("1_1ej5k")
 name = "Shield"
 description = "it Defend you from the opponent attack"
+icon = ExtResource("3_3ylqc")
 type = 1
 target = 0
 effects = Array[ExtResource("1_tn82o")]([SubResource("Resource_d54dn")])

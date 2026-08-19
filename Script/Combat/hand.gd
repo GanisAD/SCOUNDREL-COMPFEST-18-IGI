@@ -11,6 +11,8 @@ func _ready() -> void:
 	Events.card_drag_started.connect(_on_card_drag_started)
 	Events.card_drag_ended.connect(_on_card_drag_ended)
 	
+	PlayerHandler.hand = self
+	
 	# Tetap pertahankan ini jika Anda menaruh kartu placeholder langsung di editor untuk testing
 	for child in get_children():
 		var card_ui := child as CardUI
@@ -70,3 +72,9 @@ func _on_card_drag_started(active_card: CardUI) -> void:
 func _on_card_drag_ended(_active_card: CardUI) -> void:
 	for card_ui in get_children():
 		card_ui.mouse_filter = Control.MOUSE_FILTER_STOP
+		
+
+func _exit_tree() -> void:
+	# Bersihkan referensi saat keluar dari Combat scene agar tidak leak
+	if PlayerHandler.hand == self:
+		PlayerHandler.hand = null

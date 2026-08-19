@@ -6,7 +6,7 @@ var played := false
 func enter() -> void:
 	played = false
 	card_ui.state.text = "RELEASED"
-	card_ui.color.color = Color.BROWN
+	#card_ui.color.color = Color.BROWN
 	
 	_evaluate_release.call_deferred()
 	
@@ -84,6 +84,7 @@ func _evaluate_release() -> void:
 	else:
 		# Jika melanggar aturan target (misal kartu single-target dilepas di area kosong),
 		# paksa kartu pulang kembali ke tangan pemain.
+		card_ui.reparent_requested.emit(card_ui)
 		_return_to_base()
 
 func _return_to_base() -> void:

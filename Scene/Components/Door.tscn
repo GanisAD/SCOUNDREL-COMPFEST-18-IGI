@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b4i4ujg8mxuqk"]
+
+[ext_resource type="Script" uid="uid://clwsydhwm8ahp" path="res://Script/Exploration/door.gd" id="1_n0ia5"]
+[ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="2_q8uni"]
+[ext_resource type="Texture2D" uid="uid://40im08ubt0ik" path="res://icon.svg" id="2_wor5m"]
+[ext_resource type="Resource" uid="uid://q4y4jmlebogg" path="res://Data/Room/club.tres" id="3_dtdkr"]
+[ext_resource type="Resource" uid="uid://q08ausaafx2d" path="res://Data/Room/diamond.tres" id="4_ba50q"]
+[ext_resource type="Texture2D" uid="uid://cwg852pqbbfch" path="res://Resources/Door/door.png" id="5_q8uni"]
+
+[node name="Door" type="Control" unique_id=1355465168]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_n0ia5")
+possible_rooms = Array[ExtResource("2_q8uni")]([ExtResource("3_dtdkr"), ExtResource("4_ba50q")])
+
+[node name="DoorFrame" type="TextureRect" parent="." unique_id=1509663597]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 400.0
+texture = ExtResource("5_q8uni")
+expand_mode = 2
+
+[node name="IconFrame" type="TextureRect" parent="." unique_id=2110281948]
+layout_mode = 0
+offset_left = 111.0
+offset_top = -27.0
+offset_right = 188.0
+offset_bottom = 50.0
+texture = ExtResource("2_wor5m")
+expand_mode = 1

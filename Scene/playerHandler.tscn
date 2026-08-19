@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cirj7q3jgxcu2"]
+
+[ext_resource type="Script" uid="uid://cj3gsfx5rbgnt" path="res://Script/Combat/playerHandler.gd" id="1_xi01m"]
+[ext_resource type="Resource" uid="uid://bb1e7t4tipvg7" path="res://Data/Stats/Player/playerInventory.tres" id="2_eadph"]
+
+[node name="PlayerHandler" type="Node" unique_id=1088079974]
+script = ExtResource("1_xi01m")
+inventory_data = ExtResource("2_eadph")
