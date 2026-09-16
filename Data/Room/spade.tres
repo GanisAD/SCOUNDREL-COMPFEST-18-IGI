@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RoomData" format=3 uid="uid://cr3mpd5fo4uc4"]
+
+[ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="1_ggl66"]
+
+[resource]
+script = ExtResource("1_ggl66")
+metadata/_custom_type_script = "uid://dyf4igi785lr7"

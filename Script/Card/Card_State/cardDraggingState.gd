@@ -12,7 +12,7 @@ func enter() -> void:
 		card_ui.reparent(ui_layer)
 		
 	card_ui.state.text = "DRAGGING"
-	card_ui.color.color = Color.MEDIUM_PURPLE
+	#card_ui.color.color = Color.MEDIUM_PURPLE
 	
 	# Keamanan Input: Gunakan SceneTree Timer dengan flag false (agar berhenti saat game dipause)
 	minimum_drag_time_elapsed = false

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RoomData" format=3 uid="uid://q4y4jmlebogg"]
+
+[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="1_xtdmi"]
+[ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="2_j8hut"]
+
+[resource]
+script = ExtResource("2_j8hut")
+room_name = "Skeleton Room"
+description = "Room that have been infested by monster card"
+possible_monster_encounters = Array[Resource]([ExtResource("1_xtdmi")])
+metadata/_custom_type_script = "uid://dyf4igi785lr7"

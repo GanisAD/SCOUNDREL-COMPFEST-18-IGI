@@ -11,7 +11,7 @@ metadata/_custom_type_script = "uid://ccso1xnryn254"
 
 [resource]
 script = ExtResource("1_7o8pk")
-name = "Slahs"
+name = "Slash"
 description = "It slays it's opponent"
 effects = Array[ExtResource("1_fn2i3")]([SubResource("Resource_ce4ot")])
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

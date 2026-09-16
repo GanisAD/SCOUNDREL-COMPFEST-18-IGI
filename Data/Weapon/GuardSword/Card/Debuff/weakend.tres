@@ -11,7 +11,7 @@ metadata/_custom_type_script = "uid://cpqos0xsa5squ"
 [resource]
 script = ExtResource("1_yrf86")
 name = "Weakend"
-description = "It weaks your opponent, susciptable more to attacks"
+description = "It weaks your opponent, making them deal less damages"
 type = 1
 effects = Array[ExtResource("1_4wq61")]([SubResource("Resource_d54dn")])
 metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

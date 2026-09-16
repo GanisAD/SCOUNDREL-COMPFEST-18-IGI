@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomData" format=3 uid="uid://q08ausaafx2d"]
+
+[ext_resource type="Resource" uid="uid://b8o7qpf7f6xw4" path="res://Data/Weapon/GuardSword/guard_sword.tres" id="1_cw7tu"]
+[ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="1_knyec"]
+
+[resource]
+script = ExtResource("1_knyec")
+room_name = "Weapon Room"
+room_type = 0
+description = "room with weapon card"
+possible_item_pool = Array[Resource]([ExtResource("1_cw7tu")])
+metadata/_custom_type_script = "uid://dyf4igi785lr7"
