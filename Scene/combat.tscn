@@ -9,7 +9,9 @@
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
 [ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="6_mmg4p"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy/Skeleton.tscn" id="7_kgncc"]
+[ext_resource type="Texture2D" uid="uid://gt74ft4pohgp" path="res://Resources/UI/healthbar-empty.png" id="8_1blk7"]
 [ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
+[ext_resource type="Texture2D" uid="uid://cd4lrfvpkalfr" path="res://Resources/UI/healthbar-full.png" id="9_dr6gs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(1928, 748)
@@ -57,20 +59,24 @@ text = "Turn"
 label_settings = SubResource("LabelSettings_145ap")
 
 [node name="PlayerStatsUI" type="Panel" parent="BattleUI" unique_id=1139493257]
-offset_left = 21.0
-offset_top = 34.0
-offset_right = 277.0
-offset_bottom = 111.0
+offset_right = 256.0
+offset_bottom = 77.0
 script = ExtResource("6_70aft")
 
-[node name="HPLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=330469658]
+[node name="HPBar" type="TextureProgressBar" parent="BattleUI/PlayerStatsUI" unique_id=1328837348]
 layout_mode = 0
 offset_left = 3.0
 offset_top = -2.0
-offset_right = 85.0
-offset_bottom = 40.0
-text = "Hp : 0"
-label_settings = SubResource("LabelSettings_2rx4k")
+offset_right = 534.0
+offset_bottom = 417.0
+value = 99.0
+rounded = true
+fill_mode = 5
+radial_initial_angle = 244.2
+radial_fill_degrees = 179.1
+radial_center_offset = Vector2(-211.24, -157.56)
+texture_under = ExtResource("8_1blk7")
+texture_progress = ExtResource("9_dr6gs")
 
 [node name="BlockLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=1878832758]
 layout_mode = 0
