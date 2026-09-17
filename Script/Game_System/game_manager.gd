@@ -7,7 +7,13 @@ var player_hp: int = 100
 var max_hp: int = 100
 var player_gold: int = 0
 
+
+# --- DATA PINTU YANG AKTIF ---
+
+var active_doors_data: Array[RoomData] = []
+
 # --- DATA RUANGAN AKTIF ---
+
 var current_room_data: RoomData = null
 
 
@@ -16,6 +22,7 @@ var current_room_data: RoomData = null
 ## Dipanggil saat memulai permainan/run baru dari awal
 func start_new_run() -> void:
 	current_floor = 1
+	active_doors_data.clear()
 	player_hp = max_hp
 	player_gold = 0
 	current_room_data = null

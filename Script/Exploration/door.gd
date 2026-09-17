@@ -6,8 +6,8 @@ signal door_selected(room_data: RoomData)
 
 enum State { LOCKED, AVAILABLE, DISABLED }
 
-@export var icon_display: TextureRect
 @export var possible_rooms: Array[RoomData] = []
+@onready var icon_frame : TextureRect = $IconFrame
 
 var current_state: State = State.AVAILABLE
 var assigned_room_data: RoomData
@@ -18,14 +18,19 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
 	
-	generate_random_room()
+	# generate_random_room()
 
-func generate_random_room() -> void:
+func set_room_data(data: RoomData) -> void:
+	assigned_room_data = data
+	update_visual()
+
+func generate_random_room() -> RoomData:
 	if possible_rooms.is_empty():
 		return
+	
 	assigned_room_data = possible_rooms.pick_random()
-	if icon_display and assigned_room_data:
-		icon_display.texture = assigned_room_data.room_icon
+	update_visual()
+	return assigned_room_data;
 
 func set_door_state(new_state: State) -> void:
 	current_state = new_state
@@ -46,11 +51,15 @@ func _on_mouse_exited() -> void:
 	if current_state == State.AVAILABLE:
 		create_tween().tween_property(self, "scale", Vector2.ONE, 0.1)
 
+
+func update_visual() -> void:
+	if icon_frame and assigned_room_data:
+		icon_frame.texture = assigned_room_data.room_icon
+
 func _on_gui_input(event: InputEvent) -> void:
 	if current_state != State.AVAILABLE:
 		return
 		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		set_door_state(State.DISABLED)
-		# Panggil GameManager untuk langsung pindah scene sesuai RoomData pintu ini
-		GameManager.enter_room(assigned_room_data)
+		door_selected.emit(assigned_room_data)
