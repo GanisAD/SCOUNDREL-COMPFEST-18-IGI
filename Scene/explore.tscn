@@ -13,19 +13,11 @@ elevator = NodePath("Elevator")
 doors = [NodePath("HBoxContainer/Door"), NodePath("HBoxContainer/Door2"), NodePath("HBoxContainer/Door3"), NodePath("HBoxContainer/Door4")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=200171025]
-<<<<<<< Updated upstream
-offset_left = 4.0
-offset_top = 401.0
-offset_right = 44.0
-offset_bottom = 441.0
-theme_override_constants/separation = 538
-=======
 offset_left = 64.0
 offset_top = 407.0
 offset_right = 1979.0
 offset_bottom = 447.0
 theme_override_constants/separation = 466
->>>>>>> Stashed changes
 
 [node name="Door" parent="HBoxContainer" unique_id=1355465168 instance=ExtResource("1_huski")]
 layout_mode = 2
