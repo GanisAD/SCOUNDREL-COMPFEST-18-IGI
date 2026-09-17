@@ -11,7 +11,7 @@ var current_room_data: RoomData
 func _ready() -> void:
 	# Ambil data ruangan yang disimpan di GameManager
 	var active_room = GameManager.current_room_data
-	
+
 	if forfeit:
 		forfeit.forfeit_used.connect(_on_forfeit_used)
 	
@@ -24,6 +24,8 @@ func _ready() -> void:
 func setup_room(room_data: RoomData) -> void:
 	current_room_data = room_data
 	
+	altar.texture = current_room_data.room_altar
+
 	# Memicu logika acak isi ruangan berdasarkan tipe ruangan
 	if not altar:
 		return
@@ -73,6 +75,7 @@ func handle_monster_room() -> void:
 func handle_tradeoff_room() -> void:
 	# Fitur sekunder (Spade)
 	pass
+
 
 func _on_forfeit_used() -> void:
 	GameManager.return_to_dungeon_overworld()

@@ -2,12 +2,14 @@
 
 [ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="1_xtdmi"]
 [ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="2_j8hut"]
+[ext_resource type="Texture2D" uid="uid://dijwl7dm8pjar" path="res://Resources/Room/altar-clover.png" id="2_lgjpo"]
 [ext_resource type="Texture2D" uid="uid://hngv2s1a5g6y" path="res://Resources/Door/Clover .png" id="2_miv7p"]
 
 [resource]
 script = ExtResource("2_j8hut")
 room_name = "Skeleton Room"
 room_icon = ExtResource("2_miv7p")
+room_altar = ExtResource("2_lgjpo")
 description = "Room that have been infested by monster card"
 possible_monster_encounters = Array[Resource]([ExtResource("1_xtdmi")])
 metadata/_custom_type_script = "uid://dyf4igi785lr7"

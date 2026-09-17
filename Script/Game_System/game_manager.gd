@@ -11,6 +11,7 @@ var player_gold: int = 0
 # --- DATA PINTU YANG AKTIF ---
 
 var active_doors_data: Array[RoomData] = []
+var active_doors_states: Array[Door.State] = []
 
 # --- DATA RUANGAN AKTIF ---
 
@@ -29,20 +30,16 @@ func start_new_run() -> void:
 	print("New Run Started!")
 
 ## Menyimpan data ruangan terpilih dan berpindah ke scene tujuan
-func enter_room(room_data: RoomData) -> void:
+func enter_room(room_data: RoomData, door_index: int = -1) -> void:
 	current_room_data = room_data
+	
+	if door_index >= 0 and door_index < active_doors_states.size():
+		active_doors_states[door_index] = Door.State.DISABLED
 	
 	if current_room_data == null:
 		push_warning("GameManager: Enter room dipanggil tanpa RoomData!")
 		return
 		
-	# Tentukan pindah scene berdasarkan tipe ruangan
-	#match current_room_data.room_type:
-		#RoomType.Type.CLUB:
-			## Berpindah ke scene pertarungan utama
-			#get_tree().change_scene_to_file("res://Scene/combat.tscn")
-		#_:
-	# Tipe ruangan lain (Diamond, Heart, Spade) ke scene event/loot
 	get_tree().change_scene_to_file("res://Scene/Components/room_event.tscn")
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu

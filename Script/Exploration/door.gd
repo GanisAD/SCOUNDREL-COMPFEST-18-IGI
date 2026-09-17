@@ -2,7 +2,7 @@
 class_name Door
 extends Control
 
-signal door_selected(room_data: RoomData)
+signal door_selected(room_data: RoomData, index: int)
 
 enum State { LOCKED, AVAILABLE, DISABLED }
 
@@ -11,6 +11,7 @@ enum State { LOCKED, AVAILABLE, DISABLED }
 
 var current_state: State = State.AVAILABLE
 var assigned_room_data: RoomData
+var door_index: int = 0
 
 func _ready() -> void:
 	# Hubungkan sinyal mouse bawaan Control
@@ -36,11 +37,15 @@ func set_door_state(new_state: State) -> void:
 	current_state = new_state
 	match current_state:
 		State.LOCKED:
-			modulate = Color(0.4, 0.4, 0.4) # Visual redup/terkunci
+			mouse_filter = Control.MOUSE_FILTER_STOP
+			modulate = Color(0.4, 0.4, 0.4)
 		State.AVAILABLE:
 			modulate = Color.WHITE
+			mouse_filter = Control.MOUSE_FILTER_STOP
 		State.DISABLED:
-			modulate = Color(0.2, 0.2, 0.2)
+			modulate = Color(0.3, 0.3, 0.3)
+			mouse_filter = Control.MOUSE_FILTER_IGNORE
+			scale = Vector2.ONE
 
 func _on_mouse_entered() -> void:
 	if current_state == State.AVAILABLE:
@@ -62,4 +67,4 @@ func _on_gui_input(event: InputEvent) -> void:
 		
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		set_door_state(State.DISABLED)
-		door_selected.emit(assigned_room_data)
+		door_selected.emit(assigned_room_data, door_index)

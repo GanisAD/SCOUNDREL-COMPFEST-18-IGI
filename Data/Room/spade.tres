@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="RoomData" format=3 uid="uid://cr3mpd5fo4uc4"]
 
 [ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="1_ggl66"]
-[ext_resource type="Texture2D" uid="uid://hngv2s1a5g6y" path="res://Resources/Door/Clover .png" id="1_v34e2"]
+[ext_resource type="Texture2D" uid="uid://b71d0qgwps8lw" path="res://Resources/Room/altar-spade.png" id="1_we18r"]
+[ext_resource type="Texture2D" uid="uid://so46dhwjig6c" path="res://Resources/Door/Spade.png" id="2_g62la"]
 
 [resource]
 script = ExtResource("1_ggl66")
-room_icon = ExtResource("1_v34e2")
+room_icon = ExtResource("2_g62la")
+room_altar = ExtResource("1_we18r")
 metadata/_custom_type_script = "uid://dyf4igi785lr7"

@@ -5,6 +5,7 @@ extends Resource
 @export var room_name: String = "Ruangan Tanpa Nama"
 @export var room_type: RoomType.Type = RoomType.Type.CLUB
 @export var room_icon: Texture2D # Icon visual kartu/symbol (Diamonds/Hearts/Clubs/Spades)
+@export var room_altar: Texture2D
 @export_multiline var description: String = ""
 
 @export_group("Loot & Encounter Table")
