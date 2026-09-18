@@ -172,3 +172,21 @@ func add_item_to_inventory(item: ItemData, quantity: int = 1) -> bool:
 	if inventory_data:
 		return inventory_data.add_item(item, quantity)
 	return false
+
+func is_item_duplicate(item: ItemData) -> bool:
+	if not inventory_data:
+		return false
+		
+	# 1. Pengecekan khusus untuk Senjata (WeaponData)
+	if item is WeaponData:
+		if inventory_data.weapon_slot:
+			# Bandingkan berdasarkan referensi Resource atau nama uniknya
+			return inventory_data.weapon_slot == item or inventory_data.weapon_slot.name == item.name
+		return false
+
+	# 2. Pengecekan untuk Potion (jika tidak boleh ada jenis ramuan yang sama)
+	for slot in inventory_data.potion_slots:
+		if slot and (slot == item or slot.name == item.name):
+			return true
+
+	return false

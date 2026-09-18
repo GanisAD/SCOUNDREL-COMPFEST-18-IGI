@@ -12,15 +12,19 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 	gui_input.connect(_on_gui_input)
 
-func set_door_state(new_state: State) -> void:
+func set_altar_state(new_state: State) -> void:
 	current_state = new_state
 	match current_state:
 		State.LOCKED:
-			modulate = Color(0.4, 0.4, 0.4) # Visual redup/terkunci
+			modulate = Color(0.4, 0.4, 0.4)
+			mouse_filter = Control.MOUSE_FILTER_STOP
 		State.AVAILABLE:
 			modulate = Color.WHITE
+			mouse_filter = Control.MOUSE_FILTER_STOP
 		State.DISABLED:
 			modulate = Color(0.2, 0.2, 0.2)
+			mouse_filter = Control.MOUSE_FILTER_IGNORE
+			scale = Vector2.ONE # Kembalikan ukuran jika sedang di-hover
 
 func _on_mouse_entered() -> void:
 	if current_state == State.AVAILABLE:
