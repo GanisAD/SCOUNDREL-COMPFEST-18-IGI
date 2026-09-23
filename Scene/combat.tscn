@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bvyfktp4ncskk" path="res://Script/Combat/combat.gd" id="1_2bktl"]
 [ext_resource type="Script" uid="uid://c6lkr7jqlr6dh" path="res://Script/Combat/hand.gd" id="1_6nktc"]
 [ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
+[ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/Room/bg.png" id="3_d54dn"]
 [ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/UI/battle_ui.gd" id="4_miqix"]
 [ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
 [ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
@@ -29,11 +30,16 @@ font_size = 19
 script = ExtResource("1_2bktl")
 character_stats = ExtResource("2_xmftx")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1397372145]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_d54dn")
+
 [node name="EnemyHandler" type="Node" parent="." unique_id=1334140955]
 script = ExtResource("5_70aft")
 
 [node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
-position = Vector2(946, 511)
+position = Vector2(949, 475)
 stats = ExtResource("6_mmg4p")
 
 [node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
