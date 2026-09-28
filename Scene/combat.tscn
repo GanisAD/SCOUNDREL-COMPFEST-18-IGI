@@ -18,7 +18,7 @@
 size = Vector2(1928, 748)
 
 [sub_resource type="LabelSettings" id="LabelSettings_145ap"]
-font_size = 7
+font_size = 89
 
 [sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
 font_size = 30
@@ -57,16 +57,16 @@ script = ExtResource("4_miqix")
 
 [node name="TurnLabel" type="Label" parent="BattleUI" unique_id=904510305]
 visible = false
-offset_left = 31.0
-offset_top = 42.0
-offset_right = 47.0
-offset_bottom = 53.0
+offset_left = 67.0
+offset_top = 465.0
+offset_right = 83.0
+offset_bottom = 476.0
 text = "Turn"
 label_settings = SubResource("LabelSettings_145ap")
 
 [node name="PlayerStatsUI" type="Panel" parent="BattleUI" unique_id=1139493257]
 offset_right = 256.0
-offset_bottom = 77.0
+offset_bottom = 125.0
 script = ExtResource("6_70aft")
 
 [node name="HPBar" type="TextureProgressBar" parent="BattleUI/PlayerStatsUI" unique_id=1328837348]
@@ -91,6 +91,15 @@ offset_top = 31.0
 offset_right = 125.0
 offset_bottom = 73.0
 text = "Block : 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="ManaLabel" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=1878832799]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 75.0
+offset_right = 180.0
+offset_bottom = 117.0
+text = "Mana: 3 / 3"
 label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
