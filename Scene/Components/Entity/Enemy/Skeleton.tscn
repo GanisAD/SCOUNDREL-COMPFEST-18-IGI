@@ -146,5 +146,5 @@ intent = ExtResource("10_m4gqk")
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
-min_hp_percentage = 0.5
+min_hp_percentage = 50.0
 intent = ExtResource("12_w2qd8")

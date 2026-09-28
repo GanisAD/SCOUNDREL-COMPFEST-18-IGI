@@ -14,8 +14,9 @@ func is_performable() -> bool:
 	if not enemy or not enemy.stats or already_used:
 		return false
 		
-	# Perbaikan Bug Rumus: Bagi 100.0 agar menjadi faktor desimal (misal 50% -> 0.5)
-	var health_threshold = enemy.stats.max_health * (min_hp_percentage / 100.0)
+	# Perbaikan Bug Rumus: Jika nilai > 1.0 anggap 1-100%, jika <= 1.0 anggap sudah desimal 0.0-1.0
+	var factor: float = (min_hp_percentage / 100.0) if min_hp_percentage > 1.0 else min_hp_percentage
+	var health_threshold = enemy.stats.max_health * factor
 	return enemy.stats.health <= health_threshold
 
 # 2. Orkestrasi Buff

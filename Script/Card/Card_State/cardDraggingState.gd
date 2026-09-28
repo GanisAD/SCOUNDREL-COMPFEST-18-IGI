@@ -14,11 +14,16 @@ func enter() -> void:
 	card_ui.state.text = "DRAGGING"
 	#card_ui.color.color = Color.MEDIUM_PURPLE
 	
+	Events.card_drag_started.emit(card_ui)
+	
 	# Keamanan Input: Gunakan SceneTree Timer dengan flag false (agar berhenti saat game dipause)
 	minimum_drag_time_elapsed = false
 	get_tree().create_timer(DRAG_MINIMUM_THRESHOLD, false).timeout.connect(
 		func(): minimum_drag_time_elapsed = true
 	)
+
+func exit() -> void:
+	Events.card_drag_ended.emit(card_ui)
 
 # DI DALAM card_dragging_state.gd
 func on_input(event: InputEvent) -> void:
@@ -28,6 +33,7 @@ func on_input(event: InputEvent) -> void:
 		
 	# 2. Deteksi Batal (Klik Kanan)
 	if event.is_action_pressed("right_click"):
+		card_ui.reparent_requested.emit(card_ui)
 		transition_requested.emit(self.state, CardState.State.BASE)
 		
 	# 3. Deteksi Lepas Klik Kiri

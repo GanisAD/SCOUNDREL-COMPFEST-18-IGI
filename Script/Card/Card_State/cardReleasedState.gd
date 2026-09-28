@@ -18,6 +18,21 @@ func _evaluate_release() -> void:
 		_return_to_base()
 		return
 		
+	var player_node = get_tree().get_first_node_in_group("player")
+	var player_stats: CharacterStats = null
+	if player_node:
+		if "character_stats" in player_node:
+			player_stats = player_node.character_stats
+		elif "stats" in player_node:
+			player_stats = player_node.stats
+
+	# Cek apakah pemain memiliki cukup Mana untuk memainkan kartu ini
+	if player_stats and player_stats.mana < card_data.cost:
+		print("Mana tidak cukup untuk memainkan kartu: ", card_data.name)
+		card_ui.reparent_requested.emit(card_ui)
+		_return_to_base()
+		return
+		
 	# 2. Siapkan penampung hasil validasi
 	var is_valid_play := false
 	var final_targets: Array[Node] = []
@@ -28,8 +43,7 @@ func _evaluate_release() -> void:
 			# Kartu buff/defend diri sendiri sah jika dilepas di area drop umum layar
 			if _is_dropped_in_area("CardDropArea"):
 				is_valid_play = true
-				var player = get_tree().get_first_node_in_group("player")
-				if player: final_targets.append(player)
+				if player_node: final_targets.append(player_node)
 				
 		Card.Target.SINGLE_ENEMY:
 			# Harus mengenai spesifik node musuh yang valid (bukan area kosong)
@@ -50,8 +64,7 @@ func _evaluate_release() -> void:
 			# Sah jika di area drop umum, menarik player DAN semua musuh
 			if _is_dropped_in_area("CardDropArea"):
 				is_valid_play = true
-				var player = get_tree().get_first_node_in_group("player")
-				if player: final_targets.append(player)
+				if player_node: final_targets.append(player_node)
 				var active_enemies = get_tree().get_nodes_in_group("enemies")
 				for enemy in active_enemies:
 					final_targets.append(enemy)
@@ -60,8 +73,12 @@ func _evaluate_release() -> void:
 	if is_valid_play:
 		played = true
 		
+		# Kurangi Mana pemain sesuai cost kartu
+		if player_stats:
+			player_stats.mana -= card_data.cost
+			Events.player_mana_changed.emit(player_stats.mana)
+		
 		# Jalankan efek logic mekanik kartu (Data-Driven)
-		var player_node = get_tree().get_first_node_in_group("player")
 		card_data.apply_effects(final_targets, player_node)
 		
 		Events.card_played.emit(card_data)
