@@ -55,9 +55,9 @@ func _on_stats_changed() -> void:
 	if stats_ui and stats:
 		stats_ui.update_hud()
 	
-	# [TAMBAHAN] Reactive Intent: Cek ulang AI jika HP berkurang, 
-	# siapa tahu memicu Conditional Action (seperti Mega Block) secara real-time!
-	update_intent()
+	# Perbarui tampilan angka intent (misal jika damage berubah karena buff/debuff),
+	# TANPA mengacak ulang aksi yang telah direncanakan untuk giliran ini!
+	update_intent_display()
 
 # --- VISUAL & ANIMATION INTERFACES ---
 
@@ -133,8 +133,7 @@ func play_block_animation() -> void:
 # [TAMBAHAN] Setter untuk mendeteksi perubahan aksi dan memperbarui UI Intent
 func _set_current_action(value: EnemyAction) -> void:
 	current_action = value
-	if intent_ui and current_action:
-		intent_ui.update_intent(current_action.intent)
+	update_intent_display()
 
 # --- DETEKSI HOVER PENARGETAN KARTU (AIMING) ---
 
@@ -219,13 +218,41 @@ func do_turn() -> void:
 			break
 	
 	# --- PEMBERSIHAN ---
+	current_action = null
 	if intent_ui:
 		intent_ui.hide()
 
-# [MODIFIKASI] Dipanggil di awal giliran Player (atau saat HP musuh berubah)
+# [MODIFIKASI] Dipanggil di awal giliran Player untuk merencanakan aksi musuh pada giliran ini
 func update_intent() -> void:
+	_connect_player_stats()
 	if enemy_action_picker:
 		# Minta picker memilih aksi berdasarkan logika prioritas/peluang
 		current_action = enemy_action_picker.get_action()
-		if intent_ui and current_action:
-			intent_ui.show()
+		update_intent_display()
+
+# Memperbarui tampilan Intent UI berdasarkan current_action saat ini tanpa memilih ulang aksi
+func update_intent_display() -> void:
+	if intent_ui and current_action:
+		intent_ui.update_intent(current_action, self)
+	elif intent_ui:
+		intent_ui.hide()
+
+func _get_player_node() -> Node:
+	if not is_inside_tree():
+		return null
+	var players = get_tree().get_nodes_in_group("player")
+	return players[0] if not players.is_empty() else null
+
+func _connect_player_stats() -> void:
+	var player = _get_player_node()
+	if player and "character_stats" in player and player.character_stats:
+		if not player.character_stats.stats_changed.is_connected(update_intent_display):
+			player.character_stats.stats_changed.connect(update_intent_display)
+
+func _exit_tree() -> void:
+	var player = _get_player_node()
+	if player and "character_stats" in player and player.character_stats:
+		if player.character_stats.stats_changed.is_connected(update_intent_display):
+			player.character_stats.stats_changed.disconnect(update_intent_display)
+
+

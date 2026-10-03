@@ -108,7 +108,9 @@ expand_mode = 1
 
 [node name="Number" type="Label" parent="IntentUI" unique_id=647259547]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "6"
+vertical_alignment = 1
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
 offset_left = 213.0

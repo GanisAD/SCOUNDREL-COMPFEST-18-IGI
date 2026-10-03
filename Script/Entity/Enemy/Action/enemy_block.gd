@@ -4,6 +4,9 @@ extends EnemyAction
 
 @export var block_amount: int = 5
 
+func get_intent_value(_enemy: Enemy = null) -> String:
+	return str(block_amount)
+
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
 	# 1. Aturan Gameplay: Tambahkan nilai block ke stats musuh
 	enemy.add_block(block_amount)
