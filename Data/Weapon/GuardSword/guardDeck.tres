@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_kpbvr"]
 [ext_resource type="Resource" uid="uid://kj5sgo5bo0dn" path="res://Data/Weapon/GuardSword/Card/Attack/slash.tres" id="2_55cqg"]
-[ext_resource type="Script" uid="uid://biv3qhf8i5vce" path="res://Script/pile/cardPile.gd" id="2_xqmuu"]
+[ext_resource type="Script" uid="uid://biv3qhf8i5vce" path="res://Script/Card/pile/cardPile.gd" id="2_xqmuu"]
 [ext_resource type="Resource" uid="uid://dew0c8a6mltws" path="res://Data/Weapon/GuardSword/Card/Block/shield.tres" id="3_qxhap"]
 [ext_resource type="Resource" uid="uid://yklxp2bw7yh8" path="res://Data/Weapon/GuardSword/Card/Buff/strenght.tres" id="4_wxkb2"]
 [ext_resource type="Resource" uid="uid://bofqu3145g3kp" path="res://Data/Weapon/GuardSword/Card/Debuff/weakend.tres" id="5_1qhi2"]

@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bjr50a7ubx25a" path="res://Script/Card/Card_State/cardReleasedState.gd" id="7_twrih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_van61"]
-size = Vector2(15.3761425, 21.247715)
+size = Vector2(253.00002, 345)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ee0gf"]
 font_size = 20
@@ -39,8 +39,7 @@ collision_mask = 6
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointDetector" unique_id=1400804419]
-position = Vector2(76, 99.00001)
-scale = Vector2(8.073766, 8.073766)
+position = Vector2(146, 200)
 shape = SubResource("RectangleShape2D_van61")
 
 [node name="CardFrame" type="TextureRect" parent="." unique_id=11258415]

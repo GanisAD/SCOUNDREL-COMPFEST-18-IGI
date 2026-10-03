@@ -1,16 +1,16 @@
 class_name StatsUI
 extends Control
 
-# Poin Krusial: Gunakan base class 'Stats' agar bisa menerima Player (CharacterStats) 
-# maupun Enemy (EnemyStats) secara universal.
 var stats: Stats : set = set_stats
 
-# Referensi node dibuat lokal/relatif terhadap komponen ini sendiri
-@onready var hp_label: Label = $HPLabel
+@onready var hp_bar: TextureProgressBar = $HPBar
 @onready var block_label: Label = $BlockLabel
 
+func _ready() -> void:
+	# Memastikan UI diperbarui begitu node siap di Scene Tree
+	update_hud()
+
 func set_stats(value: Stats) -> void:
-	# Pengaman: Jika ganti stats di tengah jalan, putus koneksi lama agar tidak leak memori
 	if stats and stats.stats_changed.is_connected(update_hud):
 		stats.stats_changed.disconnect(update_hud)
 		
@@ -21,13 +21,13 @@ func set_stats(value: Stats) -> void:
 			stats.stats_changed.connect(update_hud)
 		update_hud()
 
-# Fungsi render generik yang tidak peduli ini milik player atau musuh
 func update_hud() -> void:
-	if not stats or not is_inside_tree(): 
+	# Jika node belum _ready atau stats kosong, hentikan fungsi agar tidak crash
+	if not stats or not is_node_ready(): 
 		return
 	
-	# Mengambil data langsung dari resource yang di-inject
-	hp_label.text = "HP: %d/%d" % [stats.health, stats.max_health]
+	hp_bar.max_value = stats.max_health
+	hp_bar.value = stats.health
 	
 	if stats.block > 0:
 		block_label.text = "Block: %d" % stats.block

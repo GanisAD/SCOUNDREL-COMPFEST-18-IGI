@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="InventoryData" format=3 uid="uid://bb1e7t4tipvg7"]
+
+[ext_resource type="Script" uid="uid://d34gg6su0m7nc" path="res://Script/Inventory/invetory_data.gd" id="1_mgplt"]
+[ext_resource type="Script" uid="uid://bqb0lvm81tlkn" path="res://Script/Inventory/slota_data.gd" id="2_kb2rv"]
+[ext_resource type="Resource" uid="uid://be745maxwolpw" path="res://Data/Weapon/BareHand/bare_hand.tres" id="3_kb2rv"]
+
+[sub_resource type="Resource" id="Resource_mgplt"]
+script = ExtResource("2_kb2rv")
+metadata/_custom_type_script = "uid://bqb0lvm81tlkn"
+
+[resource]
+script = ExtResource("1_mgplt")
+weapon_slot = ExtResource("3_kb2rv")
+potion_slots = Array[ExtResource("2_kb2rv")]([SubResource("Resource_mgplt")])
+metadata/_custom_type_script = "uid://d34gg6su0m7nc"

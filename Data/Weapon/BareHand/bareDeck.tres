@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardPile" format=3 uid="uid://b1yos4jtuc5mv"]
+
+[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_747p0"]
+[ext_resource type="Script" uid="uid://biv3qhf8i5vce" path="res://Script/Card/pile/cardPile.gd" id="2_3km3v"]
+[ext_resource type="Resource" uid="uid://ctneuybpkxc0y" path="res://Data/Weapon/BareHand/Card/barePunch.tres" id="2_v5nko"]
+
+[resource]
+script = ExtResource("2_3km3v")
+cards = Array[ExtResource("1_747p0")]([ExtResource("2_v5nko")])
+metadata/_custom_type_script = "uid://biv3qhf8i5vce"
