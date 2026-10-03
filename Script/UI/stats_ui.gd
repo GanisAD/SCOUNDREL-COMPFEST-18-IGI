@@ -3,8 +3,12 @@ extends Control
 
 var stats: Stats : set = set_stats
 
-@onready var hp_bar: TextureProgressBar = $HPBar
-@onready var block_label: Label = $BlockLabel
+@export var hide_block_when_zero: bool = true
+
+@onready var hp_bar: Range = $HPBar
+@onready var hp_label: Label = get_node_or_null("HPLabel") if has_node("HPLabel") else (get_node_or_null("HPBar/HPLabel") if has_node("HPBar/HPLabel") else null)
+@onready var block_container: Control = get_node_or_null("BlockContainer")
+@onready var block_label: Label = get_node_or_null("BlockContainer/BlockLabel") if has_node("BlockContainer/BlockLabel") else get_node_or_null("BlockLabel")
 
 func _ready() -> void:
 	# Memastikan UI diperbarui begitu node siap di Scene Tree
@@ -26,14 +30,26 @@ func update_hud() -> void:
 	if not stats or not is_node_ready(): 
 		return
 	
-	hp_bar.max_value = stats.max_health
-	hp_bar.value = stats.health
+	if hp_bar:
+		hp_bar.max_value = stats.max_health
+		hp_bar.value = stats.health
+		
+	if hp_label:
+		hp_label.text = "%d / %d" % [stats.health, stats.max_health]
 	
-	if stats.block > 0:
-		block_label.text = "Block: %d" % stats.block
-		block_label.show()
-	else:
-		block_label.hide()
+	var has_block: bool = stats.block > 0
+	var should_show_block: bool = has_block or not hide_block_when_zero
+	
+	if block_label:
+		if block_container and has_node("BlockContainer/Icon"):
+			block_label.text = "%d" % stats.block
+		else:
+			block_label.text = "Block: %d" % stats.block
+			
+	if block_container:
+		block_container.visible = should_show_block
+	elif block_label:
+		block_label.visible = should_show_block
 		
 	if has_node("ManaLabel") and "mana" in stats:
 		var mana_label = get_node("ManaLabel") as Label

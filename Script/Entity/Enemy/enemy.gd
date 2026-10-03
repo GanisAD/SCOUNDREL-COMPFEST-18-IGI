@@ -48,7 +48,7 @@ func _update_visuals() -> void:
 		if sprite and stats.art:
 			sprite.texture = stats.art
 		if stats_ui:
-			stats_ui.update_hud(stats) 
+			stats_ui.update_hud() 
 
 # [MODIFIKASI] Dipanggil otomatis saat sinyal stats_changed aktif
 func _on_stats_changed() -> void:
