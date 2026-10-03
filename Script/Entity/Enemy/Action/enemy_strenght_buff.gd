@@ -8,15 +8,31 @@ extends EnemyAction
 
 var already_used: bool = false
 
+func is_conditional() -> bool:
+	return true
+
 # 1. Pengecekan Kondisi: Aktif jika HP <= persentase batas dan belum pernah digunakan
 func is_performable() -> bool:
-	var enemy = owner as Enemy
+	var enemy = _get_enemy()
 	if not enemy or not enemy.stats or already_used:
 		return false
 		
-	# Perbaikan Bug Rumus: Bagi 100.0 agar menjadi faktor desimal (misal 50% -> 0.5)
-	var health_threshold = enemy.stats.max_health * (min_hp_percentage / 100.0)
+	# Menangani format desimal (0.5) maupun persen (50.0)
+	var pct = min_hp_percentage
+	if pct <= 1.0 and pct > 0.0:
+		pct = pct * 100.0
+	var health_threshold = enemy.stats.max_health * (pct / 100.0)
 	return enemy.stats.health <= health_threshold
+
+func _get_enemy() -> Enemy:
+	if owner is Enemy:
+		return owner as Enemy
+	var p = get_parent()
+	while p:
+		if p is Enemy:
+			return p as Enemy
+		p = p.get_parent()
+	return null
 
 # 2. Orkestrasi Buff
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:

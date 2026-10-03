@@ -108,7 +108,9 @@ expand_mode = 1
 
 [node name="Number" type="Label" parent="IntentUI" unique_id=647259547]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "6"
+vertical_alignment = 1
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
 offset_left = 213.0
@@ -146,5 +148,5 @@ intent = ExtResource("10_m4gqk")
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
-min_hp_percentage = 0.5
+min_hp_percentage = 50.0
 intent = ExtResource("12_w2qd8")
