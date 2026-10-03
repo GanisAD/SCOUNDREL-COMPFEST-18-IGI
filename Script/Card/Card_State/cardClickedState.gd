@@ -14,4 +14,6 @@ func on_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		# Transisikan langsung ke status DRAGGING
 		transition_requested.emit(self.state, CardState.State.DRAGGING)
-		
+	elif event.is_action_released("left_click") or event.is_action_pressed("right_click"):
+		card_ui.drop_point_detector.monitoring = false
+		transition_requested.emit(self.state, CardState.State.BASE)

@@ -12,6 +12,7 @@ func enter() -> void:
 	card_ui.scale = Vector2.ONE
 	
 	card_ui.position.y = 0.0
+	card_ui.drop_point_detector.monitoring = false
 	
 	card_ui.state.text = "BASE"
 func on_mouse_entered() -> void:

@@ -13,6 +13,8 @@ extends CanvasLayer
 # @onready var discard_pile_label: Label = $DiscardPileButton/Label
 
 func _ready() -> void:
+	add_to_group("ui_layer")
+	
 	#Hubungkan sinyal klik tombol End Turn
 	if end_turn_button:
 		end_turn_button.pressed.connect(_on_end_turn_button_pressed)

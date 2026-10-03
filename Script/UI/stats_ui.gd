@@ -34,3 +34,9 @@ func update_hud() -> void:
 		block_label.show()
 	else:
 		block_label.hide()
+		
+	if has_node("ManaLabel") and "mana" in stats:
+		var mana_label = get_node("ManaLabel") as Label
+		if mana_label:
+			var max_mana_val = stats.max_mana if "max_mana" in stats else 3
+			mana_label.text = "Mana: %d / %d" % [stats.mana, max_mana_val]
