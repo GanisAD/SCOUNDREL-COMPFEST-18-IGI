@@ -11,6 +11,9 @@ func enter() -> void:
 		# Lepaskan kartu dari kontainer tangan agar posisinya bisa bebas melayang
 		card_ui.reparent(ui_layer)
 		
+	# Pastikan posisi awal kartu langsung tepat di bawah kursor mouse tanpa loncat
+	card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.drag_offset
+	card_ui.z_index = 20
 	card_ui.state.text = "DRAGGING"
 	#card_ui.color.color = Color.MEDIUM_PURPLE
 	
@@ -29,7 +32,7 @@ func exit() -> void:
 func on_input(event: InputEvent) -> void:
 	# 1. Update posisi kartu mengikuti kursor
 	if event is InputEventMouseMotion:
-		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.pivot_offset
+		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.drag_offset
 		
 	# 2. Deteksi Batal (Klik Kanan)
 	if event.is_action_pressed("right_click"):
