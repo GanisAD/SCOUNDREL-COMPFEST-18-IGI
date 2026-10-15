@@ -1,3 +1,6 @@
+## State evaluasi saat klik kiri mouse dilepaskan setelah melakukan dragging kartu.
+## Menilai validitas drop area dan target, mengeksekusi efek kartu jika valid,
+## memancarkan Events.card_played, atau mengembalikan kartu ke tangan jika tidak valid.
 class_name CardReleasedState
 extends CardState
 

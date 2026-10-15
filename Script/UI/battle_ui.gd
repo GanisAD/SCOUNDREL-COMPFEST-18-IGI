@@ -1,10 +1,15 @@
+## Controller HUD utama untuk antarmuka pertempuran (Combat).
+## Bertanggung jawab mengelola banner giliran, tombol End Turn,
+## dan menghubungkan data CharacterStats pemain ke komponen PlayerStatsUI.
 class_name BattleUI
 extends CanvasLayer
 
 # --- REFERENSI NODE ---
-# Alih-alih merujuk ke Label spesifik, kita merujuk ke komponen StatsUI generik
+## Label banner animasi pergantian giliran (PLAYER TURN / ENEMY TURN).
 @onready var turn_label: Label = $TurnLabel
+## Komponen HUD penampil HP dan Block pemain.
 @onready var player_stats_ui: StatsUI = $PlayerStatsUI
+## Tombol untuk mengakhiri giliran pemain.
 @onready var end_turn_button: Button = $EndTurnButton
 
 # (Opsional) Referensi untuk komponen UI lainnya di masa depan
@@ -51,6 +56,7 @@ func show_turn_banner(text: String) -> void:
 # --- MANAJEMEN GILIRAN (TURN MANAGEMENT) ---
 
 func _on_end_turn_button_pressed() -> void:
+	Events.ui_button_clicked.emit()
 	# 1. Matikan tombol segera setelah ditekan untuk mencegah pemain melakukan spam klik
 	end_turn_button.disabled = true
 	

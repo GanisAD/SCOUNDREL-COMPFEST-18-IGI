@@ -1,7 +1,10 @@
+## State ketika kursor mouse melayang di atas kartu.
+## Menangani animasi pengangkatan (lift), pembesaran skala (scale up),
+## pemanggilan tooltip, dan pemancaran sinyal audio hover.
 class_name CardHoverState
 extends CardState
 
-# Tentukan seberapa tinggi kartu akan naik ke atas (dalam piksel)
+## Nilai pengangkatan posisi Y kartu dalam piksel saat di-hover.
 const HOVER_LIFT_AMOUNT := -120.0 
 
 var hover_tween: Tween

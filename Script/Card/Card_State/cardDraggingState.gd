@@ -1,6 +1,10 @@
+## State saat kartu sedang ditarik bebas oleh pemain di layar.
+## Melepaskan kartu sementara dari kontainer tangan (reparent ke UI layer)
+## dan mengaktifkan isolasi hover kartu lain.
 class_name CardDraggingState
 extends CardState
 
+## Batas waktu minimum sebelum status drag dapat dilepas (keamanan input).
 const DRAG_MINIMUM_THRESHOLD := 0.05
 var minimum_drag_time_elapsed := false
 
@@ -15,7 +19,9 @@ func enter() -> void:
 	card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.drag_offset
 	card_ui.z_index = 20
 	card_ui.state.text = "DRAGGING"
-	#card_ui.color.color = Color.MEDIUM_PURPLE
+	
+	# Pancarkan sinyal untuk mengisolasi hover kartu lain di tangan dan memicu audio drag
+	Events.card_drag_started.emit(card_ui)
 	
 	Events.card_drag_started.emit(card_ui)
 	
@@ -26,9 +32,9 @@ func enter() -> void:
 	)
 
 func exit() -> void:
+	# Beritahu Hand bahwa kartu selesai ditarik agar interaktivitas kartu lain pulih
 	Events.card_drag_ended.emit(card_ui)
 
-# DI DALAM card_dragging_state.gd
 func on_input(event: InputEvent) -> void:
 	# 1. Update posisi kartu mengikuti kursor
 	if event is InputEventMouseMotion:

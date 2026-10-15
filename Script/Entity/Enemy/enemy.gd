@@ -1,10 +1,13 @@
+## Entitas musuh dalam pertempuran turn-based.
+## Mengelola siklus giliran AI (EnemyActionPicker), rendering intent telegraph (IntentUI),
+## kalkulasi pertahanan (StatsUI), animasi terkena serangan, dan pemicu audio luka/kematian.
 class_name Enemy
 extends Area2D
 
-# Sinyal kematian musuh yang akan ditangkap oleh EnemyHandler
+## Sinyal kematian musuh yang dipancarkan saat HP mencapai 0.
 signal died(enemy: Enemy)
 
-# Inject data EnemyStats ke musuh ini lewat Inspector
+## Resource statistik musuh (EnemyStats) yang menentukan HP, Base Block, dan visual sprite.
 @export var stats: EnemyStats
 
 # [TAMBAHAN] Menyimpan aksi aktif yang direncanakan untuk giliran ini

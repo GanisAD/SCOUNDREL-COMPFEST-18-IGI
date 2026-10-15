@@ -1,3 +1,5 @@
+## Kelas dasar abstrak untuk seluruh state interaksi kartu dalam CardStateMachine.
+## Menyediakan antarmuka siklus hidup (enter, exit) dan delegasi input event.
 class_name CardState
 extends Node
 

@@ -1,32 +1,38 @@
+## Panel modal dialog konfirmasi (Yes / No).
+## Menampilkan pesan konfirmasi interaktif dengan payload data opsional (misal: ItemData).
 class_name PromptPanel
 extends Panel
 
-# Membuat sinyal kustom untuk didengarkan oleh skrip lain
-signal yes_confirmation(ItemData)
+## Dipancarkan saat pemain mengonfirmasi pilihan (menekan tombol Ya).
+signal yes_confirmation(item_data: ItemData)
+## Dipancarkan saat pemain membatalkan pilihan (menekan tombol Tidak).
 signal no_confirmation
 
 @onready var promptLabel = $PromptLabel
 var current_data = null
 
-func _ready():
+func _ready() -> void:
 	# Pastikan panel tersembunyi saat game baru dimulai
 	visible = false
 
-# Fungsi ini yang akan dipanggil untuk memunculkan panel
-func show_prompt(messages: String = "Apakah Anda yakin?", payload = null):
+## Memunculkan panel dialog dengan pesan khusus dan payload data.
+## [param messages]: Teks pesan konfirmasi yang ditampilkan ke pemain.
+## [param payload]: Data referensi (misal ItemData) yang akan dikirim kembali saat tombol Ya ditekan.
+func show_prompt(messages: String = "Apakah Anda yakin?", payload = null) -> void:
 	promptLabel.text = messages
 	current_data = payload
 	show()
 
-# Fungsi internal saat tombol Ya ditekan
-func _on_btn_yes_pressed():
-	yes_confirmation.emit(current_data) # Pancarkan sinyal Ya
+func _on_btn_yes_pressed() -> void:
+	Events.ui_button_clicked.emit()
+	yes_confirmation.emit(current_data)
 	_close_panel()
-# Fungsi internal saat tombol Tidak ditekan
-func _on_btn_no_pressed():
-	no_confirmation.emit() # Pancarkan sinyal Tidak
+
+func _on_btn_no_pressed() -> void:
+	Events.ui_button_clicked.emit()
+	no_confirmation.emit()
 	_close_panel()
 
 func _close_panel() -> void:
-	current_data = null # Selalu bersihkan data saat panel ditutup
+	current_data = null
 	hide()
