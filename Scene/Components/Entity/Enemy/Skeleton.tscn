@@ -1,34 +1,108 @@
 [gd_scene format=3 uid="uid://pfhymlbd8c6s"]
 
 [ext_resource type="Script" uid="uid://cb174yrmvit1" path="res://Script/Entity/Enemy/enemy.gd" id="1_ls6l5"]
-[ext_resource type="Texture2D" uid="uid://lbugtm3281vu" path="res://Resources/Entity/Enemy/skeleton-raw.png" id="1_rtd58"]
-[ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="2_kth1x"]
+[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="2_c1t02"]
+[ext_resource type="Texture2D" uid="uid://dj18h02vscxsy" path="res://Resources/Entity/Enemy/Skeleton-Sprites/1.png" id="3_p22j2"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="4_ce4ot"]
+[ext_resource type="Texture2D" uid="uid://dkpd2rs46e4sw" path="res://Resources/Entity/Enemy/Skeleton-Sprites/2.png" id="4_hrtpn"]
 [ext_resource type="Script" uid="uid://b5ytpvid0iejd" path="res://Script/UI/intent_ui.gd" id="4_j5lal"]
 [ext_resource type="Script" uid="uid://bh60cpy5uy2yt" path="res://Script/Entity/Enemy/enemy_action_picker.gd" id="5_ayxb1"]
+[ext_resource type="Texture2D" uid="uid://bo1pwir0rwvng" path="res://Resources/Entity/Enemy/Skeleton-Sprites/3.png" id="5_em4r3"]
 [ext_resource type="Texture2D" uid="uid://l5dd6upj5687" path="res://Resources/Card/Icon/sword wo bg.png" id="5_m4gqk"]
 [ext_resource type="Script" uid="uid://cy6rkfoqhnhgi" path="res://Script/Entity/Enemy/Action/enemy_attack.gd" id="6_1xqxk"]
+[ext_resource type="Texture2D" uid="uid://bls8le2i3yvxl" path="res://Resources/Entity/Enemy/Skeleton-Sprites/4.png" id="6_aow6d"]
 [ext_resource type="Script" uid="uid://cpwqtekw0l7s1" path="res://Script/Entity/Enemy/Action/enemy_block.gd" id="7_1xqxk"]
+[ext_resource type="Texture2D" uid="uid://crtue02adf57w" path="res://Resources/Entity/Enemy/Skeleton-Sprites/5.png" id="7_plh42"]
+[ext_resource type="Texture2D" uid="uid://di2l1fyf6meq" path="res://Resources/Entity/Enemy/Skeleton-Sprites/6.png" id="8_2dsxw"]
 [ext_resource type="Script" uid="uid://i08bkieiqxwq" path="res://Script/Entity/Enemy/Action/enemy_strenght_buff.gd" id="8_7rs3b"]
 [ext_resource type="Resource" uid="uid://cruxt8ofgn1eq" path="res://Script/Entity/Enemy/Intent/attackIntent.tres" id="8_qpvyo"]
+[ext_resource type="Texture2D" uid="uid://bb2u7qyv8sg0j" path="res://Resources/Entity/Enemy/Skeleton-Sprites/7.png" id="9_p14rg"]
+[ext_resource type="Texture2D" uid="uid://4loxwjjn8k26" path="res://Resources/Entity/Enemy/Skeleton-Sprites/8.png" id="10_b7n0u"]
 [ext_resource type="Resource" uid="uid://t17ikvgvlyfs" path="res://Script/Entity/Enemy/Intent/blockIntent.tres" id="10_m4gqk"]
+[ext_resource type="Texture2D" uid="uid://b721ihun0ufb4" path="res://Resources/Entity/Enemy/Skeleton-Sprites/9.png" id="11_lh0ra"]
 [ext_resource type="Resource" uid="uid://clkwesslalr20" path="res://Script/Entity/Enemy/Intent/strenghtIntent.tres" id="12_w2qd8"]
+[ext_resource type="Texture2D" uid="uid://bqlowcrouifxj" path="res://Resources/Card/Icon/shield.png" id="13_shield"]
 
-[sub_resource type="Resource" id="Resource_ce4ot"]
-script = ExtResource("2_kth1x")
-metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats_panel"]
+bg_color = Color(0.08, 0.08, 0.08, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.25, 0.25, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.18, 0.18, 0.18, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.82, 0.18, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
-size = Vector2(13.932101, 20.034155)
+size = Vector2(13.932101, 24.969898)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xg0st"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_p22j2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hrtpn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_em4r3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aow6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_plh42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2dsxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_p14rg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_b7n0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_lh0ra")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 22.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_p22j2")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="Skeleton" type="Area2D" unique_id=1894014694]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_ls6l5")
-stats = SubResource("Resource_ce4ot")
+stats = ExtResource("2_c1t02")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1865966253]
-position = Vector2(-20, -61.000008)
+position = Vector2(3.9999962, 48.499996)
 scale = Vector2(18.382132, 18.382132)
 shape = SubResource("RectangleShape2D_xg0st")
 
@@ -36,9 +110,10 @@ shape = SubResource("RectangleShape2D_xg0st")
 position = Vector2(272, 0)
 scale = Vector2(-21.964033, -24.097158)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=275826392]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=364218464]
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("1_rtd58")
+sprite_frames = SubResource("SpriteFrames_xg0st")
+animation = &"idle"
 
 [node name="IntentUI" type="HBoxContainer" parent="." unique_id=634082391]
 offset_left = -104.0
@@ -56,29 +131,66 @@ expand_mode = 1
 
 [node name="Number" type="Label" parent="IntentUI" unique_id=647259547]
 layout_mode = 2
+theme_override_font_sizes/font_size = 28
 text = "6"
+vertical_alignment = 1
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
 offset_left = 213.0
 offset_top = 33.0
 offset_right = 487.0
-offset_bottom = 102.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_stats_panel")
 script = ExtResource("4_ce4ot")
 
-[node name="HPBar" type="TextureProgressBar" parent="StatsUI" unique_id=51640980]
+[node name="HPBar" type="ProgressBar" parent="StatsUI" unique_id=51640980]
 layout_mode = 0
 offset_left = 12.0
-offset_top = 9.0
-offset_right = 56.0
+offset_top = 10.0
+offset_right = 262.0
 offset_bottom = 36.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 50.0
+show_percentage = false
 
-[node name="BlockLabel" type="Label" parent="StatsUI" unique_id=698211035]
+[node name="HPLabel" type="Label" parent="StatsUI/HPBar" unique_id=1896388731]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+text = "50 / 50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BlockContainer" type="HBoxContainer" parent="StatsUI" unique_id=698211035]
+visible = false
 layout_mode = 0
-offset_left = 9.0
-offset_top = 34.0
-offset_right = 73.0
-offset_bottom = 57.0
-text = "Block : 0"
+offset_left = 12.0
+offset_top = 40.0
+offset_right = 262.0
+offset_bottom = 68.0
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="StatsUI/BlockContainer" unique_id=172839401]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("13_shield")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BlockLabel" type="Label" parent="StatsUI/BlockContainer" unique_id=172839402]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "0"
+vertical_alignment = 1
 
 [node name="EnemyActionPicker" type="Node" parent="." unique_id=967924178]
 script = ExtResource("5_ayxb1")
@@ -94,5 +206,5 @@ intent = ExtResource("10_m4gqk")
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
-min_hp_percentage = 0.5
+min_hp_percentage = 50.0
 intent = ExtResource("12_w2qd8")

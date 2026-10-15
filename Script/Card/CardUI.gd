@@ -15,6 +15,7 @@ signal reparent_requested(card_ui: CardUI)
 
 var original_index: int = 0
 var targets: Array[Area2D] = []
+var drag_offset: Vector2 = Vector2.ZERO
 
 # ==========================================
 # REFERENSI NODE VISUAL

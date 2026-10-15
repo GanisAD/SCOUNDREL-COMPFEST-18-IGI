@@ -1,12 +1,18 @@
+# enemy_block.gd
 class_name EnemyBlock
 extends EnemyAction
 
 @export var block_amount: int = 5
 
+func get_intent_value(_enemy: Enemy = null) -> String:
+	return str(block_amount)
+
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
-	# 1. Eksekusi penambahan block lewat fungsi yang baru kita buat di Enemy
+	# 1. Aturan Gameplay: Tambahkan nilai block ke stats musuh
 	enemy.add_block(block_amount)
 	
-	# 2. Karena efek visual sederhana sudah ditangani oleh _play_block_effect() di Enemy,
-	# kita bisa langsung menyudahi aksi ini agar turn manager lanjut ke musuh berikutnya.
+	# 2. Delegasi Visual: Tunggu musuh menyelesaikan animasi bertahannya
+	await enemy.play_block_animation()
+	
+	# 3. Lapor ke Turn Manager
 	enemy_action_completed.emit()

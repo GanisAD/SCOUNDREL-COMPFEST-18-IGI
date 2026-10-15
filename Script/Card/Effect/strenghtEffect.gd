@@ -11,5 +11,8 @@ func execute(targets: Array[Node], player: Node) -> void:
 			player.character_stats.strength_stacks += stacks_to_add
 	else:
 		for target in targets:
-			if target and "stats" in target:
-				target.character_stats.strength_stacks += stacks_to_add
+			if target:
+				if "stats" in target and target.stats:
+					target.stats.strength_stacks += stacks_to_add
+				elif "character_stats" in target and target.character_stats:
+					target.character_stats.strength_stacks += stacks_to_add

@@ -15,12 +15,23 @@ signal enemy_action_completed
 # Akumulasi bobot yang akan dihitung oleh EnemyActionPicker secara dinamis
 var accumulated_weight: float = 0.0
 
+# Apakah aksi ini bertipe kondisional (bukan aksi acak berbobot biasa)
+func is_conditional() -> bool:
+	return false
+
 # 1. Fungsi Logika: Apakah aksi kondisional ini siap dijalankan?
 # Akan diplay/override oleh aksi yang memiliki syarat khusus (misal: HP <= 5)
 func is_performable() -> bool:
 	return false
 
+# Nilai angka yang akan ditampilkan di Intent UI (misal: damage atau block)
+func get_intent_value(_enemy: Enemy = null) -> String:
+	if intent and intent.number != "":
+		return intent.number
+	return ""
+
 # 2. Fungsi Eksekusi: Apa yang terjadi saat aksi ini dipilih?
 # Fungsi ini wajib di-override di skrip anak untuk menentukan mekanik aslinya.
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
 	pass
+
