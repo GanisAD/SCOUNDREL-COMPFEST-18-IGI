@@ -1,16 +1,18 @@
+## Komponen UI kartu interaktif pada antarmuka tangan pemain.
+## Menangani rendering visual kartu, kalkulasi posisi hover, dan routing input ke CardStateMachine.
 class_name CardUI
 extends Control
 
 # ==========================================
 # SIGNAL KOMUNIKASI
 # ==========================================
-# Sinyal ini tetap dipertahankan karena digunakan oleh CardBaseState/CardDraggingState
-# untuk meminta parent (HBoxContainer tangan) melakukan lepas/pasang hierarki.
+## Dipancarkan untuk meminta parent Hand (HBoxContainer) melakukan reparenting saat drag selesai/batal.
 signal reparent_requested(card_ui: CardUI)
 
 # ==========================================
 # INJEKSI DATA RESOURCE
 # ==========================================
+## Data resource kartu yang diikatkan ke komponen UI ini. Mengupdate visual secara otomatis saat di-set.
 @export var card: Card : set = _set_card
 
 var original_index: int = 0

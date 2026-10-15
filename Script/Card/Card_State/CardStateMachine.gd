@@ -1,3 +1,6 @@
+## Finite State Machine (FSM) yang mengontrol status interaksi kartu tunggal.
+## Mengelola siklus hidup status (Base, Hover, Clicked, Dragging, Aiming, Released)
+## dan mengarahkan input event mouse ke status yang sedang aktif.
 class_name CardStateMachine
 extends Node
 

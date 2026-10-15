@@ -1,4 +1,5 @@
-# intent_ui.gd
+## Komponen UI indikator intensi (telegraph) aksi musuh di atas sprite musuh.
+## Menampilkan ikon aksi (Attack, Defend, Buff) dan besaran nilai damage/armor.
 class_name IntentUI
 extends HBoxContainer
 

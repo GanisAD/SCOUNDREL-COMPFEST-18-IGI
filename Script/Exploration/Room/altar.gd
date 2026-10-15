@@ -1,6 +1,9 @@
+## Objek interaktif altar pemulihan/event dalam scene event ruangan.
+## Menangani animasi hover tween dan pemancaran sinyal altar_used saat diklik.
 class_name Altar
-extends  TextureRect
+extends TextureRect
 
+## Dipancarkan saat altar berhasil diklik/digunakan oleh pemain.
 signal altar_used
 
 enum State { LOCKED, AVAILABLE, DISABLED }

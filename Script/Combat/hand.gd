@@ -1,7 +1,10 @@
+## Kontainer tangan pemain (HBoxContainer) yang merender dan mengatur tata letak kartu.
+## Menangani penambahan kartu dinamis (add_card_to_hand), reparenting saat drag selesai/batal,
+## dan isolasi hover antar-kartu.
 class_name Hand
 extends HBoxContainer
 
-# TAMBAHAN: Tempatkan scene CardUI.tscn di slot ini melalui Inspector Godot
+## PackedScene visual kartu (CardUI.tscn) yang akan diinstansiasi ke dalam kontainer tangan.
 @export var card_ui_scene: PackedScene 
 
 var cards_played_this_turn: int = 0

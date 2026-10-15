@@ -1,3 +1,5 @@
+## State default/idle kartu saat berada di dalam tangan pemain.
+## Mereset transformasi visual (skala, rotasi, offset) ke kondisi normal.
 class_name CardBaseState
 extends CardState
 

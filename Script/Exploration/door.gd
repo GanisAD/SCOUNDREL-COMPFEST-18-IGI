@@ -1,7 +1,9 @@
-# door.gd
+## Komponen interaktif pintu dungeon pada fase eksplorasi (Explore Scene).
+## Mengelola status pintu (LOCKED, AVAILABLE, DISABLED) dan memancarkan sinyal saat dipilih pemain.
 class_name Door
 extends Control
 
+## Dipancarkan saat pintu diklik oleh pemain untuk memasuki ruangan.
 signal door_selected(room_data: RoomData, index: int)
 
 enum State { LOCKED, AVAILABLE, DISABLED }

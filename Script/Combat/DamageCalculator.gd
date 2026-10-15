@@ -1,4 +1,5 @@
-# damage_calculator.gd
+## Utility statis untuk kalkulasi matematika nilai damage pertempuran.
+## Memperhitungkan buff Strength penyerang, debuff Weakened, dan status Vulnerable penerima serangan.
 class_name DamageCalculator
 extends RefCounted
 

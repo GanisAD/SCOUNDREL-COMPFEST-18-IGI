@@ -1,6 +1,10 @@
+## Komponen UI generik (reusable) untuk menampilkan Health Bar dan Armor/Block.
+## Digunakan bersama oleh Player HUD di BattleUI maupun melekat pada setiap instance musuh (Enemy).
+## Bekerja secara reaktif dengan mendengarkan sinyal stats_changed dari resource Stats.
 class_name StatsUI
 extends Control
 
+## Resource Stats (CharacterStats atau EnemyStats) yang diikatkan ke HUD ini.
 var stats: Stats : set = set_stats
 
 @onready var hp_bar: TextureProgressBar = $HPBar

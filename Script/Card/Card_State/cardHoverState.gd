@@ -1,7 +1,10 @@
+## State ketika kursor mouse melayang di atas kartu.
+## Menangani animasi pengangkatan (lift), pembesaran skala (scale up),
+## pemanggilan tooltip, dan pemancaran sinyal audio hover.
 class_name CardHoverState
 extends CardState
 
-# Tentukan seberapa tinggi kartu akan naik ke atas (dalam piksel)
+## Nilai pengangkatan posisi Y kartu dalam piksel saat di-hover.
 const HOVER_LIFT_AMOUNT := -120.0 
 
 func enter() -> void:
@@ -16,6 +19,9 @@ func enter() -> void:
 	tween.tween_property(card_ui, "position:y", HOVER_LIFT_AMOUNT, 0.1)
 	
 	card_ui.z_index = 10
+	
+	# Pancarkan sinyal ke EventBus untuk trigger audio hover
+	Events.card_hovered.emit(card_ui)
 	
 	if card_ui.has_method("show_tooltip"):
 		card_ui.show_tooltip()

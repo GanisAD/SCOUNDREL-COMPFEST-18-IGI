@@ -1,3 +1,5 @@
+## Sistem visual penargetan musuh tunggal menggunakan busur garis Line2D dan hitbox detektor.
+## Mengaktifkan garis bidik saat sinyal Events.card_aim_started dipicu.
 class_name CardTargetSelector
 extends Node2D
 

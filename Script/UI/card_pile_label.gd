@@ -1,6 +1,9 @@
-extends Label
+## Komponen UI reaktif penampil jumlah tumpukan kartu (Draw Pile / Discard Pile).
+## Otomatis memperbarui angka saat sinyal pile_size_changed dari CardPile terpancar.
 class_name CardPileUI
+extends Label
 
+## Format string template tampilan teks (contoh: "Draw: %d").
 @export var format_text: String = "Discard Pile: %d"
 
 # Variabel ini akan menampung referensi objek CardPile asli dari PlayerHandler
