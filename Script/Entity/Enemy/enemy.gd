@@ -257,5 +257,3 @@ func _exit_tree() -> void:
 	if player and "character_stats" in player and player.character_stats:
 		if player.character_stats.stats_changed.is_connected(update_intent_display):
 			player.character_stats.stats_changed.disconnect(update_intent_display)
-
-

@@ -34,4 +34,3 @@ func get_intent_value(_enemy: Enemy = null) -> String:
 # Fungsi ini wajib di-override di skrip anak untuk menentukan mekanik aslinya.
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
 	pass
-

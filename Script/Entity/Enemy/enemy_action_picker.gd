@@ -43,4 +43,3 @@ func get_action() -> EnemyAction:
 			return action
 			
 	return chance_actions.back() # Fallback aman jika terjadi pembulatan float
-

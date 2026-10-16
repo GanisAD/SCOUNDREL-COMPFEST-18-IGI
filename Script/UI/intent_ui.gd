@@ -49,4 +49,3 @@ func update_intent(intent_or_action: Variant, enemy: Enemy = null) -> void:
 			
 	# Tampilkan UI setelah data berhasil diperbarui
 	show()
-
