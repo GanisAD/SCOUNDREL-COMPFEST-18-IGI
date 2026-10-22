@@ -3,6 +3,9 @@ extends Node
 
 # --- DATA PROGRES PEMAIN (RUN DATA) ---
 var current_floor: int = 1
+var max_floor: int = 13
+var explored_room: int = 0
+var min_explored_room: int = 3
 var player_hp: int = 100
 var max_hp: int = 100
 var player_gold: int = 0
@@ -23,6 +26,7 @@ var current_room_data: RoomData = null
 ## Dipanggil saat memulai permainan/run baru dari awal
 func start_new_run() -> void:
 	current_floor = 1
+	explored_room = 0
 	active_doors_data.clear()
 	player_hp = max_hp
 	player_gold = 0
@@ -40,9 +44,9 @@ func enter_room(room_data: RoomData, door_index: int = -1) -> void:
 		push_warning("GameManager: Enter room dipanggil tanpa RoomData!")
 		return
 		
-	get_tree().change_scene_to_file("res://Scene/Components/room_event.tscn")
+	SceneManager.change_scene(SceneManager.SceneID.ROOM_EVENT)
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null
-	get_tree().change_scene_to_file("res://Scene/explore.tscn")
+	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
