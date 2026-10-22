@@ -4,6 +4,8 @@ extends Node
 # --- DATA PROGRES PEMAIN (RUN DATA) ---
 var current_floor: int = 1
 var max_floor: int = 13
+var explored_room: int = 0
+var min_explored_room: int = 3
 var player_hp: int = 100
 var max_hp: int = 100
 var player_gold: int = 0
@@ -24,6 +26,7 @@ var current_room_data: RoomData = null
 ## Dipanggil saat memulai permainan/run baru dari awal
 func start_new_run() -> void:
 	current_floor = 1
+	explored_room = 0
 	active_doors_data.clear()
 	player_hp = max_hp
 	player_gold = 0

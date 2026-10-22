@@ -39,7 +39,8 @@ func _on_door_selected(selected_room: RoomData, index: int) -> void:
 	for door in doors:
 		if door:
 			door.set_door_state(Door.State.DISABLED)
-			
+	
+	GameManager.explored_room += 1
 	GameManager.enter_room(selected_room, index)
 
 func _on_elevator_used() -> void:
@@ -48,6 +49,7 @@ func _on_elevator_used() -> void:
 		return
 	
 	GameManager.current_floor += 1
+	GameManager.explored_room = 0
 	update_floor_ui()
 	reroll_all_doors()
 
