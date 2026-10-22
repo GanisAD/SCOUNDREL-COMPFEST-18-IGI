@@ -18,8 +18,12 @@ func _ready() -> void:
 			door.door_index = i
 			door.door_selected.connect(_on_door_selected)
 	
+	Events.floor_changed.connect(_on_floor_changed)
 	update_floor_ui()
 	setup_doors_state()
+
+func _on_floor_changed(new_floor: int, _max_floor: int) -> void:
+	update_floor_ui(new_floor)
 
 func setup_doors_state() -> void:
 	# Cek apakah GameManager sudah memiliki data pintu dari sebelum forfeit/battle
@@ -40,22 +44,21 @@ func _on_door_selected(selected_room: RoomData, index: int) -> void:
 		if door:
 			door.set_door_state(Door.State.DISABLED)
 	
-	GameManager.explored_room += 1
+	GameManager.record_room_explored()
 	GameManager.enter_room(selected_room, index)
 
 func _on_elevator_used() -> void:
-	
-	if GameManager.current_floor == GameManager.max_floor:
+	if GameManager.is_at_max_floor():
+		print("DungeonManager: Mencapai akhir labirin (lantai maksimum)!")
+		Events.dungeon_completed.emit()
 		return
 	
-	GameManager.current_floor += 1
-	GameManager.explored_room = 0
-	update_floor_ui()
-	reroll_all_doors()
+	if GameManager.advance_floor():
+		reroll_all_doors()
 
-func update_floor_ui() -> void:
+func update_floor_ui(floor_number: int = GameManager.current_floor) -> void:
 	if floor_label:
-		floor_label.text = "Current Floor : %d" % GameManager.current_floor
+		floor_label.text = "Current Floor : %d" % floor_number
 	else:
 		push_error("DungeonManager: floor_label TIDAK DITEMUKAN / NULL!")
 
