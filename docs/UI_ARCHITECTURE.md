@@ -23,12 +23,54 @@ flowchart LR
    Layar besar (seperti `BattleUI`) tersusun dari komponen-komponen kecil yang dapat digunakan kembali (`StatsUI`, `CardPileUI`). Komponen kecil ini tidak tahu tentang konteks layar induknya.
 3. **Komunikasi Bebas Dependensi (EventBus)**:
    Tombol dan interaksi pengguna tidak memanggil sistem tempur secara langsung. UI cukup memancarkan sinyal global melalui singleton `Events` (misal: `Events.player_turn_ended.emit()`).
+4. **Navigasi Terpusat & Layering Aman (SceneManager)**:
+   Pergantian layar dan transisi visual tidak boleh memanggil `get_tree().change_scene_to_file()` secara langsung di script UI. Navigasi wajib didelegasikan ke `SceneManager` yang beroperasi pada layer visual tertinggi (`layer = 128`) untuk menjamin input locking dan transisi yang halus.
 
 ---
 
-## 2. Katalog Komponen di `Script/UI/`
+## 2. Struktur Layering & Hierarki Z-Index
 
-### A. `BattleUI` (`CanvasLayer`)
+Untuk mencegah konflik tumpang tindih visual dan glitch penangkapan klik mouse (*input consumption*), ALTAR-52 menetapkan standarisasi layer visual sebagai berikut:
+
+| Layer Level | Komponen / Node | Deskripsi & Peran |
+| :--- | :--- | :--- |
+| **Layer 0 (World)** | `Explore`, `Room`, `Combat` | Dunia 2D, background ruangan, sprite altar, dan entitas pertarungan. |
+| **Layer 1 (Screen UI)** | `BattleUI` (`CanvasLayer`) | HUD pertarungan, stats pemain, tombol giliran, dan intent musuh. |
+| **Layer 10+ (Popups)** | `PromptPanel`, Tooltip | Dialog konfirmasi modal, tooltip kartu melayang, dan menu pop-up. |
+| **Layer 128 (Topmost)**| `SceneManager` (`CanvasLayer`) | Tirai transisi hitam (*fade overlay*) dan penahan klik global saat transisi. |
+
+---
+
+## 3. Katalog Komponen di `Script/UI/` & `Script/Game_System/`
+
+### A. `SceneManager` (`CanvasLayer`, Layer 128) — Autoload
+* **File Script**: [`Script/Game_System/scene_manager.gd`](../Script/Game_System/scene_manager.gd)
+* **File Scene**: [`Scene/scene_manager.tscn`](../Scene/scene_manager.tscn)
+* **Peran**: Pengendali transisi layar global dan gerbang keamanan input (*input blocker*).
+* **Elemen Child Utama**:
+  * `$Overlay` (`ColorRect`): Menutupi seluruh layar (Full Rect). Mengatur `mouse_filter` ke `MOUSE_FILTER_STOP` saat bertransisi agar pemain tidak dapat melakukan klik ganda (spam) pada tombol UI.
+  * `$AnimationPlayer` (`AnimationPlayer`): Menjalankan animasi fade (`fade_to_black` dan pembalikan `fade_from_black`).
+* **Katalog Scene Terdaftar (`SceneID`)**:
+  * `SceneID.EXPLORE`: Scene pemilihan pintu dungeon (`res://Scene/explore.tscn`).
+  * `SceneID.ROOM_EVENT`: Scene altar interaksi ruangan (`res://Scene/Components/room_event.tscn`).
+  * `SceneID.COMBAT`: Scene pertempuran giliran (`res://Scene/combat.tscn`).
+  * *(Siap diekspansi)*: `MAIN_MENU`, `GAME_OVER`, `VICTORY`.
+* **Aturan Penggunaan untuk UI Programmer**:
+  ```gdscript
+  # JANGAN PERNAH gunakan hardcoded string seperti ini di UI:
+  # get_tree().change_scene_to_file("res://Scene/combat.tscn")
+  
+  # SELALU gunakan SceneManager via Enum:
+  SceneManager.change_scene(SceneManager.SceneID.COMBAT)
+  ```
+* **Siklus Sinyal yang Tersedia**:
+  * `transition_started(target_scene: SceneID)`: Terpancar saat layar mulai menghitam.
+  * `scene_loaded(new_scene: SceneID)`: Terpancar setelah scene target selesai memuat dan `_ready()` stabil.
+  * `transition_finished(current_scene: SceneID)`: Terpancar saat layar kembali terbuka dan input pemain dibuka kembali.
+
+---
+
+### B. `BattleUI` (`CanvasLayer`)
 * **File**: [`Script/UI/battle_ui.gd`](../Script/UI/battle_ui.gd)
 * **Peran**: Pengendali utama seluruh antarmuka saat fase pertempuran berlangsung.
 * **Elemen Child Utama**:
@@ -41,7 +83,7 @@ flowchart LR
 
 ---
 
-### B. `StatsUI` (`Control`) — Komponen Generik Reusable
+### C. `StatsUI` (`Control`) — Komponen Generik Reusable
 * **File**: [`Script/UI/stats_ui.gd`](../Script/UI/stats_ui.gd)
 * **Peran**: Komponen serbaguna untuk menampilkan bar darah (`HPBar`) dan angka pertahanan (`BlockLabel`).
 * **Penggunaan Ganda**:
@@ -56,7 +98,7 @@ flowchart LR
 
 ---
 
-### C. `IntentUI` (`HBoxContainer`)
+### D. `IntentUI` (`HBoxContainer`)
 * **File**: [`Script/UI/intent_ui.gd`](../Script/UI/intent_ui.gd)
 * **Peran**: Menampilkan rencana aksi musuh (telegraph) sebelum musuh bertindak.
 * **Elemen Child**:
@@ -67,7 +109,7 @@ flowchart LR
 
 ---
 
-### D. `CardPileUI` (`Label`)
+### E. `CardPileUI` (`Label`)
 * **File**: [`Script/UI/card_pile_label.gd`](../Script/UI/card_pile_label.gd)
 * **Peran**: Label reaktif yang menampilkan sisa kartu di tumpukan tarik (*Draw Pile*) atau tumpukan buang (*Discard Pile*).
 * **Cara Kerja**:
@@ -75,7 +117,7 @@ flowchart LR
 
 ---
 
-### E. `PromptPanel` (`Panel`)
+### F. `PromptPanel` (`Panel`)
 * **File**: [`Script/UI/prompt_panel_ui.gd`](../Script/UI/prompt_panel_ui.gd)
 * **Peran**: Jendela dialog modal untuk meminta konfirmasi pemain (Yes / No).
 * **Sinyal**:
@@ -84,7 +126,7 @@ flowchart LR
 
 ---
 
-## 3. Sistem Antarmuka Kartu (Gameplay UI)
+## 4. Sistem Antarmuka Kartu (Gameplay UI)
 
 Sistem kartu berada di luar folder `Script/UI/` karena memiliki interaktivitas tinggi dengan fisika dan logika tempur.
 
@@ -128,7 +170,7 @@ Semua logika interaksi kursor dipecah ke dalam script terpisah di `Script/Card/C
 
 ---
 
-## 4. Panduan Menambahkan Komponen UI Baru
+## 5. Panduan Menambahkan Komponen UI Baru
 
 Jika Anda ingin menambahkan komponen UI baru (contoh: bar Relic atau indikator Mana):
 
