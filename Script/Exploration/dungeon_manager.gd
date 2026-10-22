@@ -44,6 +44,9 @@ func _on_door_selected(selected_room: RoomData, index: int) -> void:
 
 func _on_elevator_used() -> void:
 	
+	if GameManager.current_floor == GameManager.max_floor:
+		return
+	
 	GameManager.current_floor += 1
 	update_floor_ui()
 	reroll_all_doors()

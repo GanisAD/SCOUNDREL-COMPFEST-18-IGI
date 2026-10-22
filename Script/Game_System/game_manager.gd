@@ -3,6 +3,7 @@ extends Node
 
 # --- DATA PROGRES PEMAIN (RUN DATA) ---
 var current_floor: int = 1
+var max_floor: int = 13
 var player_hp: int = 100
 var max_hp: int = 100
 var player_gold: int = 0
