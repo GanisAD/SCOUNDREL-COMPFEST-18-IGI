@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 GameManager="*uid://ci4rstpxo42rx"
 Events="*uid://4wbw7vl7kc54"
 PlayerHandler="*uid://cirj7q3jgxcu2"
+SceneManager="*res://Scene/scene_manager.tscn"
 
 [display]
 

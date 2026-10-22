@@ -99,7 +99,7 @@ func _on_forfeit_used() -> void:
 	GameManager.return_to_dungeon_overworld()
 
 func _on_battle_confirmed(_data = null) -> void:
-	get_tree().change_scene_to_file("res://Scene/combat.tscn")
+	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
 
 func _on_prompt_yes_confirmed(payload = null) -> void:
 	# Jika payload kosong, berarti dialog hanya notifikasi penolakan duplikat (tidak ada aksi)
