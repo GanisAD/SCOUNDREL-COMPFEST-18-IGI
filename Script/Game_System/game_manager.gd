@@ -41,9 +41,9 @@ func enter_room(room_data: RoomData, door_index: int = -1) -> void:
 		push_warning("GameManager: Enter room dipanggil tanpa RoomData!")
 		return
 		
-	get_tree().change_scene_to_file("res://Scene/Components/room_event.tscn")
+	SceneManager.change_scene(SceneManager.SceneID.ROOM_EVENT)
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null
-	get_tree().change_scene_to_file("res://Scene/explore.tscn")
+	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
