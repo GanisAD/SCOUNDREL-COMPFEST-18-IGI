@@ -40,7 +40,7 @@ Selamat datang di proyek **ALTAR-52**! Dokumen ini disusun sebagai gerbang utama
     ├── Combat/             # Combat manager, Hand, PlayerHandler, DamageCalculator
     ├── Entity/             # Enemy controller, AI picker, dan Stats resource
     ├── Exploration/        # Door, DungeonManager, Altar, Room
-    ├── Game_System/        # EventBus, GameManager, AudioManager
+    ├── Game_System/        # EventBus, GameManager, AudioManager, SceneManager
     ├── Inventory/          # ItemData, WeaponData, InventoryData
     └── UI/                 # BattleUI, StatsUI, IntentUI, CardPileUI, PromptPanel
 ```
