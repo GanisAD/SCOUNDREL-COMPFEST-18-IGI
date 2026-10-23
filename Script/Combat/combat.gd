@@ -65,4 +65,3 @@ func _on_victory() -> void:
 	print("Victory! Semua musuh telah dikalahkan.")
 	Events.combat_victory.emit()
 	GameManager.return_to_dungeon_overworld()
-

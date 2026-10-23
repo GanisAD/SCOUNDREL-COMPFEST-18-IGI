@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://culgjri81u4nl"]
 
-[ext_resource type="Script" path="res://Script/Game_System/scene_manager.gd" id="1_scnmgr"]
+[ext_resource type="Script" uid="uid://bvru4q3vbjuny" path="res://Script/Game_System/scene_manager.gd" id="1_scnmgr"]
 
 [sub_resource type="Animation" id="Animation_fade_to_black"]
 resource_name = "fade_to_black"
@@ -23,11 +23,11 @@ _data = {
 &"fade_to_black": SubResource("Animation_fade_to_black")
 }
 
-[node name="SceneManager" type="CanvasLayer"]
+[node name="SceneManager" type="CanvasLayer" unique_id=588066090]
 layer = 128
 script = ExtResource("1_scnmgr")
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=433578442]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,7 +36,5 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_fade")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=477789259]
+libraries/ = SubResource("AnimationLibrary_fade")

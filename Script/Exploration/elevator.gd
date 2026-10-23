@@ -32,4 +32,3 @@ func _on_pressed() -> void:
 	if not disabled:
 		print("Elevator: Tombol dipencet!")
 		elevator_used.emit()
-

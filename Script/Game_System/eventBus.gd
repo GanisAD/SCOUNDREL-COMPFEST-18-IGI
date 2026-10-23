@@ -126,5 +126,3 @@ signal room_reshuffled(from_floor: int, to_floor: int, target_slot: int, room_da
 ## Dipanggil saat status ketersediaan forfeit berubah pada pemain di lantai aktif.
 @warning_ignore("unused_signal")
 signal forfeit_state_changed(can_forfeit: bool, remaining_forfeits: int)
-
-
