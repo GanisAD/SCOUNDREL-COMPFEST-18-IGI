@@ -119,3 +119,12 @@ signal room_exploration_changed(current: int, required_min: int)
 @warning_ignore("unused_signal")
 signal dungeon_completed
 
+## Dipanggil saat ruangan yang di-forfeit di-reshuffle ke lantai masa depan.
+@warning_ignore("unused_signal")
+signal room_reshuffled(from_floor: int, to_floor: int, target_slot: int, room_data: RoomData, overwritten_room: RoomData)
+
+## Dipanggil saat status ketersediaan forfeit berubah pada pemain di lantai aktif.
+@warning_ignore("unused_signal")
+signal forfeit_state_changed(can_forfeit: bool, remaining_forfeits: int)
+
+

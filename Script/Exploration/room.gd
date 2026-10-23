@@ -14,12 +14,14 @@ func _ready() -> void:
 
 	if forfeit:
 		forfeit.forfeit_used.connect(_on_forfeit_used)
+		update_forfeit_button_state()
 	
 	if promptPanel:
 		promptPanel.yes_confirmation.connect(_on_prompt_yes_confirmed)
 
 	if active_room:
 		setup_room(active_room)
+
 		
 	
 
@@ -95,8 +97,21 @@ func handle_tradeoff_room() -> void:
 	pass
 
 
+func update_forfeit_button_state() -> void:
+	if forfeit:
+		var can_forfeit: bool = GameManager.can_forfeit()
+		forfeit.disabled = not can_forfeit
+		if not can_forfeit:
+			forfeit.modulate = Color(0.5, 0.5, 0.5, 0.6)
+		else:
+			forfeit.modulate = Color.WHITE
+
 func _on_forfeit_used() -> void:
-	GameManager.return_to_dungeon_overworld()
+	if GameManager.can_forfeit():
+		GameManager.forfeit_current_room()
+	else:
+		push_warning("Room: Tombol forfeit ditekan tapi jatah forfeit sudah habis!")
+
 
 func _on_battle_confirmed(_data = null) -> void:
 	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
