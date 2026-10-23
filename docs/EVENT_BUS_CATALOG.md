@@ -158,6 +158,38 @@ graph TD
 
 ---
 
+### E. Eksplorasi & Progresi Labirin
+
+#### 16. `floor_changed`
+* **Deskripsi**: Dipancarkan saat lantai berubah (lantai baru dinaiki).
+* **Payload**: `current_floor: int`, `max_floor: int`.
+* **Pemancar (Emitter)**: [`game_manager.gd`](../Script/Game_System/game_manager.gd).
+* **Penerima (Listener)**: [`dungeon_manager.gd`](../Script/Exploration/dungeon_manager.gd).
+
+#### 17. `room_exploration_changed`
+* **Deskripsi**: Dipancarkan saat jumlah ruangan yang dijelajahi pada lantai aktif berubah.
+* **Payload**: `current: int`, `required_min: int`.
+* **Pemancar (Emitter)**: [`game_manager.gd`](../Script/Game_System/game_manager.gd).
+* **Penerima (Listener)**: [`elevator.gd`](../Script/Exploration/elevator.gd).
+
+#### 18. `dungeon_completed`
+* **Deskripsi**: Dipancarkan saat pemain menyelesaikan lantai maksimum (mencapai atap labirin / boss akhir).
+* **Payload**: Tidak ada.
+* **Pemancar (Emitter)**: [`dungeon_manager.gd`](../Script/Exploration/dungeon_manager.gd).
+
+#### 19. `room_reshuffled`
+* **Deskripsi**: Dipancarkan saat ruangan yang di-forfeit dikembalikan ke pool dan diacak ke lantai masa depan (menimpa ruangan lain).
+* **Payload**: `from_floor: int`, `to_floor: int`, `target_slot: int`, `room_data: RoomData`, `overwritten_room: RoomData`.
+* **Pemancar (Emitter)**: [`game_manager.gd`](../Script/Game_System/game_manager.gd) (`forfeit_current_room()`).
+
+#### 20. `forfeit_state_changed`
+* **Deskripsi**: Dipancarkan saat status ketersediaan atau jatah forfeit berubah pada lantai aktif.
+* **Payload**: `can_forfeit: bool`, `remaining_forfeits: int`.
+* **Pemancar (Emitter)**: [`game_manager.gd`](../Script/Game_System/game_manager.gd).
+* **Penerima (Listener)**: Komponen UI tombol forfeit.
+
+---
+
 ## 3. Pedoman Menambahkan Sinyal Baru
 
 Saat menambahkan sinyal baru ke [`eventBus.gd`](../Script/Game_System/eventBus.gd):
