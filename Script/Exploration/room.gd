@@ -98,10 +98,18 @@ func handle_tradeoff_room() -> void:
 	var item_pool = current_room_data.possible_item_pool
 	
 	if item_pool.is_empty():
-		promptPanel.show_prompt("Room tidak memiliki item, kembali?")
+		promptPanel.show_prompt("Room tidak memiliki trade-off, kembali?", null)
 		return
 	
-	pass
+	var chosen_item = item_pool.pick_random()
+	
+	if PlayerHandler.is_item_duplicate(chosen_item):
+		print("Debuff duplikat: ", chosen_item.name)
+		promptPanel.show_prompt("Altar ini menawarkan kutukan " + chosen_item.name + ", tetapi kamu sudah memilikinya!", null)
+		return
+
+	var prompt = "Altar Pengorbanan: Menerima " + chosen_item.name + " ?\n" + chosen_item.description
+	promptPanel.show_prompt(prompt, chosen_item)
 
 
 func update_forfeit_button_state() -> void:
@@ -133,7 +141,7 @@ func _on_prompt_yes_confirmed(payload = null) -> void:
 		RoomType.Type.CLUB:
 			_on_battle_confirmed(payload)
 			return
-		RoomType.Type.DIAMOND, RoomType.Type.HEART:
+		RoomType.Type.DIAMOND, RoomType.Type.HEART, RoomType.Type.SPADE:
 			if payload is ItemData:
 				_on_loot_button_pressed(payload)
 				return
