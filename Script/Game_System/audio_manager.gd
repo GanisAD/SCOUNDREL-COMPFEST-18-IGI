@@ -7,7 +7,7 @@
 ## dapat mengaitkan file audio (.wav/.ogg) langsung melalui Inspector tanpa harus memodifikasi
 ## logika gameplay di script tempur atau kartu.
 class_name AudioManager
-extends Node
+extends Node  
 
 # ==========================================
 # KONFIGURASI AUDIO STREAM DI INSPECTOR
@@ -15,7 +15,7 @@ extends Node
 
 @export_group("Card Audio Cues")
 ## Suara saat mouse hover di atas kartu.
-@export var sfx_card_hover: AudioStream
+##@export var sfx_card_hover: AudioStream
 ## Suara saat kartu mulai ditarik (drag).
 @export var sfx_card_drag_start: AudioStream
 ## Suara saat tarikan kartu dibatalkan / dilepas tanpa target.
@@ -74,10 +74,12 @@ func _connect_event_bus() -> void:
 	if not Engine.has_singleton("Events") and not is_instance_valid(Events):
 		return
 		
-	Events.card_hovered.connect(func(_card_ui): play_sfx(sfx_card_hover, randf_range(0.95, 1.05)))
+	##Events.card_hovered.connect(func(_card_ui): play_sfx(sfx_card_hover, randf_range(0.95, 1.05)))
 	Events.card_drag_started.connect(func(_card_ui): play_sfx(sfx_card_drag_start))
 	Events.card_drag_ended.connect(func(_card_ui): play_sfx(sfx_card_drag_cancel))
 	Events.card_played.connect(func(_card): play_sfx(sfx_card_played))
+	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw))
+	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard))
 	
 	Events.player_turn_started.connect(func(): play_sfx(sfx_turn_player_start))
 	Events.enemy_turn_started.connect(func(): play_sfx(sfx_turn_enemy_start))

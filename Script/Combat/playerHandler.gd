@@ -87,6 +87,7 @@ func draw_card() -> void:
 	var card = draw_pile.draw_card() # Asumsi fungsi draw_card() ada di kelas CardPile Anda 
 	if card:
 		hand.add_card_to_hand(card) # Memanggil fungsi publik milik hand.gd untuk melahirkan visual kartu 
+		Events.card_drawn.emit() # Sinyal per-kartu untuk audio SFX
 		
 	# Pengecekan ulang setelah penarikan kartu selesai dijalankan 
 	reshuffle_deck_from_discard() 
@@ -138,6 +139,9 @@ func discard_cards() -> void:
 			
 			# Hapus node visual kartu dari layar
 			tween.tween_callback(card_ui.queue_free)
+			
+			# Sinyal per-kartu untuk audio SFX discard
+			tween.tween_callback(Events.card_discarded.emit)
 			
 			# Beri jeda sedikit antar pembuangan kartu agar terlihat seperti Slay the Spire
 			tween.tween_interval(HAND_DISCARD_INTERVAL)
