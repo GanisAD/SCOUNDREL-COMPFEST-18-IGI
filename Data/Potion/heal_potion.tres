@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("3_2q3c5")
+effects = Array[ExtResource("1_ian4x")]([null])
 id = "3"
 name = "Heal Potion"
 description = "Heal it user a fraction of their health point"
