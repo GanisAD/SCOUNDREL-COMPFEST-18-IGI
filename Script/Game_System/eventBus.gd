@@ -109,3 +109,28 @@ signal combat_victory
 ## Sinyal umum yang dapat dipancarkan oleh komponen UI saat tombol umum ditekan.
 @warning_ignore("unused_signal")
 signal ui_button_clicked
+
+
+# ==========================================
+# EVENT EKSPLORASI & PROGRESSI LABIRIN
+# ==========================================
+
+## Dipanggil saat lantai berubah (lantai baru dinaiki).
+@warning_ignore("unused_signal")
+signal floor_changed(current_floor: int, max_floor: int)
+
+## Dipanggil saat jumlah ruangan yang dijelajahi pada lantai saat ini berubah.
+@warning_ignore("unused_signal")
+signal room_exploration_changed(current: int, required_min: int)
+
+## Dipanggil saat pemain menyelesaikan lantai maksimum (mencapai atap labirin / boss akhir).
+@warning_ignore("unused_signal")
+signal dungeon_completed
+
+## Dipanggil saat ruangan yang di-forfeit di-reshuffle ke lantai masa depan.
+@warning_ignore("unused_signal")
+signal room_reshuffled(from_floor: int, to_floor: int, target_slot: int, room_data: RoomData, overwritten_room: RoomData)
+
+## Dipanggil saat status ketersediaan forfeit berubah pada pemain di lantai aktif.
+@warning_ignore("unused_signal")
+signal forfeit_state_changed(can_forfeit: bool, remaining_forfeits: int)

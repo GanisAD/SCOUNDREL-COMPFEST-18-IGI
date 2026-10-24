@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://q4y4jmlebogg" path="res://Data/Room/club.tres" id="3_dtdkr"]
 [ext_resource type="Resource" uid="uid://q08ausaafx2d" path="res://Data/Room/diamond.tres" id="4_ba50q"]
 [ext_resource type="Texture2D" uid="uid://cwg852pqbbfch" path="res://Resources/Door/door.png" id="5_q8uni"]
-[ext_resource type="Texture2D" uid="uid://hngv2s1a5g6y" path="res://Resources/Door/Clover .png" id="6_q8uni"]
+[ext_resource type="Texture2D" uid="uid://so46dhwjig6c" path="res://Resources/Door/Spade.png" id="6_q8uni"]
 
 [node name="Door" type="Control" unique_id=1355465168]
 layout_mode = 3
@@ -23,9 +23,9 @@ expand_mode = 2
 
 [node name="IconFrame" type="TextureRect" parent="." unique_id=2110281948]
 layout_mode = 0
-offset_left = 139.0
-offset_top = -16.0
-offset_right = 257.6755
-offset_bottom = 68.0
+offset_left = 147.0
+offset_top = -30.0
+offset_right = 247.6755
+offset_bottom = 73.0
 texture = ExtResource("6_q8uni")
 expand_mode = 1

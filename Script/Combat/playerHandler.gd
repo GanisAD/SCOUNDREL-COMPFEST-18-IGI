@@ -21,11 +21,15 @@ func _ready() -> void:
 	# bisa mendeteksinya sebagai target yang sah.
 	add_to_group("player")
 	Events.card_played.connect(_on_card_played)
+	Events.combat_victory.connect(_on_combat_victory)
 
 # Fungsi utama untuk memulai simulasi pertempuran 
 func start_battle(stats: CharacterStats) -> void:
 	
 	character_stats = stats
+	
+	# Menerapkan debuff pasif jika ada di inventory sebelum kartu & pertarungan dimulai
+	apply_active_debuffs(character_stats)
 	
 	equipped_weapon = get_equipped_weapon()
 	
@@ -165,7 +169,19 @@ func reshuffle_deck_from_discard() -> void:
 	# Kocok ulang tumpukan tarik yang baru agar urutannya acak kembali 
 	draw_pile.shuffle()
 
-# --- Weapon Equip
+func _on_combat_victory() -> void:
+	if inventory_data:
+		inventory_data.decrement_debuff_battles()
+
+func apply_active_debuffs(stats: CharacterStats) -> void:
+	if not inventory_data or not stats:
+		return
+	var active_debuffs = inventory_data.get_active_debuffs()
+	for debuff in active_debuffs:
+		if debuff:
+			debuff.apply_to_stats(stats)
+
+# --- Weapon & Item Management
 
 func get_equipped_weapon() -> WeaponData:
 	if inventory_data:
@@ -177,8 +193,17 @@ func add_item_to_inventory(item: ItemData, quantity: int = 1) -> bool:
 		return inventory_data.add_item(item, quantity)
 	return false
 
-func is_item_duplicate(item: ItemData) -> bool:
+func use_potion(slot_index: int, targets: Array[Node] = []) -> bool:
 	if not inventory_data:
+		return false
+	var used_potion: ItemData = inventory_data.use_potion(slot_index)
+	if used_potion and used_potion is PotionData:
+		(used_potion as PotionData).use(targets, self)
+		return true
+	return false
+
+func is_item_duplicate(item: ItemData) -> bool:
+	if not inventory_data or not item:
 		return false
 		
 	# 1. Pengecekan khusus untuk Senjata (WeaponData)
@@ -189,8 +214,17 @@ func is_item_duplicate(item: ItemData) -> bool:
 		return false
 
 	# 2. Pengecekan untuk Potion (jika tidak boleh ada jenis ramuan yang sama)
-	for slot in inventory_data.potion_slots:
-		if slot and (slot == item or slot.name == item.name):
-			return true
+	if item is PotionData:
+		for slot in inventory_data.potion_slots:
+			if slot and slot.item_data and (slot.item_data == item or slot.item_data.name == item.name):
+				return true
+		return false
+
+	# 3. Pengecekan untuk Debuff
+	if item is DebuffData:
+		for slot in inventory_data.debuff_slots:
+			if slot and slot.item_data and (slot.item_data == item or slot.item_data.name == item.name):
+				return true
+		return false
 
 	return false
