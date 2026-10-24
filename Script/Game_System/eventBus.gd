@@ -56,9 +56,17 @@ signal tooltip_hide_requested
 @warning_ignore("unused_signal")
 signal player_hand_drawn
 
+## Dipanggil setelah satu kartu giliran ditarik
+@warning_ignore("unused_signal")
+signal card_drawn
+
 ## Dipanggil setelah semua kartu di tangan selesai dibuang ke tumpukan buangan (discard pile).
 @warning_ignore("unused_signal")
 signal player_hand_discarded
+
+## Dipanggil setiap kali satu kartu dibuang ke discard pile (untuk SFX per-kartu).
+@warning_ignore("unused_signal")
+signal card_discarded
 
 ## Dipanggil saat fase giliran pemain resmi dimulai (setelah musuh selesai bertindak).
 @warning_ignore("unused_signal")

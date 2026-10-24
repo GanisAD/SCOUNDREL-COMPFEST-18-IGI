@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cce1i6t66dvlo"
+path="res://.godot/imported/victory jingle.ogg-7ad2b19d9e3ef4e798b44cb0729f0c5f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/jingle/victory/victory jingle.ogg"
+dest_files=["res://.godot/imported/victory jingle.ogg-7ad2b19d9e3ef4e798b44cb0729f0c5f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
