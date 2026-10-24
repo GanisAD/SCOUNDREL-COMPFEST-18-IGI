@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fkpr82xmwf"
-path="res://.godot/imported/Heart .png-07585a8c449b476483619ce1bb092dc8.ctex"
+uid="uid://co1id31oyqkr2"
+path="res://.godot/imported/TLoZ_Life_Potion_Artwork.png-310d664b42d872b0633782eb8bc2e068.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Door/Heart .png"
-dest_files=["res://.godot/imported/Heart .png-07585a8c449b476483619ce1bb092dc8.ctex"]
+source_file="res://Resources/Potion/TLoZ_Life_Potion_Artwork.png"
+dest_files=["res://.godot/imported/TLoZ_Life_Potion_Artwork.png-310d664b42d872b0633782eb8bc2e068.ctex"]
 
 [params]
 

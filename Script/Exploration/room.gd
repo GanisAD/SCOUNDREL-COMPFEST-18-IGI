@@ -66,7 +66,9 @@ func handle_weapon_room() -> void:
 ## Mengacak potion dari possible_item_pool
 func handle_potion_room() -> void:
 	var item_pool = current_room_data.possible_item_pool
+	
 	if item_pool.is_empty():
+		promptPanel.show_prompt("Room tidak memiliki item, kembali?")
 		return
 		
 	var chosen_potion = item_pool.pick_random()
@@ -78,7 +80,9 @@ func handle_potion_room() -> void:
 		return
 
 	# Langsung ambil atau tampilkan konfirmasi sesuai alur game
-	_on_loot_button_pressed(chosen_potion)
+	
+	var prompt = "Apakah anda ingin menambah potion : " + chosen_potion.name 
+	promptPanel.show_prompt(prompt, chosen_potion)
 
 ## Mengacak musuh dari possible_monster_encounters
 func handle_monster_room() -> void:
@@ -88,12 +92,15 @@ func handle_monster_room() -> void:
 		
 		print("Player akan bertarung dengan : ", chosen_encounter)
 		
-		promptPanel.yes_confirmation.connect(_on_battle_confirmed)
-		
-		promptPanel.show_prompt("Apakah anda yakin akan bertarung melawan monster ini ?")
+		promptPanel.show_prompt("Apakah anda yakin akan bertarung melawan monster ini ?", chosen_encounter)
 
 func handle_tradeoff_room() -> void:
-	# Fitur sekunder (Spade)
+	var item_pool = current_room_data.possible_item_pool
+	
+	if item_pool.is_empty():
+		promptPanel.show_prompt("Room tidak memiliki item, kembali?")
+		return
+	
 	pass
 
 
@@ -119,14 +126,17 @@ func _on_battle_confirmed(_data = null) -> void:
 func _on_prompt_yes_confirmed(payload = null) -> void:
 	# Jika payload kosong, berarti dialog hanya notifikasi penolakan duplikat (tidak ada aksi)
 	if payload == null:
+		SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
 		return
 
 	match current_room_data.room_type:
 		RoomType.Type.CLUB:
 			_on_battle_confirmed(payload)
+			return
 		RoomType.Type.DIAMOND, RoomType.Type.HEART:
 			if payload is ItemData:
 				_on_loot_button_pressed(payload)
+				return
 
 func _on_loot_button_pressed(item: ItemData) -> void:
 	# Memanggil sinyal atau langsung ke PlayerHandler
@@ -134,3 +144,5 @@ func _on_loot_button_pressed(item: ItemData) -> void:
 	
 	if altar:
 		altar.set_altar_state(Altar.State.DISABLED)
+		
+	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)

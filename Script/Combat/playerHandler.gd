@@ -186,7 +186,6 @@ func is_item_duplicate(item: ItemData) -> bool:
 
 	# 2. Pengecekan untuk Potion (jika tidak boleh ada jenis ramuan yang sama)
 	for slot in inventory_data.potion_slots:
-		if slot and (slot == item or slot.name == item.name):
+		if slot and (slot == item):
 			return true
-
 	return false

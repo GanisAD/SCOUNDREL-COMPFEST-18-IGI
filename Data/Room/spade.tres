@@ -6,6 +6,8 @@
 
 [resource]
 script = ExtResource("1_ggl66")
+room_name = "Blood Exchange  Room"
+room_type = 3
 room_icon = ExtResource("2_g62la")
 room_altar = ExtResource("1_we18r")
 metadata/_custom_type_script = "uid://dyf4igi785lr7"
