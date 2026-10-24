@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
 [ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
-[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="6_mmg4p"]
 [ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy/Skeleton.tscn" id="7_kgncc"]
 [ext_resource type="Texture2D" uid="uid://gt74ft4pohgp" path="res://Resources/UI/healthbar-empty.png" id="8_1blk7"]
 [ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
@@ -40,7 +39,6 @@ script = ExtResource("5_70aft")
 
 [node name="Enemy" parent="EnemyHandler" unique_id=1894014694 instance=ExtResource("7_kgncc")]
 position = Vector2(949, 475)
-stats = ExtResource("6_mmg4p")
 
 [node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
 collision_layer = 2
