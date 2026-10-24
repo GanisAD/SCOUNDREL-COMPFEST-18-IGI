@@ -1,14 +1,20 @@
 [gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://bq707ul7s1okx"]
 
+[ext_resource type="Script" uid="uid://cdi4fjax5vm3t" path="res://Script/Effect/health_effect.gd" id="1_health"]
 [ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Effect/effect.gd" id="1_ian4x"]
 [ext_resource type="Texture2D" uid="uid://dpf1bc8ab01ev" path="res://Resources/Potion/health potion.png" id="2_ian4x"]
 [ext_resource type="Script" uid="uid://bsnppancayfuh" path="res://Script/Inventory/Item/potion_data.gd" id="3_2q3c5"]
 
+[sub_resource type="Resource" id="Resource_heal"]
+script = ExtResource("1_health")
+amount = 15
+metadata/_custom_type_script = "uid://cdi4fjax5vm3t"
+
 [resource]
 script = ExtResource("3_2q3c5")
-effects = Array[ExtResource("1_ian4x")]([null])
+effects = Array[ExtResource("1_ian4x")]([SubResource("Resource_heal")])
 id = "3"
 name = "Heal Potion"
-description = "Heal it user a fraction of their health point"
+description = "Memulihkan 15 Health Point pengguna."
 icon = ExtResource("2_ian4x")
 metadata/_custom_type_script = "uid://bsnppancayfuh"
