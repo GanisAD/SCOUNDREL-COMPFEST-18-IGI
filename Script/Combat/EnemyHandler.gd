@@ -27,6 +27,22 @@ func _setup_enemy_signals() -> void:
 		if enemy.has_signal("died") and not enemy.died.is_connected(_on_enemy_died):
 			enemy.died.connect(_on_enemy_died.bind(enemy))
 
+
+func set_enemy_stats_for_all(new_stats: EnemyStats) -> void:
+	_update_active_enemies()
+	for enemy in active_enemies:
+		if is_instance_valid(enemy):
+			# Memanggil setter internal musuh agar me-refresh instance stats & AI controller-nya
+			enemy.stats = new_stats
+
+# Mengganti EnemyStats untuk satu musuh spesifik berdasarkan indeksnya
+func set_enemy_stats_at(index: int, new_stats: EnemyStats) -> void:
+	_update_active_enemies()
+	if index >= 0 and index < active_enemies.size():
+		var enemy = active_enemies[index]
+		if is_instance_valid(enemy):
+			enemy.stats = new_stats
+
 # --- LOGIKA TURN-BASED (SEKUENSAL) ---
 
 # Dipanggil oleh Battle Manager saat giliran Player selesai

@@ -175,6 +175,11 @@ func forfeit_current_room() -> bool:
 	return_to_dungeon_overworld()
 	return true
 
+func enter_battle_scene(Enemy:EnemyStats) -> void:
+	Events.combat_start.emit(Enemy)
+	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
+	print("Player melawan : ", Enemy.enemy_name)
+
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null

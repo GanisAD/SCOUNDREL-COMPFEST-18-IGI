@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://pxip4kp1rjrg"]
+
+[ext_resource type="Script" uid="uid://b8ycvj2ybxa2" path="res://Script/Inventory/Item/PotionUI.gd" id="1_332kh"]
+[ext_resource type="Texture2D" uid="uid://dpf1bc8ab01ev" path="res://Resources/Potion/health potion.png" id="1_v06ls"]
+
+[node name="Potion" type="Control" unique_id=1598172714]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_332kh")
+
+[node name="IconRect" type="TextureRect" parent="." unique_id=1832627208]
+layout_mode = 0
+offset_right = 107.0
+offset_bottom = 100.0
+texture = ExtResource("1_v06ls")
+expand_mode = 1

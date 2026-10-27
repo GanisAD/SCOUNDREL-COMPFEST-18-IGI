@@ -11,6 +11,7 @@ extends CanvasLayer
 @onready var player_stats_ui: StatsUI = $PlayerStatsUI
 ## Tombol untuk mengakhiri giliran pemain.
 @onready var end_turn_button: Button = $EndTurnButton
+@onready var potion_use_button: Button = $PotionUseButton
 
 # (Opsional) Referensi untuk komponen UI lainnya di masa depan
 # @onready var mana_ui: Control = $ManaUI
@@ -23,6 +24,9 @@ func _ready() -> void:
 	#Hubungkan sinyal klik tombol End Turn
 	if end_turn_button:
 		end_turn_button.pressed.connect(_on_end_turn_button_pressed)
+	
+	if potion_use_button:
+		potion_use_button.pressed.connect(_on_potion_use_button_pressed)
 	
 	#Hubungkan sinyal dari Event Bus global (jika kamu menggunakannya)
 	Events.player_turn_started.connect(_on_player_turn_started)
@@ -69,3 +73,6 @@ func _on_player_turn_started() -> void:
 	# Saat Enemy selesai menyerang dan giliran kembali ke Player, aktifkan lagi tombolnya
 	if end_turn_button:
 		end_turn_button.disabled = false
+
+func _on_potion_use_button_pressed() -> void:
+	PlayerHandler.use_potion(0) # Memakai potion yang berada pada index paling pertama slot inventory

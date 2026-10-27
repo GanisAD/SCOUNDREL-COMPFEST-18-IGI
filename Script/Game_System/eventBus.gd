@@ -89,6 +89,9 @@ signal player_died
 # EVENT STATUS MUSUH & PERTEMPURAN
 # ==========================================
 
+@warning_ignore("unused_signal")
+signal combat_start(Enemy:EnemyStats)
+
 ## Dipanggil saat fase giliran kelompok musuh dimulai.
 @warning_ignore("unused_signal")
 signal enemy_turn_started
@@ -114,6 +117,10 @@ signal ui_button_clicked
 # ==========================================
 # EVENT EKSPLORASI & PROGRESSI LABIRIN
 # ==========================================
+
+## Dipanggil saat scene berpindah ke mode exploration
+@warning_ignore("unused_signal")
+signal exploration_start
 
 ## Dipanggil saat lantai berubah (lantai baru dinaiki).
 @warning_ignore("unused_signal")

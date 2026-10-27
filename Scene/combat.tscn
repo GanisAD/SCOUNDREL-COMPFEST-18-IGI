@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
 [ext_resource type="Texture2D" uid="uid://cd4lrfvpkalfr" path="res://Resources/UI/healthbar-full.png" id="9_dr6gs"]
 [ext_resource type="Script" uid="uid://bacju5ksgja7j" path="res://Script/Game_System/audio_manager.gd" id="13_0q1xu"]
+[ext_resource type="Script" uid="uid://cyrb3uhqfu0v6" path="res://Script/UI/potion_container.gd" id="13_othti"]
 [ext_resource type="AudioStream" uid="uid://ddbctgtrkklf2" path="res://Resources/Audio/SFX/draw card/draw card sfx 2, credit oxidvideos.mp3" id="14_0q1xu"]
 [ext_resource type="AudioStream" uid="uid://ush86j0df115" path="res://Resources/Audio/SFX/draw card/draw card sfx 3, credit oxidvideos.mp3" id="14_oypbx"]
 [ext_resource type="AudioStream" uid="uid://cce1i6t66dvlo" path="res://Resources/Audio/SFX/jingle/victory/victory jingle.ogg" id="16_1iwes"]
@@ -27,6 +28,9 @@ font_size = 89
 
 [sub_resource type="LabelSettings" id="LabelSettings_2rx4k"]
 font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_44v7a"]
+font_size = 55
 
 [sub_resource type="LabelSettings" id="LabelSettings_xg0st"]
 font_size = 19
@@ -122,6 +126,15 @@ offset_bottom = 117.0
 text = "Mana: 3 / 3"
 label_settings = SubResource("LabelSettings_2rx4k")
 
+[node name="Label" type="Label" parent="BattleUI/PlayerStatsUI" unique_id=1998703727]
+layout_mode = 0
+offset_left = 303.0
+offset_top = 35.0
+offset_right = 387.0
+offset_bottom = 111.0
+text = "0/0"
+label_settings = SubResource("LabelSettings_44v7a")
+
 [node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
 offset_left = 38.0
 offset_top = 759.0
@@ -157,6 +170,14 @@ offset_bottom = 955.0
 script = ExtResource("1_6nktc")
 card_ui_scene = ExtResource("6_2rx4k")
 
+[node name="PotionContainer" type="HBoxContainer" parent="BattleUI" unique_id=2110694395]
+offset_left = 1425.0
+offset_top = 39.0
+offset_right = 1919.0
+offset_bottom = 155.0
+alignment = 2
+script = ExtResource("13_othti")
+
 [node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
 offset_left = 1614.0
 offset_top = 757.0
@@ -164,6 +185,14 @@ offset_right = 1795.0
 offset_bottom = 803.0
 theme_override_font_sizes/font_size = 30
 text = "End Turn"
+
+[node name="PotionUseButton" type="Button" parent="BattleUI" unique_id=221676097]
+offset_left = 1579.0
+offset_top = 57.0
+offset_right = 1869.0
+offset_bottom = 139.0
+theme_override_font_sizes/font_size = 54
+text = "Use Potion"
 
 [node name="AudioManager" type="Node" parent="." unique_id=1514159376]
 script = ExtResource("13_0q1xu")

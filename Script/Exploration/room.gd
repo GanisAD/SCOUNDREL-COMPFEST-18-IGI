@@ -129,7 +129,8 @@ func _on_forfeit_used() -> void:
 
 
 func _on_battle_confirmed(_data = null) -> void:
-	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
+	# SceneManager.change_scene(SceneManager.SceneID.COMBAT)
+	GameManager.enter_battle_scene(_data)
 
 func _on_prompt_yes_confirmed(payload = null) -> void:
 	# Jika payload kosong, berarti dialog hanya notifikasi penolakan duplikat (tidak ada aksi)
@@ -153,4 +154,4 @@ func _on_loot_button_pressed(item: ItemData) -> void:
 	if altar:
 		altar.set_altar_state(Altar.State.DISABLED)
 		
-	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
+	GameManager.return_to_dungeon_overworld()

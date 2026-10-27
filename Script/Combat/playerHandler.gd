@@ -9,6 +9,7 @@ const HAND_DISCARD_INTERVAL := 0.1
 @export var inventory_data: InventoryData
  
 var hand: Node
+var _potionContainer : Node
 
 # Variabel untuk menampung data statistik dan tumpukan kartu 
 var character_stats: CharacterStats 

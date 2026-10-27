@@ -19,6 +19,9 @@ func _ready() -> void:
 	battle_stats.set_health(battle_stats.max_health)
 	battle_stats.set_mana(battle_stats.max_mana)
 	battle_stats.stats_changed.connect(_on_player_stats_changed.bind(battle_stats))
+
+	# SETUP STATUS MUSUH
+	Events.combat_start.connect(enemy_handler.set_enemy_stats_for_all)
 	
 	PlayerHandler.start_battle(battle_stats)
 	
