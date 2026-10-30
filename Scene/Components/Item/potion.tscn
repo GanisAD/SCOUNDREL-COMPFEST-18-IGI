@@ -10,7 +10,7 @@ script = ExtResource("1_332kh")
 
 [node name="IconRect" type="TextureRect" parent="." unique_id=1832627208]
 layout_mode = 0
-offset_right = 107.0
-offset_bottom = 100.0
+offset_right = 39.0
+offset_bottom = 36.0
 texture = ExtResource("1_v06ls")
 expand_mode = 1

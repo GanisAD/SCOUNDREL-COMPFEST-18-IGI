@@ -9,7 +9,7 @@ const HAND_DISCARD_INTERVAL := 0.1
 @export var inventory_data: InventoryData
  
 var hand: Node
-var _potionContainer : Node
+var _potionContainer: PotionContainer : set = _set_potion_container
 
 # Variabel untuk menampung data statistik dan tumpukan kartu 
 var character_stats: CharacterStats 
@@ -183,6 +183,16 @@ func apply_active_debuffs(stats: CharacterStats) -> void:
 			debuff.apply_to_stats(stats)
 
 # --- Weapon & Item Management
+func _set_potion_container(value: PotionContainer) -> void:
+	_potionContainer = value
+	if _potionContainer and inventory_data:
+		_potionContainer.inventory = inventory_data
+
+# Setter untuk menyuntikkan InventoryData baru ke PotionContainer jika node UI sudah siap
+func _set_inventory_data(value: InventoryData) -> void:
+	inventory_data = value
+	if _potionContainer and inventory_data:
+		_potionContainer.inventory = inventory_data
 
 func get_equipped_weapon() -> WeaponData:
 	if inventory_data:

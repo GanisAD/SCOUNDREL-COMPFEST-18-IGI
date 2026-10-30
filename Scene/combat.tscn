@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://bacju5ksgja7j" path="res://Script/Game_System/audio_manager.gd" id="13_0q1xu"]
 [ext_resource type="Script" uid="uid://cyrb3uhqfu0v6" path="res://Script/UI/potion_container.gd" id="13_othti"]
 [ext_resource type="AudioStream" uid="uid://ddbctgtrkklf2" path="res://Resources/Audio/SFX/draw card/draw card sfx 2, credit oxidvideos.mp3" id="14_0q1xu"]
+[ext_resource type="PackedScene" uid="uid://pxip4kp1rjrg" path="res://Scene/Components/Item/potion.tscn" id="14_5pmrc"]
 [ext_resource type="AudioStream" uid="uid://ush86j0df115" path="res://Resources/Audio/SFX/draw card/draw card sfx 3, credit oxidvideos.mp3" id="14_oypbx"]
 [ext_resource type="AudioStream" uid="uid://cce1i6t66dvlo" path="res://Resources/Audio/SFX/jingle/victory/victory jingle.ogg" id="16_1iwes"]
 [ext_resource type="AudioStream" uid="uid://b3aytjt1dgwa6" path="res://Resources/Audio/SFX/jingle/defeat/defeat jingle.ogg" id="17_othti"]
@@ -177,6 +178,7 @@ offset_right = 1919.0
 offset_bottom = 155.0
 alignment = 2
 script = ExtResource("13_othti")
+potion_ui_scene = ExtResource("14_5pmrc")
 
 [node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
 offset_left = 1614.0
