@@ -109,8 +109,6 @@ signal combat_victory
 ## Sinyal umum yang dapat dipancarkan oleh komponen UI saat tombol umum ditekan.
 @warning_ignore("unused_signal")
 signal ui_button_clicked
-<<<<<<< Updated upstream
-=======
 
 
 # ==========================================
@@ -162,4 +160,3 @@ signal shield_used(block_amount: int)
 ## [param damage]: Jumlah damage yang diterima.
 @warning_ignore("unused_signal")
 signal hit_taken(target: Node, damage: int)
->>>>>>> Stashed changes
