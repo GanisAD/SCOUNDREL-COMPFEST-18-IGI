@@ -6,6 +6,7 @@ extends Effect
 @export var target_self: bool = true
 
 func execute(targets: Array[Node], player: Node) -> void:
+	Events.potion_used.emit()
 	if target_self:
 		if player and "character_stats" in player:
 			player.character_stats.strength_stacks += stacks_to_add

@@ -2,6 +2,8 @@ extends Node2D
 class_name Combat 
 
 @export var character_stats: CharacterStats
+@export var bgm_exploration: AudioStream
+@export var bgm_combat: AudioStream
 
 @onready var battle_ui: CanvasLayer = $BattleUI
 #@onready var PlayerHandler: PlayerHandler = $PlayerHandler
@@ -12,6 +14,11 @@ class_name Combat
 
 
 func _ready() -> void:
+	
+	# Panggil BGM eksplorasi yang sama. 
+	# Musik dari ruangan sebelumnya akan terus mengalir tanpa terputus/terulang!
+	BGMManager.play_bgm(bgm_exploration)
+	
 	var battle_stats = character_stats.duplicate(true)
 	battle_ui.initialize_player(battle_stats)
 	

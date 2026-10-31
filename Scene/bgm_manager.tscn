@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dx6e20mfym14u"]
+
+[ext_resource type="AudioStream" uid="uid://bptgrrusgb8bv" path="res://Resources/Audio/BGM/explore bgm/exploration bgm v4.ogg" id="1_5thov"]
+
+[sub_resource type="GDScript" id="GDScript_c6lqs"]
+resource_name = "BGMManager"
+script/source = "extends Node
+
+@onready var bgm_player: AudioStreamPlayer = $AudioStreamPlayer
+
+func play_bgm(stream: AudioStream) -> void:
+	# Jika musik yang diminta sama dan sedang diputar, abaikan agar lagu tidak ter-reset
+	if bgm_player.stream == stream and bgm_player.playing:
+		return
+	
+	bgm_player.stream = stream
+	bgm_player.play()
+
+func stop_bgm() -> void:
+	bgm_player.stop()
+"
+
+[node name="BGMManager" type="Node" unique_id=1240410567]
+script = SubResource("GDScript_c6lqs")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=131233146]
+stream = ExtResource("1_5thov")
+volume_db = -7.039
+autoplay = true
+parameters/looping = true

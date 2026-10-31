@@ -6,7 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cyq1g32wtxqsf" path="res://Resources/Door/door-bg.png" id="4_lsfxy"]
 [ext_resource type="Script" uid="uid://bacju5ksgja7j" path="res://Script/Game_System/audio_manager.gd" id="5_4fj1r"]
 [ext_resource type="AudioStream" uid="uid://ush86j0df115" path="res://Resources/Audio/SFX/draw card/draw card sfx 3, credit oxidvideos.mp3" id="6_8wwn8"]
-[ext_resource type="AudioStream" uid="uid://bptgrrusgb8bv" path="res://Resources/Audio/BGM/explore bgm/exploration bgm v4.ogg" id="6_iimj8"]
+[ext_resource type="AudioStream" uid="uid://cn31pgclsiewg" path="res://Resources/Audio/SFX/elevator/freesound_community-elevator-sound-99315.mp3" id="7_p4p60"]
+[ext_resource type="PackedScene" uid="uid://dx6e20mfym14u" path="res://Scene/bgm_manager.tscn" id="8_p4p60"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n3gve"]
 font_size = 49
@@ -59,13 +60,10 @@ offset_bottom = 113.0
 text = "Current Floor : 1"
 label_settings = SubResource("LabelSettings_n3gve")
 
-[node name="AudioManager" type="Node" parent="." unique_id=734954959]
+[node name="SFXManager" type="Node" parent="." unique_id=734954959]
 script = ExtResource("5_4fj1r")
 sfx_card_draw = ExtResource("6_8wwn8")
+sfx_elevator = ExtResource("7_p4p60")
 metadata/_custom_type_script = "uid://bacju5ksgja7j"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioManager" unique_id=2104933526]
-stream = ExtResource("6_iimj8")
-volume_db = 2.083
-autoplay = true
-parameters/looping = true
+[node name="BGMManager" parent="." unique_id=1240410567 instance=ExtResource("8_p4p60")]

@@ -41,6 +41,24 @@ extends Node
 ## Suara klik tombol standar antarmuka.
 @export var sfx_button_click: AudioStream
 
+@export_group("Exploration Audio Cues")
+## Suara SFX ketika berpindah lantai.
+@export var sfx_elevator: AudioStream
+
+@export_group("Exploration Fight Cues")
+## Suara SFX ketika menggunakan kartu senjata.
+@export var sfx_weapon: AudioStream
+
+## Suara SFX ketika menggunakan kartu potion.
+@export var sfx_potion: AudioStream
+
+## Suara SFX ketika menggunakan kartu shiled.
+@export var sfx_shield: AudioStream
+
+## Suara SFX ketika menerima damage/memberikan damage.
+@export var sfx_hit: AudioStream
+
+
 # ==========================================
 # NODE PEMUTAR AUDIO INTERNAL
 # ==========================================
@@ -88,6 +106,14 @@ func _connect_event_bus() -> void:
 	Events.combat_victory.connect(func(): play_sfx(sfx_victory))
 	Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
 
+	Events.floor_changed.connect(func(_current_floor: int, _max_floor: int): play_sfx(sfx_elevator))
+	
+	Events.weapon_used.connect(func(): play_sfx(sfx_weapon))
+	Events.potion_used.connect(func(): play_sfx(sfx_potion))
+	Events.shield_used.connect(func(): play_sfx(sfx_shield))
+	Events.hit_taken.connect(func(): play_sfx(sfx_hit))
+	
+		
 # ==========================================
 # FUNGSI PUBLIK (API AUDIO)
 # ==========================================

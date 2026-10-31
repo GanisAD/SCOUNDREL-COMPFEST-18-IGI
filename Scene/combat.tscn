@@ -18,6 +18,10 @@
 [ext_resource type="AudioStream" uid="uid://cce1i6t66dvlo" path="res://Resources/Audio/SFX/jingle/victory/victory jingle.ogg" id="16_1iwes"]
 [ext_resource type="AudioStream" uid="uid://b3aytjt1dgwa6" path="res://Resources/Audio/SFX/jingle/defeat/defeat jingle.ogg" id="17_othti"]
 [ext_resource type="AudioStream" uid="uid://dtprlggfxkeak" path="res://Resources/Audio/SFX/Click Sfx/click sfx 1.wav" id="18_5pmrc"]
+[ext_resource type="AudioStream" uid="uid://d33k11chol1mv" path="res://Resources/Audio/SFX/elevator/freesound_community-elevator-75341.mp3" id="19_othti"]
+[ext_resource type="AudioStream" uid="uid://csnwy14xdpxu2" path="res://Resources/Audio/SFX/hit impact/sword impact on armor, credit DRAGON-STUDIO.mp3" id="20_notb7"]
+[ext_resource type="AudioStream" uid="uid://tjmbktxcpql" path="res://Resources/Audio/SFX/drink potion/potion drink 2.wav" id="21_ix4ye"]
+[ext_resource type="AudioStream" uid="uid://bcjfrcjv50o1t" path="res://Resources/Audio/SFX/hit impact/hitHurt 8.wav" id="22_yuw34"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(1928, 748)
@@ -174,6 +178,10 @@ sfx_card_discard = ExtResource("14_oypbx")
 sfx_victory = ExtResource("16_1iwes")
 sfx_defeat = ExtResource("17_othti")
 sfx_button_click = ExtResource("18_5pmrc")
+sfx_elevator = ExtResource("19_othti")
+sfx_weapon = ExtResource("20_notb7")
+sfx_potion = ExtResource("21_ix4ye")
+sfx_hit = ExtResource("22_yuw34")
 metadata/_custom_type_script = "uid://bacju5ksgja7j"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="AudioManager" unique_id=61635032]
