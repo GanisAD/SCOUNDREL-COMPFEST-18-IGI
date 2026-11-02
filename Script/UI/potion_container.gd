@@ -7,14 +7,20 @@ extends HBoxContainer
 var inventory: InventoryData : set = _set_inventory
 
 func _ready() -> void:
-	# Daftarkan referensi ke PlayerHandler jika diperlukan
-	if "PlayerHandler" in self or ClassDB.class_exists("PlayerHandler"):
-		PlayerHandler._potionContainer = self
+	var ph = get_node_or_null("/root/PlayerHandler")
+	if ph:
+		if "_potionContainer" in ph:
+			ph._potionContainer = self
+		if not inventory and "inventory_data" in ph and ph.inventory_data:
+			inventory = ph.inventory_data
+	else:
+		update_potions_ui()
 
 func _set_inventory(value: InventoryData) -> void:
+	if inventory and inventory.inventory_updated.is_connected(update_potions_ui):
+		inventory.inventory_updated.disconnect(update_potions_ui)
 	inventory = value
 	if inventory:
-		# Sambungkan sinyal inventory_updated agar UI merespons penggunaan/penambahan potion
 		if not inventory.inventory_updated.is_connected(update_potions_ui):
 			inventory.inventory_updated.connect(update_potions_ui)
 		update_potions_ui()
@@ -22,21 +28,25 @@ func _set_inventory(value: InventoryData) -> void:
 ## Fungsi utama untuk memuat ulang seluruh node UI Potion di dalam Container
 func update_potions_ui() -> void:
 	if not potion_ui_scene:
-		push_error("PotionContainer: potion_ui_scene belum di-assign di Inspector!")
-		return
+		potion_ui_scene = load("res://Scene/Components/Item/potion.tscn")
+		if not potion_ui_scene:
+			push_error("PotionContainer: potion_ui_scene belum di-assign di Inspector!")
+			return
 		
 	# 1. Bersihkan anak (child) UI lama agar tidak menumpuk
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 		
 	if not inventory:
 		return
 		
 	# 2. Iterasi setiap slot potion yang ada di InventoryData
-	for slot in inventory.potion_slots:
+	for i in range(inventory.potion_slots.size()):
+		var slot: SlotData = inventory.potion_slots[i]
 		if slot and slot.item_data and slot.item_data is PotionData:
 			var potion_ui = potion_ui_scene.instantiate() as PotionUI
 			if potion_ui:
 				add_child(potion_ui)
-				# Inject data ke instance UI (Bukan ke PackedScene)
-				potion_ui.potion = slot.item_data as PotionData
+				potion_ui.slot_index = i
+				potion_ui.slot_data = slot
