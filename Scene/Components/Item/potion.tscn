@@ -3,14 +3,44 @@
 [ext_resource type="Script" uid="uid://b8ycvj2ybxa2" path="res://Script/Inventory/Item/PotionUI.gd" id="1_332kh"]
 [ext_resource type="Texture2D" uid="uid://dpf1bc8ab01ev" path="res://Resources/Potion/health potion.png" id="1_v06ls"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_qty"]
+font_size = 18
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Potion" type="Control" unique_id=1598172714]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 0
+mouse_default_cursor_shape = 2
 script = ExtResource("1_332kh")
 
 [node name="IconRect" type="TextureRect" parent="." unique_id=1832627208]
-layout_mode = 0
-offset_right = 39.0
-offset_bottom = 36.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("1_v06ls")
 expand_mode = 1
+stretch_mode = 5
+
+[node name="QuantityLabel" type="Label" parent="." unique_id=1832627209]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "x1"
+label_settings = SubResource("LabelSettings_qty")
+horizontal_alignment = 2
+vertical_alignment = 2

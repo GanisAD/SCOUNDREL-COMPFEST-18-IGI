@@ -10,10 +10,15 @@ class_name Combat
 @onready var draw_pile_label: CardPileUI = $BattleUI/CardPileUI/DrawPileLabel
 @onready var discard_pile_label: CardPileUI = $BattleUI/CardPileUI/DiscardPileLabel
 
+var current_battle_stats: CharacterStats
 
 func _ready() -> void:
 	var battle_stats = character_stats.duplicate(true)
+	current_battle_stats = battle_stats
 	battle_ui.initialize_player(battle_stats)
+	var ph = get_node_or_null("/root/PlayerHandler")
+	if ph and ph.inventory_data:
+		battle_ui.initialize_inventory(ph.inventory_data)
 	
 	# 1. SETUP STATUS PEMAIN AWAL
 	battle_stats.set_health(battle_stats.max_health)
@@ -66,5 +71,8 @@ func _on_player_stats_changed(stats: CharacterStats) -> void:
 
 func _on_victory() -> void:
 	print("Victory! Semua musuh telah dikalahkan.")
+	if current_battle_stats:
+		GameManager.player_hp = current_battle_stats.health
+		GameManager.max_hp = current_battle_stats.max_health
 	Events.combat_victory.emit()
 	GameManager.return_to_dungeon_overworld()

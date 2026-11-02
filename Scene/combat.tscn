@@ -20,6 +20,8 @@
 [ext_resource type="AudioStream" uid="uid://cce1i6t66dvlo" path="res://Resources/Audio/SFX/jingle/victory/victory jingle.ogg" id="16_1iwes"]
 [ext_resource type="AudioStream" uid="uid://b3aytjt1dgwa6" path="res://Resources/Audio/SFX/jingle/defeat/defeat jingle.ogg" id="17_othti"]
 [ext_resource type="AudioStream" uid="uid://dtprlggfxkeak" path="res://Resources/Audio/SFX/Click Sfx/click sfx 1.wav" id="18_5pmrc"]
+[ext_resource type="Script" path="res://Script/UI/debuff_container.gd" id="19_debuff_container"]
+[ext_resource type="PackedScene" path="res://Scene/Components/Item/debuff.tscn" id="20_debuff_scene"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(1928, 748)
@@ -180,6 +182,14 @@ alignment = 2
 script = ExtResource("13_othti")
 potion_ui_scene = ExtResource("14_5pmrc")
 
+[node name="DebuffContainer" type="HBoxContainer" parent="BattleUI" unique_id=2110694396]
+offset_left = 16.0
+offset_top = 135.0
+offset_right = 350.0
+offset_bottom = 195.0
+script = ExtResource("19_debuff_container")
+debuff_ui_scene = ExtResource("20_debuff_scene")
+
 [node name="EndTurnButton" type="Button" parent="BattleUI" unique_id=1958134832]
 offset_left = 1614.0
 offset_top = 757.0
@@ -187,14 +197,6 @@ offset_right = 1795.0
 offset_bottom = 803.0
 theme_override_font_sizes/font_size = 30
 text = "End Turn"
-
-[node name="PotionUseButton" type="Button" parent="BattleUI" unique_id=221676097]
-offset_left = 1579.0
-offset_top = 57.0
-offset_right = 1869.0
-offset_bottom = 139.0
-theme_override_font_sizes/font_size = 54
-text = "Use Potion"
 
 [node name="AudioManager" type="Node" parent="." unique_id=1514159376]
 script = ExtResource("13_0q1xu")
