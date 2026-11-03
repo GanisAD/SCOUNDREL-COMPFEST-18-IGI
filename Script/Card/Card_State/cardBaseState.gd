@@ -8,17 +8,17 @@ var base_tween: Tween
 func enter() -> void:
 	if not card_ui.is_node_ready():
 		await card_ui.ready
-		
+
 	# Kembalikan jangkar ke default
 	card_ui.pivot_offset = Vector2.ZERO
 	card_ui.rotation = 0.0
 	card_ui.drop_point_detector.monitoring = false
 	card_ui.z_index = 0
 	card_ui.state.text = "BASE"
-	
+
 	if base_tween and base_tween.is_valid():
 		base_tween.kill()
-		
+
 	# Animasi halus kembali ke skala 1.0 dan posisi y 0.0 jika kartu sebelumnya terangkat/membesar
 	if card_ui.scale != Vector2.ONE or card_ui.position.y != 0.0:
 		base_tween = card_ui.create_tween().set_parallel(true)

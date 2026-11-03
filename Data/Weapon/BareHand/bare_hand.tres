@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bq60yclouik42" path="res://Script/Inventory/Item/weapon_data.gd" id="1_l44e4"]
 [ext_resource type="Resource" uid="uid://b1yos4jtuc5mv" path="res://Data/Weapon/BareHand/bareDeck.tres" id="2_pm7e0"]
+[ext_resource type="AudioStream" uid="uid://b0ge1ijhlmsqm" path="res://Resources/Audio/SFX/punch/punch.ogg" id="3_punch"]
 
 [resource]
 script = ExtResource("1_l44e4")
 weapon_type = "Hand"
 base_damage_bonus = 3
+attack_sfx = ExtResource("3_punch")
 weapon_deck = ExtResource("2_pm7e0")
 id = "2"
 name = "Bare Hand"

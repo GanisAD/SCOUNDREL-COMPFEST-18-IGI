@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://porjbsydo103"
+path="res://.godot/imported/enemy turn.ogg-447ac090b639a1d40169b74c5f3b5b55.oggvorbisstr"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/turn sfx/enemy turn.ogg"
+dest_files=["res://.godot/imported/enemy turn.ogg-447ac090b639a1d40169b74c5f3b5b55.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

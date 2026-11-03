@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://f4rs5ojn7i7h"
+path="res://.godot/imported/defeat jingle 2.ogg-8630f9b7f26c903345f4929e1f1bcc07.oggvorbisstr"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/jingle/defeat/defeat jingle 2.ogg"
+dest_files=["res://.godot/imported/defeat jingle 2.ogg-8630f9b7f26c903345f4929e1f1bcc07.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

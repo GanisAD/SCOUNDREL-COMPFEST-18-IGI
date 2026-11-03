@@ -49,6 +49,9 @@ extends Node
 ## Suara SFX ketika menggunakan kartu senjata.
 @export var sfx_weapon: AudioStream
 
+## Suara SFX serangan bare hand.
+@export var sfx_bare_hand: AudioStream = preload("res://Resources/Audio/SFX/punch/punch.ogg")
+
 ## Suara SFX ketika menggunakan kartu potion.
 @export var sfx_potion: AudioStream
 
@@ -96,22 +99,42 @@ func _connect_event_bus() -> void:
 	Events.card_drag_started.connect(func(_card_ui): play_sfx(sfx_card_drag_start))
 	Events.card_drag_ended.connect(func(_card_ui): play_sfx(sfx_card_drag_cancel))
 	Events.card_played.connect(func(_card): play_sfx(sfx_card_played))
-	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw))
-	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard))
+	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw), randf_range(0.95, 1.05))
+	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard), randf_range(0.95, 1.05))
 	
 	Events.player_turn_started.connect(func(): play_sfx(sfx_turn_player_start))
 	Events.enemy_turn_started.connect(func(): play_sfx(sfx_turn_enemy_start))
 	
-	Events.player_died.connect(func(): play_sfx(sfx_defeat))
+	Events.player_died.connect(func():
+		_on_player_died()
+		play_sfx(sfx_defeat)
+	)
 	Events.combat_victory.connect(func(): play_sfx(sfx_victory))
 	Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
 
 	Events.floor_changed.connect(func(_current_floor: int, _max_floor: int): play_sfx(sfx_elevator))
 	
-	Events.weapon_used.connect(func(): play_sfx(sfx_weapon))
-	Events.potion_used.connect(func(): play_sfx(sfx_potion))
-	Events.shield_used.connect(func(): play_sfx(sfx_shield))
+	Events.weapon_used.connect(func(weapon: WeaponData):
+		var stream: AudioStream = sfx_bare_hand if sfx_bare_hand else sfx_weapon
+		if weapon:
+			stream = weapon.attack_sfx if weapon.attack_sfx else sfx_weapon
+		play_sfx(stream)
+	)
+	Events.potion_used.connect(func(): play_sfx(sfx_potion, randf_range(0.95, 1.05)))
+	Events.shield_used.connect(func(): play_sfx(sfx_shield, randf_range(0.95, 1.05)))
 	Events.hit_taken.connect(func(): play_sfx(sfx_hit))
+	
+	# Audio cues musuh (Skeleton) menggunakan audio yang sama dengan player namun dengan pitch lebih rendah (suara lebih dalam)
+	Events.enemy_attack_used.connect(func():
+		var stream: AudioStream = sfx_weapon if sfx_weapon else sfx_bare_hand
+		play_sfx(stream, randf_range(0.65, 0.75))
+	)
+	Events.enemy_buff_used.connect(func():
+		play_sfx(sfx_potion, randf_range(0.65, 0.75))
+	)
+	Events.enemy_shield_used.connect(func():
+		play_sfx(sfx_shield, randf_range(0.65, 0.75))
+	)
 	
 		
 # ==========================================
@@ -169,3 +192,19 @@ func stop_bgm(fade_time: float = 1.0) -> void:
 	var tween = create_tween()
 	tween.tween_property(_bgm_player, "volume_db", -40.0, fade_time)
 	tween.tween_callback(_bgm_player.stop)
+
+func _on_player_died() -> void:
+	# 1. Hentikan BGM internal AudioManager
+	if _bgm_player and _bgm_player.playing:
+		_bgm_player.stop()
+		
+	# 2. Hentikan AudioStreamPlayer child langsung (seperti AudioStreamPlayer di scene combat)
+	for child in get_children():
+		if child is AudioStreamPlayer and child != _bgm_player:
+			child.stop()
+			
+	# 3. Hentikan Autoload BGMManager jika ada
+	if Engine.has_singleton("BGMManager") or is_instance_valid(get_node_or_null("/root/BGMManager")):
+		var bgm_mgr = get_node_or_null("/root/BGMManager")
+		if bgm_mgr and bgm_mgr.has_method("stop_bgm"):
+			bgm_mgr.stop_bgm()

@@ -36,6 +36,7 @@ func _get_enemy() -> Enemy:
 
 # 2. Orkestrasi Buff
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
+	Events.enemy_buff_used.emit()
 	# Aturan Gameplay: Tambahkan buff strength
 	enemy.stats.strength_stacks += strength_amount
 	already_used = true
