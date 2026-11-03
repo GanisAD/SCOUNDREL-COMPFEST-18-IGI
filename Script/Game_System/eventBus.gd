@@ -89,6 +89,9 @@ signal player_died
 # EVENT STATUS MUSUH & PERTEMPURAN
 # ==========================================
 
+@warning_ignore("unused_signal")
+signal combat_start(Enemy:EnemyStats)
+
 ## Dipanggil saat fase giliran kelompok musuh dimulai.
 @warning_ignore("unused_signal")
 signal enemy_turn_started
@@ -115,6 +118,10 @@ signal ui_button_clicked
 # EVENT EKSPLORASI & PROGRESSI LABIRIN
 # ==========================================
 
+## Dipanggil saat scene berpindah ke mode exploration
+@warning_ignore("unused_signal")
+signal exploration_start
+
 ## Dipanggil saat lantai berubah (lantai baru dinaiki).
 @warning_ignore("unused_signal")
 signal floor_changed(current_floor: int, max_floor: int)
@@ -134,7 +141,6 @@ signal room_reshuffled(from_floor: int, to_floor: int, target_slot: int, room_da
 ## Dipanggil saat status ketersediaan forfeit berubah pada pemain di lantai aktif.
 @warning_ignore("unused_signal")
 signal forfeit_state_changed(can_forfeit: bool, remaining_forfeits: int)
-
 
 # ==========================================
 # EVENT AKSI TEMPUR

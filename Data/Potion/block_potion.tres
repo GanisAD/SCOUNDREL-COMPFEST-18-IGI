@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PotionData" format=3 uid="uid://ds48273i66y4o"]
+
+[ext_resource type="Script" uid="uid://dcfa41a3i6aty" path="res://Script/Effect/blockEffect.gd" id="1_block"]
+[ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Effect/effect.gd" id="1_bn0vt"]
+[ext_resource type="Script" uid="uid://bsnppancayfuh" path="res://Script/Inventory/Item/potion_data.gd" id="2_bn0vt"]
+[ext_resource type="Texture2D" uid="uid://co1id31oyqkr2" path="res://Resources/Potion/TLoZ_Life_Potion_Artwork.png" id="3_o7h40"]
+
+[sub_resource type="Resource" id="Resource_block"]
+script = ExtResource("1_block")
+amount = 12
+metadata/_custom_type_script = "uid://dcfa41a3i6aty"
+
+[resource]
+script = ExtResource("2_bn0vt")
+effects = Array[ExtResource("1_bn0vt")]([SubResource("Resource_block")])
+id = "2"
+name = "Block Potion"
+description = "Memberikan efek blok tambahan selama satu turn untuk player sebesar 12 poin"
+icon = ExtResource("3_o7h40")
+metadata/_custom_type_script = "uid://bsnppancayfuh"

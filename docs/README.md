@@ -13,7 +13,8 @@ Selamat datang di proyek **ALTAR-52**! Dokumen ini disusun sebagai gerbang utama
   1. `GameManager` (`res://Script/Game_System/game_manager.gd`): Mengatur status global run (floor, HP overworld, transisi antar ruangan).
   2. `Events` (`res://Script/Game_System/eventBus.gd`): EventBus pusat komunikasi publish-subscribe antar-sistem.
   3. `PlayerHandler` (`res://Scene/playerHandler.tscn`): Mengontrol tumpukan kartu (Draw, Discard), giliran pemain, dan kalkulasi damage masuk.
-  4. *(Opsional/Terjadwal)* `AudioManager` (`res://Script/Game_System/audio_manager.gd`): Singleton pengelola pemutaran SFX, BGM, dan respon audio EventBus.
+  4. `SceneManager` (`res://Scene/scene_manager.tscn`): Mengatur routing scene terpusat, transisi visual (fade), dan pencegahan input locking saat pergantian scene.
+  5. *(Opsional/Terjadwal)* `AudioManager` (`res://Script/Game_System/audio_manager.gd`): Singleton pengelola pemutaran SFX, BGM, dan respon audio EventBus.
 
 ---
 
@@ -39,7 +40,7 @@ Selamat datang di proyek **ALTAR-52**! Dokumen ini disusun sebagai gerbang utama
     ├── Combat/             # Combat manager, Hand, PlayerHandler, DamageCalculator
     ├── Entity/             # Enemy controller, AI picker, dan Stats resource
     ├── Exploration/        # Door, DungeonManager, Altar, Room
-    ├── Game_System/        # EventBus, GameManager, AudioManager
+    ├── Game_System/        # EventBus, GameManager, AudioManager, SceneManager
     ├── Inventory/          # ItemData, WeaponData, InventoryData
     └── UI/                 # BattleUI, StatsUI, IntentUI, CardPileUI, PromptPanel
 ```

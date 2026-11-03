@@ -7,6 +7,7 @@ extends Control
 # SIGNAL KOMUNIKASI
 # ==========================================
 ## Dipancarkan untuk meminta parent Hand (HBoxContainer) melakukan reparenting saat drag selesai/batal.
+@warning_ignore("unused_signal")
 signal reparent_requested(card_ui: CardUI)
 
 # ==========================================
