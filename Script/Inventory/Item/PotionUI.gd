@@ -74,6 +74,7 @@ func use_potion() -> void:
 	var events = get_node_or_null("/root/Events")
 	if events and events.has_signal("ui_button_clicked"):
 		events.ui_button_clicked.emit()
+		events.potion_used.emit()
 	var ph = get_node_or_null("/root/PlayerHandler")
 	if ph and slot_index >= 0:
 		ph.use_potion(slot_index)

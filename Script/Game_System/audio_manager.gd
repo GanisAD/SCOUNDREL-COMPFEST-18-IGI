@@ -110,7 +110,7 @@ func _connect_event_bus() -> void:
 		play_sfx(sfx_defeat)
 	)
 	Events.combat_victory.connect(func(): play_sfx(sfx_victory))
-	Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
+	#Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
 
 	Events.floor_changed.connect(func(_current_floor: int, _max_floor: int): play_sfx(sfx_elevator))
 	

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://orynqa8s2iuo"
+path="res://.godot/imported/sword swing 2.ogg-c252111b13ce6cb1a803f4e87202239d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/sword/sword swing 2.ogg"
+dest_files=["res://.godot/imported/sword swing 2.ogg-c252111b13ce6cb1a803f4e87202239d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
