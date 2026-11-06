@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bgg7byukockt8"]
+
+[ext_resource type="Script" uid="uid://coox67qv88acj" path="res://Script/UI/MainMenu.gd" id="1_rrxvj"]
+
+[node name="MainMenu" type="Control" unique_id=62029722]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rrxvj")
+
+[node name="Panel" type="Panel" parent="." unique_id=1786808074]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=252263586]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -218.0
+offset_right = 270.0
+offset_bottom = 218.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=1495007024]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 90
+text = "Nama Game"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=1193823479]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1694856397]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Play"
+
+[node name="Credit" type="Button" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1202023637]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Credit"
+
+[node name="Quit" type="Button" parent="Panel/VBoxContainer/VBoxContainer" unique_id=881080715]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Quit"
