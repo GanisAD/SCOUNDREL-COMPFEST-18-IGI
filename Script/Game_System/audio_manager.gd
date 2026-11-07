@@ -98,7 +98,7 @@ func _connect_event_bus() -> void:
 	##Events.card_hovered.connect(func(_card_ui): play_sfx(sfx_card_hover, randf_range(0.95, 1.05)))
 	Events.card_drag_started.connect(func(_card_ui): play_sfx(sfx_card_drag_start))
 	Events.card_drag_ended.connect(func(_card_ui): play_sfx(sfx_card_drag_cancel))
-	Events.card_played.connect(func(_card): play_sfx(sfx_card_played))
+	Events.card_played.connect(_on_card_played)
 	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw), randf_range(0.95, 1.05))
 	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard), randf_range(0.95, 1.05))
 	
@@ -192,6 +192,48 @@ func stop_bgm(fade_time: float = 1.0) -> void:
 	var tween = create_tween()
 	tween.tween_property(_bgm_player, "volume_db", -40.0, fade_time)
 	tween.tween_callback(_bgm_player.stop)
+
+func _on_card_played(card: Card) -> void:
+	if not card:
+		if sfx_card_played:
+			play_sfx(sfx_card_played)
+		return
+
+	# 1. Prioritas Utama: Suara khusus per kartu jika disetel di Resource Card
+	if "sound_override" in card and card.sound_override:
+		play_sfx(card.sound_override, randf_range(0.95, 1.05))
+		return
+
+	# 2. Suara berdasarkan Jenis & Tipe Kartu
+	var card_name_lower = card.name.to_lower()
+	
+	# Cek apakah kartu bertipe pertahanan / Shield
+	if "shield" in card_name_lower or "block" in card_name_lower or "defend" in card_name_lower:
+		play_sfx(sfx_shield, randf_range(0.95, 1.05))
+		return
+
+	match card.type:
+		Card.Type.ATTACK:
+			# Ambil audio dari weapon yang sedang dipakai player jika ada
+			var stream: AudioStream = null
+			if Engine.has_singleton("PlayerHandler") or is_instance_valid(get_node_or_null("/root/PlayerHandler")):
+				var ph = get_node_or_null("/root/PlayerHandler")
+				if ph and "equipped_weapon" in ph and ph.equipped_weapon and ph.equipped_weapon.attack_sfx:
+					stream = ph.equipped_weapon.attack_sfx
+
+			if not stream:
+				stream = sfx_weapon if sfx_weapon else sfx_bare_hand
+			play_sfx(stream, randf_range(0.95, 1.05))
+
+		Card.Type.SKILL, Card.Type.POWER:
+			if sfx_potion:
+				play_sfx(sfx_potion, randf_range(0.95, 1.05))
+			elif sfx_card_played:
+				play_sfx(sfx_card_played)
+
+		_:
+			if sfx_card_played:
+				play_sfx(sfx_card_played)
 
 func _on_player_died() -> void:
 	# 1. Hentikan BGM internal AudioManager

@@ -5,11 +5,6 @@ extends Effect
 @export var repeats: int = 1 
 
 func execute(targets: Array[Node], player: Node) -> void:
-	var used_weapon: WeaponData
-	if player and "equipped_weapon" in player:
-		used_weapon = player.equipped_weapon
-	Events.weapon_used.emit(used_weapon)
-
 	var attacker_stats = null
 	if player:
 		if "character_stats" in player:
