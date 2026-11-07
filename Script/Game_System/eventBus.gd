@@ -141,3 +141,40 @@ signal room_reshuffled(from_floor: int, to_floor: int, target_slot: int, room_da
 ## Dipanggil saat status ketersediaan forfeit berubah pada pemain di lantai aktif.
 @warning_ignore("unused_signal")
 signal forfeit_state_changed(can_forfeit: bool, remaining_forfeits: int)
+
+# ==========================================
+# EVENT AKSI TEMPUR
+# ==========================================
+
+## Dipanggil saat pemain atau musuh melakukan aksi tempur
+## [param weapon]: Data senjata yang digunakan; null jika tidak ada senjata aktif.
+@warning_ignore("unused_signal")
+signal weapon_used(weapon: WeaponData)
+
+## Dipanggil saat aksi bertipe attack dieksekusi oleh musuh (misal: Skeleton)
+@warning_ignore("unused_signal")
+signal enemy_attack_used()
+
+## Dipanggil saat aksi buff/strength dieksekusi oleh musuh (misal: Skeleton)
+@warning_ignore("unused_signal")
+signal enemy_buff_used()
+
+## Dipanggil saat aksi shield/block dieksekusi oleh musuh (misal: Skeleton)
+@warning_ignore("unused_signal")
+signal enemy_shield_used()
+
+## Dipanggil saat pemain menggunakan kartu bertipe potion (Heal/Buff).
+## [param heal_amount]: Jumlah HP yang dipulihkan, 0 jika efeknya bukan heal.
+@warning_ignore("unused_signal")
+signal potion_used(heal_amount: int)
+
+## Dipanggil saat pemain menggunakan kartu bertipe shield (Block/Defense).
+## [param block_amount]: Jumlah block/armor yang ditambahkan.
+@warning_ignore("unused_signal")
+signal shield_used()
+
+## Dipanggil saat sebuah entitas (pemain atau musuh) menerima hit / damage.
+## [param target]: Node yang terkena hit.
+## [param damage]: Jumlah damage yang diterima.
+@warning_ignore("unused_signal")
+signal hit_taken(target: Node, damage: int)

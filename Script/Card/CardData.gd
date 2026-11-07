@@ -23,6 +23,10 @@ enum Target {SELF, SINGLE_ENEMY, ALL_ENEMIES, EVERYONE}
 ## Array ini menampung custom resource Effect (Damage, Block, dll.)
 @export var effects: Array[Effect] = []
 
+@export_group("Card Audio")
+## Suara kustom khusus untuk kartu ini jika ingin berbeda dari suara standar tipe kartu.
+@export var sound_override: AudioStream
+
 # ==========================================
 # FUNGSI UTILITAS & VALIDASI
 # ==========================================

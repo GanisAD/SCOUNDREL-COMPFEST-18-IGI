@@ -15,17 +15,23 @@ run/main_scene="uid://dovanrrf4dukk"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://xi0eiu01n2vt"
+
 [autoload]
 
 GameManager="*uid://ci4rstpxo42rx"
 Events="*uid://4wbw7vl7kc54"
 PlayerHandler="*uid://cirj7q3jgxcu2"
 SceneManager="*res://Scene/scene_manager.tscn"
+BGMManager="*uid://dx6e20mfym14u"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=2
 window/stretch/mode="viewport"
 
 [input]

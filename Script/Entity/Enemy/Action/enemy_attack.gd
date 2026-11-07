@@ -20,6 +20,7 @@ func get_intent_value(enemy: Enemy = null) -> String:
 	return str(final_damage)
 
 func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
+	Events.enemy_attack_used.emit()
 	# 1. Tentukan formula aturan permainan yang dieksekusi saat benturan fisik
 	var impact_logic = func():
 		if player and is_instance_valid(player):

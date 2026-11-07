@@ -44,8 +44,8 @@
 ## **UI HUD**
 
 1. **Information Requirement** : 
-    1. **Exploration**: Remaining HP, Weapon Durability,  Debuff, Buff.
-    2. **Combat :** Current HP, Current Mana , Block Point, Buff Effect, Debuff Effect, Whose Turn.
+	1. **Exploration**: Remaining HP, Weapon Durability,  Debuff, Buff.
+	2. **Combat :** Current HP, Current Mana , Block Point, Buff Effect, Debuff Effect, Whose Turn.
 2. **HUD** : 
-    1. **Exploration :** HP Bar, Weapon Slot, Effect Slot
-    2. **Combat :** HP Bar**,** Mana Bar, Block Stats, Buff Stats & Icon, Debuff Stats & Icon. ****
+	1. **Exploration :** HP Bar, Weapon Slot, Effect Slot
+	2. **Combat :** HP Bar**,** Mana Bar, Block Stats, Buff Stats & Icon, Debuff Stats & Icon. ****

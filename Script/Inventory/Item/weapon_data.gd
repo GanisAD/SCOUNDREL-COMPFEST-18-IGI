@@ -6,6 +6,9 @@ extends ItemData  # Atau extends Resource jika belum ada kelas dasar ItemData
 @export var weapon_type: String = "Sword"
 @export var base_damage_bonus: int = 0
 
+@export_group("Weapon Audio")
+@export var attack_sfx: AudioStream
+
 @export_group("Card Deck")
 # Mengunci/menyimpan deck kartu eksklusif milik senjata ini
 @export var weapon_deck: CardPile

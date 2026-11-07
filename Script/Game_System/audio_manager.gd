@@ -41,6 +41,27 @@ extends Node
 ## Suara klik tombol standar antarmuka.
 @export var sfx_button_click: AudioStream
 
+@export_group("Exploration Audio Cues")
+## Suara SFX ketika berpindah lantai.
+@export var sfx_elevator: AudioStream
+
+@export_group("Exploration Fight Cues")
+## Suara SFX ketika menggunakan kartu senjata.
+@export var sfx_weapon: AudioStream
+
+## Suara SFX serangan bare hand.
+@export var sfx_bare_hand: AudioStream = preload("res://Resources/Audio/SFX/punch/punch.ogg")
+
+## Suara SFX ketika menggunakan kartu potion.
+@export var sfx_potion: AudioStream
+
+## Suara SFX ketika menggunakan kartu shiled.
+@export var sfx_shield: AudioStream
+
+## Suara SFX ketika menerima damage/memberikan damage.
+@export var sfx_hit: AudioStream
+
+
 # ==========================================
 # NODE PEMUTAR AUDIO INTERNAL
 # ==========================================
@@ -77,17 +98,45 @@ func _connect_event_bus() -> void:
 	##Events.card_hovered.connect(func(_card_ui): play_sfx(sfx_card_hover, randf_range(0.95, 1.05)))
 	Events.card_drag_started.connect(func(_card_ui): play_sfx(sfx_card_drag_start))
 	Events.card_drag_ended.connect(func(_card_ui): play_sfx(sfx_card_drag_cancel))
-	Events.card_played.connect(func(_card): play_sfx(sfx_card_played))
-	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw))
-	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard))
+	Events.card_played.connect(_on_card_played)
+	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw), randf_range(0.95, 1.05))
+	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard), randf_range(0.95, 1.05))
 	
 	Events.player_turn_started.connect(func(): play_sfx(sfx_turn_player_start))
 	Events.enemy_turn_started.connect(func(): play_sfx(sfx_turn_enemy_start))
 	
-	Events.player_died.connect(func(): play_sfx(sfx_defeat))
+	Events.player_died.connect(func():
+		_on_player_died()
+		play_sfx(sfx_defeat)
+	)
 	Events.combat_victory.connect(func(): play_sfx(sfx_victory))
-	Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
+	#Events.ui_button_clicked.connect(func(): play_sfx(sfx_button_click))
 
+	Events.floor_changed.connect(func(_current_floor: int, _max_floor: int): play_sfx(sfx_elevator))
+	
+	Events.weapon_used.connect(func(weapon: WeaponData):
+		var stream: AudioStream = sfx_bare_hand if sfx_bare_hand else sfx_weapon
+		if weapon:
+			stream = weapon.attack_sfx if weapon.attack_sfx else sfx_weapon
+		play_sfx(stream)
+	)
+	Events.potion_used.connect(func(): play_sfx(sfx_potion, randf_range(0.95, 1.05)))
+	Events.shield_used.connect(func(): play_sfx(sfx_shield, randf_range(0.95, 1.05)))
+	Events.hit_taken.connect(func(): play_sfx(sfx_hit))
+	
+	# Audio cues musuh (Skeleton) menggunakan audio yang sama dengan player namun dengan pitch lebih rendah (suara lebih dalam)
+	Events.enemy_attack_used.connect(func():
+		var stream: AudioStream = sfx_weapon if sfx_weapon else sfx_bare_hand
+		play_sfx(stream, randf_range(0.65, 0.75))
+	)
+	Events.enemy_buff_used.connect(func():
+		play_sfx(sfx_potion, randf_range(0.65, 0.75))
+	)
+	Events.enemy_shield_used.connect(func():
+		play_sfx(sfx_shield, randf_range(0.65, 0.75))
+	)
+	
+		
 # ==========================================
 # FUNGSI PUBLIK (API AUDIO)
 # ==========================================
@@ -143,3 +192,61 @@ func stop_bgm(fade_time: float = 1.0) -> void:
 	var tween = create_tween()
 	tween.tween_property(_bgm_player, "volume_db", -40.0, fade_time)
 	tween.tween_callback(_bgm_player.stop)
+
+func _on_card_played(card: Card) -> void:
+	if not card:
+		if sfx_card_played:
+			play_sfx(sfx_card_played)
+		return
+
+	# 1. Prioritas Utama: Suara khusus per kartu jika disetel di Resource Card
+	if "sound_override" in card and card.sound_override:
+		play_sfx(card.sound_override, randf_range(0.95, 1.05))
+		return
+
+	# 2. Suara berdasarkan Jenis & Tipe Kartu
+	var card_name_lower = card.name.to_lower()
+	
+	# Cek apakah kartu bertipe pertahanan / Shield
+	if "shield" in card_name_lower or "block" in card_name_lower or "defend" in card_name_lower:
+		play_sfx(sfx_shield, randf_range(0.95, 1.05))
+		return
+
+	match card.type:
+		Card.Type.ATTACK:
+			# Ambil audio dari weapon yang sedang dipakai player jika ada
+			var stream: AudioStream = null
+			if Engine.has_singleton("PlayerHandler") or is_instance_valid(get_node_or_null("/root/PlayerHandler")):
+				var ph = get_node_or_null("/root/PlayerHandler")
+				if ph and "equipped_weapon" in ph and ph.equipped_weapon and ph.equipped_weapon.attack_sfx:
+					stream = ph.equipped_weapon.attack_sfx
+
+			if not stream:
+				stream = sfx_weapon if sfx_weapon else sfx_bare_hand
+			play_sfx(stream, randf_range(0.95, 1.05))
+
+		Card.Type.SKILL, Card.Type.POWER:
+			if sfx_potion:
+				play_sfx(sfx_potion, randf_range(0.95, 1.05))
+			elif sfx_card_played:
+				play_sfx(sfx_card_played)
+
+		_:
+			if sfx_card_played:
+				play_sfx(sfx_card_played)
+
+func _on_player_died() -> void:
+	# 1. Hentikan BGM internal AudioManager
+	if _bgm_player and _bgm_player.playing:
+		_bgm_player.stop()
+		
+	# 2. Hentikan AudioStreamPlayer child langsung (seperti AudioStreamPlayer di scene combat)
+	for child in get_children():
+		if child is AudioStreamPlayer and child != _bgm_player:
+			child.stop()
+			
+	# 3. Hentikan Autoload BGMManager jika ada
+	if Engine.has_singleton("BGMManager") or is_instance_valid(get_node_or_null("/root/BGMManager")):
+		var bgm_mgr = get_node_or_null("/root/BGMManager")
+		if bgm_mgr and bgm_mgr.has_method("stop_bgm"):
+			bgm_mgr.stop_bgm()
