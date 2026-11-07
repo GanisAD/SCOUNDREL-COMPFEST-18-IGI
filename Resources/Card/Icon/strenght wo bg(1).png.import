@@ -17,6 +17,7 @@ dest_files=["res://.godot/imported/strenght wo bg(1).png-0c92d497bf1a0cb5804d4f7
 
 compress/mode=0
 compress/high_quality=false
+compress/high_quality_mode=0
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
