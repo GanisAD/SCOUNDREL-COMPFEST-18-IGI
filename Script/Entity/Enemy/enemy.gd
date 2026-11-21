@@ -22,6 +22,9 @@ var current_action: EnemyAction : set = _set_current_action
 @onready var enemy_action_picker: EnemyActionPicker = $EnemyActionPicker
 @onready var intent_ui = $IntentUI # Asumsi node IntentUI ditempel di scene musuh
 
+var base_sprite_scale: Vector2 = Vector2.ONE
+var base_modulate: Color = Color.WHITE
+
 func _ready() -> void:
 	add_to_group("enemies")
 	# 1. Gandakan resource stats agar data HP musuh ini tidak berbagi dengan musuh lain
@@ -38,6 +41,8 @@ func _ready() -> void:
 		arrow.visible = false
 	
 	if sprite:
+		base_sprite_scale = sprite.scale
+		base_modulate = sprite.modulate
 		sprite.play("idle")
 	
 	# 3. Hubungkan sinyal internal Area2D untuk sistem hover aiming kartu
@@ -105,18 +110,19 @@ func play_buff_animation() -> void:
 		return
 		
 	var rage_color = Color.from_string("ffd043", Color.ORANGE)
+	base_modulate = rage_color
 	var tween = create_tween().set_parallel(true)
 	tween.bind_node(self)
 	
 	# 1. Ubah warna modulate sprite secara permanen
-	tween.tween_property(sprite, "modulate", rage_color, 0.35)\
+	tween.tween_property(sprite, "modulate", base_modulate, 0.35)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 	# 2. Denyut membesar singkat (Juice Effect)
 	var scale_tween = create_tween()
 	scale_tween.bind_node(self)
-	scale_tween.tween_property(sprite, "scale", Vector2(1.2, 1.2), 0.15)
-	scale_tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.15)
+	scale_tween.tween_property(sprite, "scale", base_sprite_scale * 1.2, 0.15)
+	scale_tween.tween_property(sprite, "scale", base_sprite_scale, 0.15)
 	
 	# Tunggu animasi selesai agar aksi tidak terputus prematur
 	await scale_tween.finished
@@ -128,8 +134,8 @@ func play_block_animation() -> void:
 		
 	var tween = create_tween()
 	tween.bind_node(self)
-	tween.tween_property(sprite, "scale", Vector2(1.15, 1.15), 0.1)
-	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_property(sprite, "scale", base_sprite_scale * 1.15, 0.1)
+	tween.tween_property(sprite, "scale", base_sprite_scale, 0.1)
 	
 	await tween.finished
 
@@ -166,7 +172,7 @@ func take_damage(amount: int) -> void:
 func _play_hit_effect() -> void:
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color.RED, 0.1)
-	tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
+	tween.tween_property(sprite, "modulate", base_modulate, 0.1)
 
 func add_block(amount: int) -> void:
 	if not stats:
@@ -175,19 +181,11 @@ func add_block(amount: int) -> void:
 	# Tambahkan nilai block ke dalam stats musuh
 	stats.block += amount
 	
-	# Berikan sedikit feedback visual (misal: efek bergetar/skala membesar singkat)
-	_play_block_effect()
-	
 	# Memicu pembaruan UI secara manual jika diperlukan 
 	# (Jika stats_changed tidak otomatis terpicu saat variabel .block berubah)
 	_on_stats_changed()
 
 # Efek visual sederhana saat musuh menambah pertahanan/block
-func _play_block_effect() -> void:
-	var tween = create_tween()
-	# Membuat sprite membesar sedikit lalu kembali normal untuk memberi kesan memompa pertahanan
-	tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.1)
-	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
 
 # --- TURNS & AI LOGIC (CO-ROUTINE FRIENDLY) ---
 

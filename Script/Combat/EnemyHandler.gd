@@ -48,6 +48,7 @@ func set_enemy_stats_at(index: int, new_stats: EnemyStats) -> void:
 # Dipanggil oleh Battle Manager saat giliran Player selesai
 func start_enemy_turn() -> void:
 	Events.enemy_turn_started.emit()
+	reset_enemy_blocks()
 	_update_active_enemies()
 	
 	if active_enemies.is_empty():

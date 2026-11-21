@@ -95,6 +95,7 @@ func advance_floor() -> bool:
 	Events.floor_changed.emit(current_floor, MAX_FLOOR)
 	Events.room_exploration_changed.emit(explored_room, MIN_EXPLORED_ROOM_PER_FLOOR)
 	Events.forfeit_state_changed.emit(can_forfeit(), get_remaining_forfeits())
+
 	return true
 
 ## Dipanggil saat memulai permainan/run baru dari awal
@@ -106,6 +107,8 @@ func start_new_run() -> void:
 	player_hp = max_hp
 	player_gold = 0
 	current_room_data = null
+
+	PlayerHandler.inventory_data.clear_inventory()
 	
 	if room_pool_manager == null:
 		room_pool_manager = RoomPoolManager.new()
@@ -116,6 +119,8 @@ func start_new_run() -> void:
 	Events.floor_changed.emit(current_floor, MAX_FLOOR)
 	Events.room_exploration_changed.emit(explored_room, MIN_EXPLORED_ROOM_PER_FLOOR)
 	Events.forfeit_state_changed.emit(can_forfeit(), get_remaining_forfeits())
+
+	Events.player_died.connect(player_died_gameover)
 	print("New Run Started with Room Pooling!")
 
 ## Menyimpan data ruangan terpilih dan berpindah ke scene tujuan
@@ -184,3 +189,6 @@ func enter_battle_scene(Enemy:EnemyStats) -> void:
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null
 	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
+
+func player_died_gameover() -> void:
+	SceneManager.change_scene(SceneManager.SceneID.GAME_OVER)

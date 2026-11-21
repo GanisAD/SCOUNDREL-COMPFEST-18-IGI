@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ALTAR-52"
-run/main_scene="uid://dovanrrf4dukk"
+run/main_scene="uid://bgg7byukockt8"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

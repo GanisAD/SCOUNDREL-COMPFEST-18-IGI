@@ -11,7 +11,8 @@ func _ready():
 	quit_button.pressed.connect(_on_quit_pressed)
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://Scene/explore.tscn")
+	GameManager.start_new_run()
+	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
 
 func _on_credit_pressed():
 	print("Credit ditekan")

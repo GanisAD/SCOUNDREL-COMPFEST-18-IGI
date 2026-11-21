@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://ush86j0df115" path="res://Resources/Audio/SFX/draw card/draw card sfx 3, credit oxidvideos.mp3" id="6_8wwn8"]
 [ext_resource type="AudioStream" uid="uid://cn31pgclsiewg" path="res://Resources/Audio/SFX/elevator/freesound_community-elevator-sound-99315.mp3" id="7_p4p60"]
 [ext_resource type="PackedScene" uid="uid://dx6e20mfym14u" path="res://Scene/bgm_manager.tscn" id="8_p4p60"]
+[ext_resource type="PackedScene" uid="uid://c4mlymrvbisoi" path="res://Scene/PauseMenu.tscn" id="9_cip7p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n3gve"]
 font_size = 49
@@ -67,3 +68,7 @@ sfx_elevator = ExtResource("7_p4p60")
 metadata/_custom_type_script = "uid://bacju5ksgja7j"
 
 [node name="BGMManager" parent="." unique_id=1240410567 instance=ExtResource("8_p4p60")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=722859705]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1985372180 instance=ExtResource("9_cip7p")]

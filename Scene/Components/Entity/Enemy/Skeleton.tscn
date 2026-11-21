@@ -23,32 +23,6 @@
 [ext_resource type="Resource" uid="uid://clkwesslalr20" path="res://Script/Entity/Enemy/Intent/strenghtIntent.tres" id="12_w2qd8"]
 [ext_resource type="Texture2D" uid="uid://bqlowcrouifxj" path="res://Resources/Card/Icon/shield.png" id="13_shield"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats_panel"]
-bg_color = Color(0.08, 0.08, 0.08, 0.7)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.25, 0.25, 0.25, 0.8)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
-bg_color = Color(0.18, 0.18, 0.18, 0.85)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
-bg_color = Color(0.82, 0.18, 0.18, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xg0st"]
 size = Vector2(13.932101, 24.969898)
 
@@ -94,6 +68,32 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats_panel"]
+bg_color = Color(0.08, 0.08, 0.08, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.25, 0.25, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.18, 0.18, 0.18, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.82, 0.18, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Skeleton" type="Area2D" unique_id=1894014694]
 collision_layer = 4
@@ -206,5 +206,4 @@ intent = ExtResource("10_m4gqk")
 [node name="EnemyStrenghtEffect" type="Node" parent="EnemyActionPicker" unique_id=721828034]
 script = ExtResource("8_7rs3b")
 strength_amount = 1
-min_hp_percentage = 50.0
 intent = ExtResource("12_w2qd8")

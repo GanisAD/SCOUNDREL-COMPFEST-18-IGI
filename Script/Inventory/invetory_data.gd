@@ -6,7 +6,9 @@ signal inventory_updated
 
 @export_group("Weapon Slot")
 ## Slot khusus untuk memegang 1 Senjata aktif
-@export var weapon_slot: WeaponData
+@export var default_weapon : WeaponData
+
+var weapon_slot: WeaponData
 
 @export_group("Potion Slots")
 ## Jumlah maksimum slot potion yang bisa dibawa player
@@ -198,3 +200,15 @@ func add_item(item: ItemData, quantity: int = 1) -> bool:
 		return add_potion(item, quantity)
 	else:
 		return add_potion(item, quantity)
+
+func clear_inventory() -> void:
+	weapon_slot = default_weapon
+	
+	potion_slots.clear()
+	potion_slots.resize(max_potion_slots)
+	
+	debuff_slots.clear()
+	debuff_slots.resize(max_debuff_slots)
+	
+	inventory_updated.emit()
+	print("Inventory: Seluruh isi inventory telah dikosongkan.")

@@ -22,6 +22,8 @@ const SCENE_PATHS: Dictionary = {
 	SceneID.EXPLORE: "res://Scene/explore.tscn",
 	SceneID.ROOM_EVENT: "res://Scene/Components/room_event.tscn",
 	SceneID.COMBAT: "res://Scene/combat.tscn",
+	SceneID.GAME_OVER: "res://Scene/dead_scene.tscn",
+	SceneID.MAIN_MENU: "res://Scene/MainMenu.tscn"
 }
 
 signal transition_started(target_scene: SceneID)

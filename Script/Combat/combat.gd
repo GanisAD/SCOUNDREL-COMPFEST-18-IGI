@@ -24,6 +24,7 @@ func _ready() -> void:
 	current_battle_stats = battle_stats
 	battle_ui.initialize_player(battle_stats)
 	var ph = get_node_or_null("/root/PlayerHandler")
+
 	if ph and ph.inventory_data:
 		battle_ui.initialize_inventory(ph.inventory_data)
 	
@@ -60,10 +61,9 @@ func _ready() -> void:
 
 func _start_player_turn() -> void:
 	# 1. Enemy Reset Armor & Rencanakan Serangan Baru (Tampil di UI)
-	enemy_handler.reset_enemy_blocks()
 	enemy_handler.update_enemy_intents()
 	
-	battle_ui.show_turn_banner("PLAYER TURN")
+	await battle_ui.show_turn_banner("PLAYER TURN")
 	battle_ui._on_player_turn_started()
 	
 	# 2. Player Reset Mana & Tarik Kartu
