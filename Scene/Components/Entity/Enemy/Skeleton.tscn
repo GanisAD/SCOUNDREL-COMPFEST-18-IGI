@@ -136,10 +136,10 @@ text = "6"
 vertical_alignment = 1
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
-offset_left = 213.0
-offset_top = 33.0
-offset_right = 487.0
-offset_bottom = 110.0
+offset_left = -135.0
+offset_top = 123.0
+offset_right = 139.0
+offset_bottom = 200.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_stats_panel")
 script = ExtResource("4_ce4ot")
 

@@ -8,3 +8,4 @@ extends Resource
 @export var icon: Texture2D
 @export var is_stackable: bool = false
 @export var max_stack_size: int = 1
+

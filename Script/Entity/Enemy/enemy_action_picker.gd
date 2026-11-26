@@ -2,6 +2,9 @@
 class_name EnemyActionPicker
 extends Node
 
+@export var enemy: Enemy : set = _set_enemy
+@export var target: Node : set = _set_target
+
 # Daftar internal untuk memisahkan jenis aksi
 var conditional_actions: Array[EnemyAction] = []
 var chance_actions: Array[EnemyAction] = []
@@ -9,6 +12,22 @@ var total_weight: float = 0.0
 
 func _ready() -> void:
 	setup_actions()
+
+func _set_enemy(value: Enemy) -> void:
+	enemy = value
+	if not is_node_ready():
+		return
+	for child in get_children():
+		if child is EnemyAction:
+			child.enemy = enemy
+
+func _set_target(value: Node) -> void:
+	target = value
+	if not is_node_ready():
+		return
+	for child in get_children():
+		if child is EnemyAction:
+			child.target = target
 
 # 1. Mengelompokkan aksi dan menghitung bobot kumulatif saat inisialisasi
 func setup_actions() -> void:
@@ -18,6 +37,8 @@ func setup_actions() -> void:
 	
 	for child in get_children():
 		if child is EnemyAction:
+			child.enemy = enemy
+			child.target = target
 			if child.is_conditional():
 				conditional_actions.append(child)
 			else:

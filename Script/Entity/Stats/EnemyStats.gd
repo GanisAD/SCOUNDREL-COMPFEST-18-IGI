@@ -8,8 +8,8 @@ extends Stats
 ## Jumlah stack Weakened yang dimiliki (Default 0)
 @export var weakened_stacks: int = 0
 
-# (Opsional) Tempat penampung untuk sistem AI/Intent di masa depan
-# @export var ai: EnemyAI 
+# (Opsional) Scene AI (EnemyActionPicker) khusus untuk musuh ini jika di-spawn dari base scene
+@export var ai: PackedScene
 
 # Override fungsi create_instance untuk memastikan tipe kembaliannya (EnemyStats)
 # dan mereset nilai saat musuh di-spawn ke dalam battle scene.
