@@ -34,6 +34,7 @@ var active_doors_states: Array[Door.State] = []
 
 # --- DATA RUANGAN AKTIF ---
 var current_room_data: RoomData = null
+var current_encounter: Array[EnemyStats] = []
 
 func _ready() -> void:
 	if room_pool_manager == null:
@@ -180,10 +181,29 @@ func forfeit_current_room() -> bool:
 	return_to_dungeon_overworld()
 	return true
 
-func enter_battle_scene(Enemy:EnemyStats) -> void:
-	Events.combat_start.emit(Enemy)
+func enter_battle_scene(encounter: Variant) -> void:
+	current_encounter.clear()
+	
+	if encounter is Array:
+		for enemy in encounter:
+			if enemy is EnemyStats:
+				current_encounter.append(enemy)
+	elif encounter is EnemyStats:
+		current_encounter.append(encounter)
+	elif encounter != null and encounter.get("enemies") is Array:
+		# Dukungan opsional jika menggunakan custom Resource EncounterData
+		for enemy in encounter.enemies:
+			if enemy is EnemyStats:
+				current_encounter.append(enemy)
+	
+	if current_encounter.is_empty():
+		push_error("GameManager: enter_battle_scene dipanggil tanpa data EnemyStats yang valid!")
+		return
+	
+	var enemy_names = current_encounter.map(func(e: EnemyStats): return e.enemy_name)
+	print("Player melawan : ", ", ".join(enemy_names))
+	
 	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
-	print("Player melawan : ", Enemy.enemy_name)
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:

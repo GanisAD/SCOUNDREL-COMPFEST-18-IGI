@@ -5,10 +5,10 @@ class_name Enemy
 extends Area2D
 
 ## Sinyal kematian musuh yang dipancarkan saat HP mencapai 0.
-signal died(enemy: Enemy)
+signal died
 
 ## Resource statistik musuh (EnemyStats) yang menentukan HP, Base Block, dan visual sprite.
-@export var stats: EnemyStats
+@export var stats: EnemyStats : set = set_enemy_stats
 
 # [TAMBAHAN] Menyimpan aksi aktif yang direncanakan untuk giliran ini
 var current_action: EnemyAction : set = _set_current_action
@@ -27,33 +27,70 @@ var base_modulate: Color = Color.WHITE
 
 func _ready() -> void:
 	add_to_group("enemies")
-	# 1. Gandakan resource stats agar data HP musuh ini tidak berbagi dengan musuh lain
-	if stats:
-		stats = stats.create_instance() as EnemyStats
-		stats_ui.stats = stats
-		
-		# [TAMBAHAN] Hubungkan sinyal perubahan status untuk sistem Reactive Intent
-		# Jika HP musuh berubah akibat diserang player, ia akan mengecek ulang aksinya
-		stats.stats_changed.connect(_on_stats_changed)
 	
-	# 2. Sembunyikan indikator panah target di awal pertempuran
+	# Sembunyikan indikator panah target di awal pertempuran
 	if arrow:
 		arrow.visible = false
 	
 	if sprite:
 		base_sprite_scale = sprite.scale
 		base_modulate = sprite.modulate
-		sprite.play("idle")
+		play_animation("idle")
 	
-	# 3. Hubungkan sinyal internal Area2D untuk sistem hover aiming kartu
+	# Hubungkan sinyal internal Area2D untuk sistem hover aiming kartu
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
+
+# Setter aman untuk stats (berfungsi baik sebelum maupun sesudah _ready)
+func set_enemy_stats(value: EnemyStats) -> void:
+	if stats and stats.stats_changed.is_connected(_on_stats_changed):
+		stats.stats_changed.disconnect(_on_stats_changed)
+		
+	if value:
+		stats = value.create_instance() as EnemyStats
+	else:
+		stats = null
+		
+	if not is_node_ready():
+		await ready
+		
+	update_stats()
+	setup_ai()
+
+func update_stats() -> void:
+	if not stats:
+		return
+		
+	if not stats.stats_changed.is_connected(_on_stats_changed):
+		stats.stats_changed.connect(_on_stats_changed)
+		
+	if stats_ui:
+		stats_ui.stats = stats
+		stats_ui.update_hud()
+		
+	_update_visuals()
+
+func setup_ai() -> void:
+	if stats and stats.ai:
+		if enemy_action_picker:
+			enemy_action_picker.queue_free()
+		var new_picker := stats.ai.instantiate() as EnemyActionPicker
+		if new_picker:
+			add_child(new_picker)
+			enemy_action_picker = new_picker
+	elif not enemy_action_picker:
+		enemy_action_picker = get_node_or_null("EnemyActionPicker") as EnemyActionPicker
+		
+	if enemy_action_picker:
+		enemy_action_picker.enemy = self
+		enemy_action_picker.target = _get_player_node()
+		enemy_action_picker.setup_actions()
 
 # --- MANAJEMEN VISUAL ---
 
 func _update_visuals() -> void:
 	if stats:
-		if sprite and stats.art:
+		if sprite and stats.art and "texture" in sprite:
 			sprite.texture = stats.art
 		if stats_ui:
 			stats_ui.update_hud() 
@@ -166,7 +203,7 @@ func take_damage(amount: int) -> void:
 	_play_hit_effect()
 	
 	if stats.health <= 0:
-		died.emit(self)
+		died.emit()
 		queue_free()
 
 func _play_hit_effect() -> void:
@@ -178,44 +215,40 @@ func add_block(amount: int) -> void:
 	if not stats:
 		return
 		
-	# Tambahkan nilai block ke dalam stats musuh
+	# Memodifikasi stats.block otomatis memancarkan sinyal stats_changed ke StatsUI
 	stats.block += amount
-	
-	# Memicu pembaruan UI secara manual jika diperlukan 
-	# (Jika stats_changed tidak otomatis terpicu saat variabel .block berubah)
-	_on_stats_changed()
 
 # Efek visual sederhana saat musuh menambah pertahanan/block
 
 # --- TURNS & AI LOGIC (CO-ROUTINE FRIENDLY) ---
 
 # [MODIFIKASI TOTAL] Menggunakan arsitektur EnemyAction baru
-# enemy.gd
 func do_turn() -> void:
 	if not enemy_action_picker or not current_action:
 		return
 		
-	var players = get_tree().get_nodes_in_group("player")
-	var target_player = players[0] if not players.is_empty() else null
+	var target_player = _get_player_node()
 	
 	# --- MEKANISME FAILSAFE MENGGUNAKAN REFERENCE ---
 	# Menggunakan Dictionary agar lambda bisa memodifikasi nilainya secara eksternal
 	var flags = { "action_done": false }
 	var failsafe_timer = get_tree().create_timer(1.5)
 	
-	# Hubungkan sinyal selesai yang asli ke lambda
+	# Hubungkan sinyal selesai yang asli ke lambda (one-shot agar tidak menumpuk antar turn)
 	current_action.enemy_action_completed.connect(func():
 		flags["action_done"] = true
-	)
+	, CONNECT_ONE_SHOT)
 	
 	# Eksekusi aksi musuh
 	current_action.perform_action(self, target_player)
 	
 	# Tunggu mana yang lebih cepat: Aksi selesai secara normal, ATAU waktu failsafe habis
 	while not flags["action_done"]:
+		if not is_instance_valid(self) or not is_inside_tree():
+			return
 		await get_tree().process_frame
 		if failsafe_timer.time_left <= 0:
-			print("WARNING: Aksi musuh ", stats.enemy_name, " macet! Failsafe dipicu.")
+			print("WARNING: Aksi musuh ", stats.enemy_name if stats else name, " macet! Failsafe dipicu.")
 			break
 	
 	# --- PEMBERSIHAN ---

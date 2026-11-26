@@ -34,3 +34,9 @@ func take_damage(amount: int) -> void:
 	# Sisa damage yang lolos dari Block baru memotong HP asli 
 	if amount > 0:
 		health -= amount
+
+func create_instance() -> Resource:
+	var instance: Stats = self.duplicate()
+	instance.health = max_health
+	instance.block = 0
+	return instance

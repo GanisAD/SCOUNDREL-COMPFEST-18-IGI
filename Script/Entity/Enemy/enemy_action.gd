@@ -15,6 +15,10 @@ signal enemy_action_completed
 # Akumulasi bobot yang akan dihitung oleh EnemyActionPicker secara dinamis
 var accumulated_weight: float = 0.0
 
+# Referensi runtime yang disuntikkan oleh EnemyActionPicker
+var enemy: Enemy
+var target: Node
+
 # Apakah aksi ini bertipe kondisional (bukan aksi acak berbobot biasa)
 func is_conditional() -> bool:
 	return false
@@ -30,7 +34,13 @@ func get_intent_value(_enemy: Enemy = null) -> String:
 		return intent.number
 	return ""
 
+# Helper untuk aksi bertipe Summon/Split agar dapat mengakses EnemyHandler
+func get_enemy_handler() -> EnemyHandler:
+	if not is_inside_tree():
+		return null
+	return get_tree().get_first_node_in_group("enemy_handler") as EnemyHandler
+
 # 2. Fungsi Eksekusi: Apa yang terjadi saat aksi ini dipilih?
 # Fungsi ini wajib di-override di skrip anak untuk menentukan mekanik aslinya.
-func perform_action(enemy: Enemy, player: PlayerHandler) -> void:
+func perform_action(_enemy: Enemy, _player: Node) -> void:
 	pass
