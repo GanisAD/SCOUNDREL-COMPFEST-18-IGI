@@ -76,8 +76,6 @@ metadata/_custom_type_script = "uid://bacju5ksgja7j"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=722859705]
 
-[node name="PauseMenu" parent="CanvasLayer" unique_id=1985372180 instance=ExtResource("9_cip7p")]
-
 [node name="WeaponSlotUI" type="Panel" parent="CanvasLayer" unique_id=1895513364]
 offset_left = 4.0
 offset_top = 130.0
@@ -106,3 +104,5 @@ offset_right = 331.119
 offset_bottom = 83.017
 text = "0/3"
 label_settings = SubResource("LabelSettings_cip7p")
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1985372180 instance=ExtResource("9_cip7p")]

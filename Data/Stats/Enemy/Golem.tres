@@ -5,4 +5,6 @@
 [resource]
 script = ExtResource("1_adojp")
 enemy_name = "Golem"
+max_health = 70
+block_reset_type = 1
 metadata/_custom_type_script = "uid://dyhlscpnv4y2a"

@@ -100,7 +100,7 @@ func reset_enemy_blocks() -> void:
 	_cleanup_invalid_enemies()
 	for enemy in active_enemies:
 		if enemy.stats:
-			enemy.stats.block = 0
+			enemy.stats.reset_block()
 
 func update_enemy_intents() -> void:
 	_cleanup_invalid_enemies()

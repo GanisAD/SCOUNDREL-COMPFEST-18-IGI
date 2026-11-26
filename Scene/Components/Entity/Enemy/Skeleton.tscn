@@ -136,10 +136,10 @@ text = "6"
 vertical_alignment = 1
 
 [node name="StatsUI" type="Panel" parent="." unique_id=1095239114]
-offset_left = -135.0
+offset_left = -150.0
 offset_top = 123.0
-offset_right = 139.0
-offset_bottom = 200.0
+offset_right = 150.0
+offset_bottom = 228.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_stats_panel")
 script = ExtResource("4_ce4ot")
 
@@ -147,7 +147,7 @@ script = ExtResource("4_ce4ot")
 layout_mode = 0
 offset_left = 12.0
 offset_top = 10.0
-offset_right = 262.0
+offset_right = 288.0
 offset_bottom = 36.0
 theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
@@ -190,6 +190,39 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 18
 text = "0"
+vertical_alignment = 1
+
+[node name="StatusContainer" type="HBoxContainer" parent="StatsUI" unique_id=172839403]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 72.0
+offset_right = 292.0
+offset_bottom = 98.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="StrengthLabel" type="Label" parent="StatsUI/StatusContainer" unique_id=172839404]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "Strength: 0"
+vertical_alignment = 1
+
+[node name="WeaknessLabel" type="Label" parent="StatsUI/StatusContainer" unique_id=172839405]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "Weakness: 0"
+vertical_alignment = 1
+
+[node name="ChargeLabel" type="Label" parent="StatsUI/StatusContainer" unique_id=172839406]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "Charge: 0"
 vertical_alignment = 1
 
 [node name="EnemyActionPicker" type="Node" parent="." unique_id=967924178]

@@ -138,6 +138,40 @@ offset_bottom = 111.0
 text = "0/0"
 label_settings = SubResource("LabelSettings_44v7a")
 
+[node name="StatusPanel" type="Panel" parent="BattleUI/PlayerStatsUI" unique_id=1998703801]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 205.0
+offset_right = 256.0
+offset_bottom = 345.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BattleUI/PlayerStatsUI/StatusPanel" unique_id=1998703802]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = -8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StrengthLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703803]
+layout_mode = 2
+text = "Strength: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="WeaknessLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703804]
+layout_mode = 2
+text = "Weakness: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="ChargeLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703805]
+layout_mode = 2
+text = "Charge: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
 [node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
 offset_left = 38.0
 offset_top = 759.0

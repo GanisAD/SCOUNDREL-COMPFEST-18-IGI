@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Card" format=3 uid="uid://31d7d6rhanjq"]
+
+[ext_resource type="Script" uid="uid://dvyj2b2cpwx8y" path="res://Script/Effect/effect.gd" id="1_ug1j5"]
+[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="2_k33r6"]
+[ext_resource type="Script" uid="uid://c6iq5cav1j6wm" path="res://Script/Effect/chargeEffect.gd" id="2_pak8i"]
+[ext_resource type="Texture2D" uid="uid://dirpqli78h1f6" path="res://Resources/Card/Icon/club.jpg" id="3_pak8i"]
+
+[sub_resource type="Resource" id="Resource_xg0st"]
+script = ExtResource("2_pak8i")
+metadata/_custom_type_script = "uid://c6iq5cav1j6wm"
+
+[resource]
+script = ExtResource("2_k33r6")
+id = "12"
+name = "Charge"
+description = "Stacking up weapon damage as much as you can, then release it in singgle blow."
+icon = ExtResource("3_pak8i")
+type = 2
+target = 0
+cost = 3
+effects = Array[ExtResource("1_ug1j5")]([SubResource("Resource_xg0st")])
+metadata/_custom_type_script = "uid://pyfgi1lxe2mu"

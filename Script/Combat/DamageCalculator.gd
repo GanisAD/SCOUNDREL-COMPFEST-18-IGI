@@ -5,6 +5,7 @@ extends RefCounted
 
 const STRENGTH_MODIFIER_PER_STACK: float = 0.25
 const WEAKENED_MODIFIER_PER_STACK: float = 0.10
+const CHARGE_DAMAGE_PER_STACK: float = 1.0 # 1 stack Charge = +1 flat damage
 
 ## Ubah tipe parameter menjadi 'Resource' agar bisa menerima CharacterStats maupun EnemyStats
 static func calculate_damage(base_damage: int, attacker_stats: Resource, receiver_stats: Resource) -> int:
@@ -13,9 +14,11 @@ static func calculate_damage(base_damage: int, attacker_stats: Resource, receive
 	# === FASE PENYERANG (ATTACKER) ===
 	if attacker_stats:
 		# Ambil nilai stack HANYA JIKA properti tersebut ada di dalam stats, jika tidak anggap 0
+		var chg_stacks: int = attacker_stats.charge_stacks if "charge_stacks" in attacker_stats else 0
 		var str_stacks: int = attacker_stats.strength_stacks if "strength_stacks" in attacker_stats else 0
 		var weak_stacks: int = attacker_stats.weakened_stacks if "weakened_stacks" in attacker_stats else 0
-		
+
+		modified_damage += (chg_stacks * CHARGE_DAMAGE_PER_STACK)
 		# 1. Kalkulasi Strength
 		var strength_multiplier: float = 1.0 + (str_stacks * STRENGTH_MODIFIER_PER_STACK)
 		modified_damage *= strength_multiplier
