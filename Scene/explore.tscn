@@ -9,9 +9,14 @@
 [ext_resource type="AudioStream" uid="uid://cn31pgclsiewg" path="res://Resources/Audio/SFX/elevator/freesound_community-elevator-sound-99315.mp3" id="7_p4p60"]
 [ext_resource type="PackedScene" uid="uid://dx6e20mfym14u" path="res://Scene/bgm_manager.tscn" id="8_p4p60"]
 [ext_resource type="PackedScene" uid="uid://c4mlymrvbisoi" path="res://Scene/PauseMenu.tscn" id="9_cip7p"]
+[ext_resource type="Texture2D" uid="uid://y4ah81jupyp2" path="res://Resources/Card/Icon/sword.png" id="10_ke45g"]
+[ext_resource type="Script" uid="uid://c8ogapqskgidh" path="res://Script/UI/weapon_slot_ui.gd" id="10_r1dwd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n3gve"]
 font_size = 49
+
+[sub_resource type="LabelSettings" id="LabelSettings_cip7p"]
+font_size = 63
 
 [node name="Explore" type="Node2D" unique_id=554458340 node_paths=PackedStringArray("elevator", "doors")]
 script = ExtResource("1_n3gve")
@@ -56,7 +61,7 @@ script = ExtResource("3_lsfxy")
 [node name="floorLabel" type="Label" parent="." unique_id=1990206801]
 offset_left = 2.0
 offset_top = 45.0
-offset_right = 357.0
+offset_right = 385.0
 offset_bottom = 113.0
 text = "Current Floor : 1"
 label_settings = SubResource("LabelSettings_n3gve")
@@ -72,3 +77,32 @@ metadata/_custom_type_script = "uid://bacju5ksgja7j"
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=722859705]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1985372180 instance=ExtResource("9_cip7p")]
+
+[node name="WeaponSlotUI" type="Panel" parent="CanvasLayer" unique_id=1895513364]
+offset_left = 4.0
+offset_top = 130.0
+offset_right = 427.0
+offset_bottom = 271.0
+script = ExtResource("10_r1dwd")
+
+[node name="WeaponIcon" type="TextureRect" parent="CanvasLayer/WeaponSlotUI" unique_id=297165113]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 23.0
+offset_right = 173.0
+offset_bottom = 106.0
+texture = ExtResource("10_ke45g")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="DurabilityLabel" type="Label" parent="CanvasLayer/WeaponSlotUI" unique_id=769576814]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.047000002
+anchor_bottom = 0.163
+offset_left = 254.0
+offset_top = 19.0
+offset_right = 331.119
+offset_bottom = 83.017
+text = "0/3"
+label_settings = SubResource("LabelSettings_cip7p")

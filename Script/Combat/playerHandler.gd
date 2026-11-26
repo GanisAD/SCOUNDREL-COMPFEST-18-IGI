@@ -173,6 +173,7 @@ func reshuffle_deck_from_discard() -> void:
 func _on_combat_victory() -> void:
 	if inventory_data:
 		inventory_data.decrement_debuff_battles()
+		_process_weapon_durability()
 
 func apply_active_debuffs(stats: CharacterStats) -> void:
 	if not inventory_data or not stats:
@@ -239,3 +240,32 @@ func is_item_duplicate(item: ItemData) -> bool:
 		return false
 
 	return false
+
+func _process_weapon_durability() -> void:
+	var current_weapon := get_equipped_weapon()
+	if not current_weapon:
+		return
+		
+	var is_broken := current_weapon.increment_durability(1)
+	print("Weapon '%s' durability: %d/%d" % [
+		current_weapon.name, 
+		current_weapon.current_durability, 
+		current_weapon.max_durability
+	])
+	
+	if is_broken:
+		_break_equipped_weapon(current_weapon)
+
+func _break_equipped_weapon(broken_weapon: WeaponData) -> void:
+	print("Senjata '%s' telah hancur!" % broken_weapon.name)
+	
+	# Kosongkan slot senjata di InventoryData (menggantikan queue_free())
+	inventory_data.weapon_slot = inventory_data.default_weapon 
+	equipped_weapon = inventory_data.default_weapon
+	
+	# Beri tahu UI dan sistem lain bahwa senjata telah hancur
+	Events.weapon_broken.emit(broken_weapon)
+	
+	# Opsional: Jika ada sinyal update inventaris, pancarkan di sini agar slot UI kosong
+	if inventory_data.has_signal("inventory_updated"):
+		inventory_data.inventory_updated.emit()

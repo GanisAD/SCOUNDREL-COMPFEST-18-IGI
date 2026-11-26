@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://ctyv7o3p8ytxn"]
+
+[ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="1_adojp"]
+
+[resource]
+script = ExtResource("1_adojp")
+enemy_name = "Golem"
+metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
