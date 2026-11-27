@@ -86,7 +86,7 @@ func advance_floor() -> bool:
 		push_warning("GameManager: Sudah berada di lantai maksimum (%d)!" % MAX_FLOOR)
 		return false
 	
-	current_floor += 1
+	current_floor += 12
 	explored_room = 0
 	forfeits_used_this_floor = 0
 	last_entered_door_index = -1

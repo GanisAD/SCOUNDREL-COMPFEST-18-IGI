@@ -1,10 +1,16 @@
 [gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://ctyv7o3p8ytxn"]
 
 [ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="1_adojp"]
+[ext_resource type="PackedScene" path="res://Scene/Components/Entity/Enemy/GolemAI.tscn" id="2_golem_ai"]
+[ext_resource type="Texture2D" uid="uid://dk4r4yjjso47s" path="res://Resources/Entity/Enemy/golem.png" id="2_yge4l"]
+[ext_resource type="PackedScene" uid="uid://cef83s858hvpf" path="res://Scene/Components/Entity/Enemy/Golem.tscn" id="4_golem_scene"]
 
 [resource]
 script = ExtResource("1_adojp")
 enemy_name = "Golem"
-max_health = 70
+enemy_scene = ExtResource("4_golem_scene")
+ai = ExtResource("2_golem_ai")
+max_health = 60
+art = ExtResource("2_yge4l")
 block_reset_type = 1
 metadata/_custom_type_script = "uid://dyhlscpnv4y2a"

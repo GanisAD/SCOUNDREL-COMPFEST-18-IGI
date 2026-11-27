@@ -5,8 +5,8 @@ extends Node2D
 signal enemy_turn_ended
 signal all_enemies_defeated
 
-# Masukkan base scene Enemy.tscn di Inspector
-@export var enemy_scene: PackedScene
+# Masukkan base scene Enemy.tscn di Inspector sebagai fallback
+@export var default_enemy_scene: PackedScene
 # Jarak horizontal antar musuh saat di-spawn otomatis
 @export var enemy_spacing: float = 160.0
 
@@ -42,11 +42,16 @@ func setup_encounter(enemy_roster: Array[EnemyStats]) -> void:
 # --- 2. SINGLE ENTRY-POINT SPAWNER (UNTUK ENCOUNTER, SUMMON, & SPLIT) ---
 
 func spawn_enemy(stats: EnemyStats, local_pos: Vector2) -> Enemy:
-	if not enemy_scene or not stats:
-		push_error("EnemyHandler: enemy_scene atau stats belum diisi!")
+	if not stats:
+		push_error("EnemyHandler: stats belum diisi!")
 		return null
 		
-	var new_enemy = enemy_scene.instantiate() as Enemy
+	var scene_to_spawn: PackedScene = stats.enemy_scene if stats.enemy_scene else default_enemy_scene
+	if not scene_to_spawn:
+		push_error("EnemyHandler: stats.enemy_scene dan default_enemy_scene belum diisi!")
+		return null
+		
+	var new_enemy = scene_to_spawn.instantiate() as Enemy
 	new_enemy.position = local_pos
 	add_child(new_enemy)
 	

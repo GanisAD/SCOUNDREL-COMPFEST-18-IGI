@@ -50,6 +50,7 @@ func _on_elevator_used() -> void:
 	if GameManager.is_at_max_floor():
 		print("DungeonManager: Mencapai akhir labirin (lantai maksimum)!")
 		Events.dungeon_completed.emit()
+		SceneManager.change_scene(SceneManager.SceneID.ROOFTOP)
 		return
 	
 	if GameManager.advance_floor():
