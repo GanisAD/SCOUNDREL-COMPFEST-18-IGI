@@ -62,6 +62,28 @@ extends Node
 @export var sfx_hit: AudioStream
 
 
+@export_group("Golem Enemy SFX")
+## Suara serangan Golem variasi 1.
+@export var sfx_golem_atk_1: AudioStream
+## Suara serangan Golem variasi 2.
+@export var sfx_golem_atk_2: AudioStream
+## Suara Golem saat menerima damage.
+@export var sfx_golem_hurt: AudioStream
+## Suara Golem saat dikalahkan.
+@export var sfx_golem_defeat: AudioStream
+
+@export_subgroup("Golem Pitch")
+@export_range(0.5, 2.0, 0.01) var golem_attack_pitch_min: float = 0.88
+@export_range(0.5, 2.0, 0.01) var golem_attack_pitch_max: float = 0.98
+@export_range(0.5, 2.0, 0.01) var golem_hurt_pitch_min: float = 0.82
+@export_range(0.5, 2.0, 0.01) var golem_hurt_pitch_max: float = 0.92
+@export_range(0.5, 2.0, 0.01) var golem_defeat_pitch: float = 0.78
+
+@export_group("Weapon Attack SFX")
+## Suara serangan Wooden Club.
+@export var sfx_club_attack: AudioStream = preload("res://Resources/Audio/SFX/ClubSfx/ClubAtk.ogg")
+
+
 # ==========================================
 # NODE PEMUTAR AUDIO INTERNAL
 # ==========================================
@@ -99,8 +121,8 @@ func _connect_event_bus() -> void:
 	Events.card_drag_started.connect(func(_card_ui): play_sfx(sfx_card_drag_start))
 	Events.card_drag_ended.connect(func(_card_ui): play_sfx(sfx_card_drag_cancel))
 	Events.card_played.connect(_on_card_played)
-	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw), randf_range(0.95, 1.05))
-	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard), randf_range(0.95, 1.05))
+	Events.card_drawn.connect(func(): play_sfx(sfx_card_draw, randf_range(0.95, 1.05)))
+	Events.card_discarded.connect(func(): play_sfx(sfx_card_discard, randf_range(0.95, 1.05)))
 	
 	Events.player_turn_started.connect(func(): play_sfx(sfx_turn_player_start))
 	Events.enemy_turn_started.connect(func(): play_sfx(sfx_turn_enemy_start))
@@ -134,6 +156,17 @@ func _connect_event_bus() -> void:
 	)
 	Events.enemy_shield_used.connect(func():
 		play_sfx(sfx_shield, randf_range(0.65, 0.75))
+	)
+	
+	Events.golem_attack_used.connect(func(_golem: Enemy):
+		var attack_stream: AudioStream = sfx_golem_atk_1 if randi() % 2 == 0 else sfx_golem_atk_2
+		play_sfx(attack_stream, randf_range(golem_attack_pitch_min, golem_attack_pitch_max))
+	)
+	Events.golem_hurt.connect(func(_golem: Enemy):
+		play_sfx(sfx_golem_hurt, randf_range(golem_hurt_pitch_min, golem_hurt_pitch_max))
+	)
+	Events.golem_defeated.connect(func(_golem: Enemy):
+		play_sfx(sfx_golem_defeat, golem_defeat_pitch)
 	)
 	
 		
@@ -214,12 +247,15 @@ func _on_card_played(card: Card) -> void:
 
 	match card.type:
 		Card.Type.ATTACK:
-			# Ambil audio dari weapon yang sedang dipakai player jika ada
 			var stream: AudioStream = null
 			if Engine.has_singleton("PlayerHandler") or is_instance_valid(get_node_or_null("/root/PlayerHandler")):
 				var ph = get_node_or_null("/root/PlayerHandler")
-				if ph and "equipped_weapon" in ph and ph.equipped_weapon and ph.equipped_weapon.attack_sfx:
-					stream = ph.equipped_weapon.attack_sfx
+				if ph and "equipped_weapon" in ph and ph.equipped_weapon:
+					var equipped_weapon: WeaponData = ph.equipped_weapon
+					if equipped_weapon.attack_sfx:
+						stream = equipped_weapon.attack_sfx
+					elif equipped_weapon.weapon_type == "Club":
+						stream = sfx_club_attack
 
 			if not stream:
 				stream = sfx_weapon if sfx_weapon else sfx_bare_hand

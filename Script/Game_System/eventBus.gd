@@ -181,3 +181,15 @@ signal shield_used()
 ## [param damage]: Jumlah damage yang diterima.
 @warning_ignore("unused_signal")
 signal hit_taken(target: Node, damage: int)
+
+## Dipanggil saat Golem melakukan serangan.
+@warning_ignore("unused_signal")
+signal golem_attack_used(golem: Enemy)
+
+## Dipanggil saat Golem menerima damage.
+@warning_ignore("unused_signal")
+signal golem_hurt(golem: Enemy)
+
+## Dipanggil saat Golem dikalahkan.
+@warning_ignore("unused_signal")
+signal golem_defeated(golem: Enemy)

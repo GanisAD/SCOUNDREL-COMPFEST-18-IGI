@@ -216,11 +216,16 @@ func _on_area_exited(area: Area2D) -> void:
 func take_damage(amount: int) -> void:
 	if not stats:
 		return
-		
+	
 	stats.take_damage(amount)
 	_play_hit_effect()
 	
+	if stats.enemy_name == "Golem" and stats.health > 0:
+		Events.golem_hurt.emit(self)
+	
 	if stats.health <= 0:
+		if stats.enemy_name == "Golem":
+			Events.golem_defeated.emit(self)
 		died.emit()
 		queue_free()
 

@@ -17,18 +17,18 @@ Di ALTAR-52, kita **sangat menghindari** meletakkan node `AudioStreamPlayer` sec
 ### Alur Kerja Audio:
 ```mermaid
 sequenceDiagram
-    autonumber
-    actor Player as Pemain
-    participant CardFSM as CardStateMachine
-    participant EventBus as Events (eventBus.gd)
-    participant AudioMgr as AudioManager (audio_manager.gd)
-    participant GodotAudio as AudioServer (SFX Bus)
+	autonumber
+	actor Player as Pemain
+	participant CardFSM as CardStateMachine
+	participant EventBus as Events (eventBus.gd)
+	participant AudioMgr as AudioManager (audio_manager.gd)
+	participant GodotAudio as AudioServer (SFX Bus)
 
-    Player->>CardFSM: Lepas kartu di atas musuh
-    CardFSM->>EventBus: Emit signal card_played(card)
-    EventBus->>AudioMgr: Menerima notifikasi card_played
-    AudioMgr->>GodotAudio: play_sfx(sfx_card_played, pitch)
-    GodotAudio-->>Player: Suara hantaman kartu berbunyi
+	Player->>CardFSM: Lepas kartu di atas musuh
+	CardFSM->>EventBus: Emit signal card_played(card)
+	EventBus->>AudioMgr: Menerima notifikasi card_played
+	AudioMgr->>GodotAudio: play_sfx(sfx_card_played, pitch)
+	GodotAudio-->>Player: Suara hantaman kartu berbunyi
 ```
 
 ---
