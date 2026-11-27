@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Intent" format=3 uid="uid://t17ikvgvlyfs"]
+
+[ext_resource type="Texture2D" uid="uid://bqlowcrouifxj" path="res://Resources/Card/Icon/shield.png" id="1_f6jil"]
+[ext_resource type="Script" uid="uid://bfri07uj0xdav" path="res://Script/Entity/Enemy/intent.gd" id="1_iraj3"]
+
+[resource]
+script = ExtResource("1_iraj3")
+icon = ExtResource("1_f6jil")
+metadata/_custom_type_script = "uid://bfri07uj0xdav"

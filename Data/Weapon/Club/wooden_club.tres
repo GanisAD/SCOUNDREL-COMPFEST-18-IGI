@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://bd1sj878yq8y"]
+
+[ext_resource type="Texture2D" uid="uid://dirpqli78h1f6" path="res://Resources/Card/Icon/club.jpg" id="1_e7o6c"]
+[ext_resource type="Script" uid="uid://bq60yclouik42" path="res://Script/Inventory/Item/weapon_data.gd" id="1_famf7"]
+[ext_resource type="Resource" uid="uid://hmg03dw4vs8b" path="res://Data/Weapon/Club/clubDeck.tres" id="3_5vhyj"]
+[ext_resource type="AudioStream" uid="uid://bum3o3w52m5vb" path="res://Resources/Audio/SFX/ClubSfx/ClubAtk.ogg" id="4_club_atk"]
+
+[resource]
+script = ExtResource("1_famf7")
+weapon_type = "Club"
+attack_sfx = ExtResource("4_club_atk")
+weapon_deck = ExtResource("3_5vhyj")
+max_durability = 2
+id = "6"
+name = "Wooden Club"
+description = "Great weapon that could stack great damage"
+icon = ExtResource("1_e7o6c")
+metadata/_custom_type_script = "uid://bq60yclouik42"

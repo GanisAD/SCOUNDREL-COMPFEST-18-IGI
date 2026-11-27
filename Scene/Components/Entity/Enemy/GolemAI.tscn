@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Script/Entity/Enemy/enemy_action_picker.gd" id="1_picker"]
+[ext_resource type="Script" path="res://Script/Entity/Enemy/Action/enemy_periodic_block_action.gd" id="2_periodic"]
+[ext_resource type="Script" path="res://Script/Entity/Enemy/Action/enemy_block.gd" id="3_block"]
+[ext_resource type="Script" path="res://Script/Entity/Enemy/Action/enemy_attack.gd" id="4_attack"]
+[ext_resource type="Resource" path="res://Script/Entity/Enemy/Intent/blockIntent.tres" id="5_block_intent"]
+[ext_resource type="Resource" path="res://Script/Entity/Enemy/Intent/attackIntent.tres" id="6_attack_intent"]
+
+[node name="GolemAI" type="Node"]
+script = ExtResource("1_picker")
+
+[node name="TripleShieldAction" type="Node" parent="."]
+script = ExtResource("2_periodic")
+base_block = 6
+multiplier = 3
+turn_interval = 5
+intent = ExtResource("5_block_intent")
+
+[node name="RegularShieldAction" type="Node" parent="."]
+script = ExtResource("3_block")
+block_amount = 7
+intent = ExtResource("5_block_intent")
+weight = 3.0
+
+[node name="HeavySlamAction" type="Node" parent="."]
+script = ExtResource("4_attack")
+damage = 8
+intent = ExtResource("6_attack_intent")
+weight = 1.0

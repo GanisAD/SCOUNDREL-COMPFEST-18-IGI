@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dxo0eodoltsye"
+path="res://.godot/imported/soundreality-bell-fx-410608.mp3-a25307668e3444a763c05d47b1537023.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/turn sfx/soundreality-bell-fx-410608.mp3"
+dest_files=["res://.godot/imported/soundreality-bell-fx-410608.mp3-a25307668e3444a763c05d47b1537023.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

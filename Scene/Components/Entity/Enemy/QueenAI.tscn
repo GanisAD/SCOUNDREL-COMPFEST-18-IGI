@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://bh60cpy5uy2yt" path="res://Script/Entity/Enemy/enemy_action_picker.gd" id="1_picker"]
+[ext_resource type="Script" uid="uid://cy6rkfoqhnhgi" path="res://Script/Entity/Enemy/Action/enemy_attack.gd" id="2_attack"]
+[ext_resource type="Resource" uid="uid://cruxt8ofgn1eq" path="res://Script/Entity/Enemy/Intent/attackIntent.tres" id="3_attack_intent"]
+
+[node name="QueenAI" type="Node"]
+script = ExtResource("1_picker")
+
+[node name="InstantKillAttack" type="Node" parent="."]
+script = ExtResource("2_attack")
+damage = 9999999
+intent = ExtResource("3_attack_intent")
+weight = 1.0

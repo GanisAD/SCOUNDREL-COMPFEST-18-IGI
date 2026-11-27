@@ -1,0 +1,271 @@
+extends Node
+#class_name PlayerHandler 
+
+# Jeda waktu (dalam detik) antar penarikan kartu agar kartu tidak muncul sekaligus 
+const HAND_DRAW_INTERVAL := 0.25
+const HAND_DISCARD_INTERVAL := 0.1 
+
+# Dependensi ke Node Hand (HBoxContainer) untuk merender kartu secara visual 
+@export var inventory_data: InventoryData
+ 
+var hand: Node
+var _potionContainer: PotionContainer : set = _set_potion_container
+
+# Variabel untuk menampung data statistik dan tumpukan kartu 
+var character_stats: CharacterStats 
+var equipped_weapon: WeaponData
+var draw_pile: CardPile 
+var discard_pile: CardPile 
+
+func _ready() -> void:
+	# PENTING: Daftarkan node ini ke group agar sistem efek kartu musuh
+	# bisa mendeteksinya sebagai target yang sah.
+	add_to_group("player")
+	Events.card_played.connect(_on_card_played)
+	Events.combat_victory.connect(_on_combat_victory)
+
+# Fungsi utama untuk memulai simulasi pertempuran 
+func start_battle(stats: CharacterStats) -> void:
+	
+	character_stats = stats
+	
+	# Menerapkan debuff pasif jika ada di inventory sebelum kartu & pertarungan dimulai
+	apply_active_debuffs(character_stats)
+	
+	equipped_weapon = get_equipped_weapon()
+	
+	if not hand:
+		push_error("Gagal start battle: Node Hand belum terdaftar di PlayerHandler!")
+		return
+	
+	if not equipped_weapon :
+		push_error("Gagal memulai battle: Player belum equip senjata")
+		if not equipped_weapon.weapon_deck :
+			push_error("Gagal memulai battle: senjata tidak memiliki deck!")
+			return
+	
+	draw_pile = equipped_weapon.weapon_deck.duplicate(true) as CardPile
+	
+	# Membuat deep copy dari dek awal agar perubahan di dalam battle tidak merusak dek asli 
+	#draw_pile = character_stats.deck.duplicate(true) 
+	
+	draw_pile.shuffle() # Mengocok tumpukan kartu di awal permainan 
+	# Menyiapkan tumpukan buangan yang masih kosong 
+	discard_pile = CardPile.new() 
+	
+	# Panggil fungsi untuk memulai giliran pertama 
+	#start_turn() 
+
+# Fungsi untuk memulai giliran baru pemain 
+func start_turn() -> void:
+	# Mereset status pertahanan (Block) dan Mana pemain 
+	character_stats.block = 0 
+	character_stats.reset_mana() # Asumsi fungsi kustom untuk mereset Mana kembali penuh 
+	
+	# Reset perhitungan kartu agar indeks pelepasan kartu (reparenting) tidak bug
+	if hand.get("cards_played_this_turn") != null:
+		hand.cards_played_this_turn = 0
+	
+	# Menarik kartu secara berkala sesuai dengan jumlah kartu per turn milik karakter 
+	draw_cards(character_stats.cards_per_turn) 
+
+func take_damage(amount: int) -> void:
+	if not character_stats or character_stats.health <= 0:
+		return
+		
+	# Lemparkan kalkulasi matematika damage ke resource stats
+	character_stats.take_damage(amount)
+	
+	# Di sini tempat terbaik untuk memicu efek 1st-person feedback!
+	# Contoh: CameraShake.trigger() atau HitFlash.play()
+	
+	# Periksa kondisi kekalahan (Game Over)
+	if character_stats.health <= 0:
+		Events.player_died.emit() # Beritahu Battle Node bahwa pemain kalah
+
+# Logika inti untuk menarik satu kartu 
+func draw_card() -> void:
+	# Cek dan lakukan kocok ulang jika tumpukan kartu tarik ternyata kosong 
+	reshuffle_deck_from_discard() 
+	
+	# Mengambil satu kartu dari posisi paling atas tumpukan draw_pile 
+	var card = draw_pile.draw_card() # Asumsi fungsi draw_card() ada di kelas CardPile Anda 
+	if card:
+		hand.add_card_to_hand(card) # Memanggil fungsi publik milik hand.gd untuk melahirkan visual kartu 
+		Events.card_drawn.emit() # Sinyal per-kartu untuk audio SFX
+		
+	# Pengecekan ulang setelah penarikan kartu selesai dijalankan 
+	reshuffle_deck_from_discard() 
+
+# Fungsi manajemen jeda (Tween) untuk menarik beberapa kartu sekaligus 
+func draw_cards(amount: int) -> void:
+	var tween := create_tween() 
+	
+	# Melakukan perulangan penarikan kartu berdasarkan jumlah yang diminta 
+	for i in range(amount):
+		tween.tween_callback(draw_card) # Memanggil fungsi draw_card secara bergantian 
+		tween.tween_interval(HAND_DRAW_INTERVAL) # Memberikan jeda waktu sesuai konstanta kita 
+		
+	# Setelah semua kartu selesai ditarik ke tangan, pancarkan sinyal global melalui Event Bus 
+	tween.finished.connect(
+		func():
+			Events.player_hand_drawn.emit() 
+	)
+
+func _on_card_played(card: Card) -> void:
+	# Pastikan data kartu yang dilempar oleh sinyal itu valid
+	if card:
+		# Masukkan data resource kartu tersebut ke tumpukan buangan agar bisa dikocok ulang nanti 
+		discard_pile.add_card(card) 
+
+func end_turn() -> void:
+	# Jika Anda memiliki fungsi disable di hand.gd, panggil di sini
+	# agar pemain tidak bisa menarik kartu saat animasi buang kartu berjalan.
+	# hand.disable_hand() 
+	
+	discard_cards()
+
+# Logika untuk membuang kartu satu per satu dengan jeda animasi (Juice/Game Feel)
+func discard_cards() -> void:
+	if hand.get_child_count() == 0:
+		Events.player_hand_discarded.emit()
+		return
+	
+	var tween := create_tween()
+	
+	# Ambil semua kartu visual yang masih tersisa di node Hand
+	var cards_in_hand = hand.get_children()
+	
+	for child in cards_in_hand:
+		var card_ui = child # Cast sebagai node CardUI Anda
+		if card_ui:
+			# Pindahkan data Resource kartu ke dalam tumpukan buangan
+			tween.tween_callback(discard_pile.add_card.bind(card_ui.card))
+			
+			# Hapus node visual kartu dari layar
+			tween.tween_callback(card_ui.queue_free)
+			
+			# Sinyal per-kartu untuk audio SFX discard
+			tween.tween_callback(Events.card_discarded.emit)
+			
+			# Beri jeda sedikit antar pembuangan kartu agar terlihat seperti Slay the Spire
+			tween.tween_interval(HAND_DISCARD_INTERVAL)
+
+	# Setelah semua kartu selesai dibuang, pancarkan sinyal
+	tween.finished.connect(
+		func():
+			Events.player_hand_discarded.emit()
+	)
+# Logika pengocokan ulang kartu buangan kembali ke dek tarik jika habis 
+func reshuffle_deck_from_discard() -> void:
+	# Jika tumpukan kartu tarik belum habis, lewati proses ini segera 
+	if not draw_pile.is_empty():
+		return 
+		
+	# Pindahkan seluruh sisa kartu dari tumpukan buangan kembali ke tumpukan tarik 
+	while not discard_pile.is_empty():
+		var card = discard_pile.draw_card() 
+		draw_pile.add_card(card) 
+		
+	# Kocok ulang tumpukan tarik yang baru agar urutannya acak kembali 
+	draw_pile.shuffle()
+
+func _on_combat_victory() -> void:
+	if inventory_data:
+		inventory_data.decrement_debuff_battles()
+		_process_weapon_durability()
+
+func apply_active_debuffs(stats: CharacterStats) -> void:
+	if not inventory_data or not stats:
+		return
+	var active_debuffs = inventory_data.get_active_debuffs()
+	for debuff in active_debuffs:
+		if debuff:
+			debuff.apply_to_stats(stats)
+
+# --- Weapon & Item Management
+func _set_potion_container(value: PotionContainer) -> void:
+	_potionContainer = value
+	if _potionContainer and inventory_data:
+		_potionContainer.inventory = inventory_data
+
+# Setter untuk menyuntikkan InventoryData baru ke PotionContainer jika node UI sudah siap
+func _set_inventory_data(value: InventoryData) -> void:
+	inventory_data = value
+	if _potionContainer and inventory_data:
+		_potionContainer.inventory = inventory_data
+
+func get_equipped_weapon() -> WeaponData:
+	if inventory_data:
+		return inventory_data.weapon_slot
+	return null
+
+func add_item_to_inventory(item: ItemData, quantity: int = 1) -> bool:
+	if inventory_data:
+		return inventory_data.add_item(item, quantity)
+	return false
+
+func use_potion(slot_index: int, targets: Array[Node] = []) -> bool:
+	if not inventory_data:
+		return false
+	var used_potion: ItemData = inventory_data.use_potion(slot_index)
+	if used_potion and used_potion is PotionData:
+		(used_potion as PotionData).use(targets, self)
+		return true
+	return false
+
+func is_item_duplicate(item: ItemData) -> bool:
+	if not inventory_data or not item:
+		return false
+		
+	# 1. Pengecekan khusus untuk Senjata (WeaponData)
+	if item is WeaponData:
+		if inventory_data.weapon_slot:
+			# Bandingkan berdasarkan referensi Resource atau nama uniknya
+			return inventory_data.weapon_slot == item or inventory_data.weapon_slot.name == item.name
+		return false
+
+	# 2. Pengecekan untuk Potion (jika tidak boleh ada jenis ramuan yang sama)
+	if item is PotionData:
+		for slot in inventory_data.potion_slots:
+			if slot and slot.item_data and (slot.item_data == item or slot.item_data.name == item.name):
+				return true
+		return false
+
+	# 3. Pengecekan untuk Debuff
+	if item is DebuffData:
+		for slot in inventory_data.debuff_slots:
+			if slot and slot.item_data and (slot.item_data == item or slot.item_data.name == item.name):
+				return true
+		return false
+
+	return false
+
+func _process_weapon_durability() -> void:
+	var current_weapon := get_equipped_weapon()
+	if not current_weapon:
+		return
+		
+	var is_broken := current_weapon.increment_durability(1)
+	print("Weapon '%s' durability: %d/%d" % [
+		current_weapon.name, 
+		current_weapon.current_durability, 
+		current_weapon.max_durability
+	])
+	
+	if is_broken:
+		_break_equipped_weapon(current_weapon)
+
+func _break_equipped_weapon(broken_weapon: WeaponData) -> void:
+	print("Senjata '%s' telah hancur!" % broken_weapon.name)
+	
+	# Kosongkan slot senjata di InventoryData (menggantikan queue_free())
+	inventory_data.weapon_slot = inventory_data.default_weapon 
+	equipped_weapon = inventory_data.default_weapon
+	
+	# Beri tahu UI dan sistem lain bahwa senjata telah hancur
+	Events.weapon_broken.emit(broken_weapon)
+	
+	# Opsional: Jika ada sinyal update inventaris, pancarkan di sini agar slot UI kosong
+	if inventory_data.has_signal("inventory_updated"):
+		inventory_data.inventory_updated.emit()

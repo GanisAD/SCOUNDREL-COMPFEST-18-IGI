@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://du54crkwwjhmo"
+path="res://.godot/imported/SFX_Weapon_Break_Metal_v2.wav-607d263277bca147db6cba331cc5040d.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/weapon break/SFX_Weapon_Break_Metal_v2.wav"
+dest_files=["res://.godot/imported/SFX_Weapon_Break_Metal_v2.wav-607d263277bca147db6cba331cc5040d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

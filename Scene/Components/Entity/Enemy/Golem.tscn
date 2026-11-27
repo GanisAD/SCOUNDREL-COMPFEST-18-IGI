@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cef83s858hvpf"]
+
+[ext_resource type="PackedScene" path="res://Scene/Components/Entity/Enemy/Enemy.tscn" id="1_base"]
+[ext_resource type="Texture2D" uid="uid://dk4r4yjjso47s" path="res://Resources/Entity/Enemy/golem.png" id="2_a8rdo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_golem"]
+size = Vector2(280, 340)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nouk6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_a8rdo")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[node name="Golem" unique_id=1843021416 instance=ExtResource("1_base")]
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_golem")
+
+[node name="Sprite2D" parent="." index="2"]
+scale = Vector2(0.155, 0.155)
+sprite_frames = SubResource("SpriteFrames_nouk6")
+animation = &"Idle"
+
+[node name="IntentUI" parent="." index="3"]
+offset_top = -340.0
+offset_bottom = -280.0
+
+[node name="StatsUI" parent="." index="4"]
+offset_top = 150.0
+offset_bottom = 255.0

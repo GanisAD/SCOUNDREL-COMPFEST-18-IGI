@@ -1,0 +1,74 @@
+## Komponen UI generik (reusable) untuk menampilkan Health Bar dan Armor/Block.
+## Digunakan bersama oleh Player HUD di BattleUI maupun melekat pada setiap instance musuh (Enemy).
+## Bekerja secara reaktif dengan mendengarkan sinyal stats_changed dari resource Stats.
+class_name StatsUI
+extends Control
+
+## Resource Stats (CharacterStats atau EnemyStats) yang diikatkan ke HUD ini.
+var stats: Stats : set = set_stats
+
+@export var hide_block_when_zero: bool = true
+
+@onready var hp_bar: Range = $HPBar
+@onready var hp_label: Label = get_node_or_null("HPLabel") if has_node("HPLabel") else (get_node_or_null("HPBar/HPLabel") if has_node("HPBar/HPLabel") else null)
+@onready var block_container: Control = get_node_or_null("BlockContainer")
+@onready var block_label: Label = get_node_or_null("BlockContainer/BlockLabel") if has_node("BlockContainer/BlockLabel") else get_node_or_null("BlockLabel")
+@onready var strength_label: Label = find_child("StrengthLabel", true, false) as Label
+@onready var weakness_label: Label = find_child("WeaknessLabel", true, false) as Label
+@onready var charge_label: Label = find_child("ChargeLabel", true, false) as Label
+
+func _ready() -> void:
+	# Memastikan UI diperbarui begitu node siap di Scene Tree
+	update_hud()
+
+func set_stats(value: Stats) -> void:
+	if stats and stats.stats_changed.is_connected(update_hud):
+		stats.stats_changed.disconnect(update_hud)
+		
+	stats = value
+	
+	if stats:
+		if not stats.stats_changed.is_connected(update_hud):
+			stats.stats_changed.connect(update_hud)
+		update_hud()
+
+func update_hud() -> void:
+	# Jika node belum _ready atau stats kosong, hentikan fungsi agar tidak crash
+	if not stats or not is_node_ready(): 
+		return
+	
+	if hp_bar:
+		hp_bar.max_value = stats.max_health
+		hp_bar.value = stats.health
+		
+	if hp_label:
+		hp_label.text = "%d / %d" % [stats.health, stats.max_health]
+	
+	var has_block: bool = stats.block > 0
+	var should_show_block: bool = has_block or not hide_block_when_zero
+	
+	if block_label:
+		if block_container and has_node("BlockContainer/Icon"):
+			block_label.text = "%d" % stats.block
+		else:
+			block_label.text = "Block: %d" % stats.block
+			
+	if block_container:
+		block_container.visible = should_show_block
+	elif block_label:
+		block_label.visible = should_show_block
+		
+	if has_node("ManaLabel") and "mana" in stats:
+		var mana_label = get_node("ManaLabel") as Label
+		if mana_label:
+			var max_mana_val = stats.max_mana if "max_mana" in stats else 3
+			mana_label.text = "Mana: %d / %d" % [stats.mana, max_mana_val]
+			
+	if strength_label and "strength_stacks" in stats:
+		strength_label.text = "Strength: %d" % stats.strength_stacks
+		
+	if weakness_label and "weakened_stacks" in stats:
+		weakness_label.text = "Weakness: %d" % stats.weakened_stacks
+		
+	if charge_label and "charge_stacks" in stats:
+		charge_label.text = "Charge: %d" % stats.charge_stacks

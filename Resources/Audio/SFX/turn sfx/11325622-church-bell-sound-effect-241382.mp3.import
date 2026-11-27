@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bb0pshubpbw43"
+path="res://.godot/imported/11325622-church-bell-sound-effect-241382.mp3-e734b664173e83f940aa8b8819d58dbb.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/turn sfx/11325622-church-bell-sound-effect-241382.mp3"
+dest_files=["res://.godot/imported/11325622-church-bell-sound-effect-241382.mp3-e734b664173e83f940aa8b8819d58dbb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

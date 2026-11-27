@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://7cgh5kj03b0e"
+path="res://.godot/imported/combat bgm.ogg-a3b6b212dfb604af31a2b691e657a8c4.oggvorbisstr"
+
+[deps]
+
+source_file="res://Resources/Audio/BGM/Combat bgm/combat bgm.ogg"
+dest_files=["res://.godot/imported/combat bgm.ogg-a3b6b212dfb604af31a2b691e657a8c4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

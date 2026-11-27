@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RoomData" format=3 uid="uid://q08ausaafx2d"]
+
+[ext_resource type="Resource" uid="uid://b8o7qpf7f6xw4" path="res://Data/Weapon/GuardSword/guard_sword.tres" id="1_cw7tu"]
+[ext_resource type="Script" uid="uid://dyf4igi785lr7" path="res://Script/Exploration/Room/room_data.gd" id="1_knyec"]
+[ext_resource type="Resource" uid="uid://bd1sj878yq8y" path="res://Data/Weapon/Club/wooden_club.tres" id="2_nqgvm"]
+[ext_resource type="Texture2D" uid="uid://bbjyes1c7yh74" path="res://Resources/Room/altar-diamond.png" id="2_tcsfw"]
+[ext_resource type="Texture2D" uid="uid://bwxl2s2lssxnt" path="res://Resources/Door/Diamond.png" id="3_tcsfw"]
+
+[resource]
+script = ExtResource("1_knyec")
+room_name = "Weapon Room"
+room_type = 0
+room_icon = ExtResource("3_tcsfw")
+room_altar = ExtResource("2_tcsfw")
+description = "room with weapon card"
+possible_item_pool = Array[Resource]([ExtResource("2_nqgvm"), ExtResource("1_cw7tu")])
+metadata/_custom_type_script = "uid://dyf4igi785lr7"

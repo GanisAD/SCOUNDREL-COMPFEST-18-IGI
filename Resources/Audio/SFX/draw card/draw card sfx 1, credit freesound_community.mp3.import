@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b7wod1e5h7auj"
+path="res://.godot/imported/draw card sfx 1, credit freesound_community.mp3-27f736cee3677514487aa9197c897e0f.mp3str"
+
+[deps]
+
+source_file="res://Resources/Audio/SFX/draw card/draw card sfx 1, credit freesound_community.mp3"
+dest_files=["res://.godot/imported/draw card sfx 1, credit freesound_community.mp3-27f736cee3677514487aa9197c897e0f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

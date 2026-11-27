@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EncounterData" format=3 uid="uid://dr32snvf8fvt6"]
+
+[ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="1_htyes"]
+[ext_resource type="Script" uid="uid://biae4bxkhr8kd" path="res://Script/Exploration/encounter_data.gd" id="2_j2u7m"]
+[ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="2_wovlm"]
+
+[resource]
+script = ExtResource("2_j2u7m")
+encounter_name = "A Skeleton Encounter"
+enemies = Array[ExtResource("1_htyes")]([ExtResource("2_wovlm")])
+metadata/_custom_type_script = "uid://biae4bxkhr8kd"

@@ -1,0 +1,50 @@
+## State saat kartu sedang ditarik bebas oleh pemain di layar.
+## Melepaskan kartu sementara dari kontainer tangan (reparent ke UI layer)
+## dan mengaktifkan isolasi hover kartu lain.
+class_name CardDraggingState
+extends CardState
+
+## Batas waktu minimum sebelum status drag dapat dilepas (keamanan input).
+const DRAG_MINIMUM_THRESHOLD := 0.05
+var minimum_drag_time_elapsed := false
+
+func enter() -> void:
+	# Ambil referensi UI Layer global (menggunakan grup scene yang sudah disiapkan)
+	var ui_layer := get_tree().get_first_node_in_group("ui_layer")
+	if ui_layer:
+		# Lepaskan kartu dari kontainer tangan agar posisinya bisa bebas melayang
+		card_ui.reparent(ui_layer)
+		
+	# Pastikan posisi awal kartu langsung tepat di bawah kursor mouse tanpa loncat
+	card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.drag_offset
+	card_ui.z_index = 20
+	card_ui.state.text = "DRAGGING"
+	
+	# Pancarkan sinyal untuk mengisolasi hover kartu lain di tangan dan memicu audio drag
+	Events.card_drag_started.emit(card_ui)
+	
+	Events.card_drag_started.emit(card_ui)
+	
+	# Keamanan Input: Gunakan SceneTree Timer dengan flag false (agar berhenti saat game dipause)
+	minimum_drag_time_elapsed = false
+	get_tree().create_timer(DRAG_MINIMUM_THRESHOLD, false).timeout.connect(
+		func(): minimum_drag_time_elapsed = true
+	)
+
+func exit() -> void:
+	# Beritahu Hand bahwa kartu selesai ditarik agar interaktivitas kartu lain pulih
+	Events.card_drag_ended.emit(card_ui)
+
+func on_input(event: InputEvent) -> void:
+	# 1. Update posisi kartu mengikuti kursor
+	if event is InputEventMouseMotion:
+		card_ui.global_position = card_ui.get_global_mouse_position() - card_ui.drag_offset
+		
+	# 2. Deteksi Batal (Klik Kanan)
+	if event.is_action_pressed("right_click"):
+		card_ui.reparent_requested.emit(card_ui)
+		transition_requested.emit(self.state, CardState.State.BASE)
+		
+	# 3. Deteksi Lepas Klik Kiri
+	elif event.is_action_released("left_click"):
+		transition_requested.emit(self.state, CardState.State.RELEASED)
