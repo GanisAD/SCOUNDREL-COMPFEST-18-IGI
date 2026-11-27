@@ -10,5 +10,6 @@ script = ExtResource("1_76vnl")
 enemy_name = "Queen"
 enemy_scene = ExtResource("2_fryiv")
 ai = ExtResource("3_queen_ai")
+max_health = 999999
 art = ExtResource("1_bq3av")
 metadata/_custom_type_script = "uid://dyhlscpnv4y2a"
