@@ -5,53 +5,111 @@ class_name Enemy
 extends Area2D
 
 ## Sinyal kematian musuh yang dipancarkan saat HP mencapai 0.
-signal died(enemy: Enemy)
+signal died
 
 ## Resource statistik musuh (EnemyStats) yang menentukan HP, Base Block, dan visual sprite.
-@export var stats: EnemyStats
+@export var stats: EnemyStats : set = set_enemy_stats
 
 # [TAMBAHAN] Menyimpan aksi aktif yang direncanakan untuk giliran ini
 var current_action: EnemyAction : set = _set_current_action
+var turns_taken: int = 0
 
 # Onready variables untuk memetakan node child di Scene musuh
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 @onready var arrow: Sprite2D = $Arrow
 @onready var stats_ui = $StatsUI  # Menghubungkan ke UI HP & Block musuh
 
-# [TAMBAHAN] Ambil referensi picker AI musuh
-@onready var enemy_action_picker: EnemyActionPicker = $EnemyActionPicker
+# [TAMBAHAN] Ambil referensi picker AI musuh (opsional jika menggunakan stats.ai)
+@onready var enemy_action_picker: EnemyActionPicker = get_node_or_null("EnemyActionPicker") as EnemyActionPicker
 @onready var intent_ui = $IntentUI # Asumsi node IntentUI ditempel di scene musuh
+
+var base_sprite_scale: Vector2 = Vector2.ONE
+var base_modulate: Color = Color.WHITE
 
 func _ready() -> void:
 	add_to_group("enemies")
-	# 1. Gandakan resource stats agar data HP musuh ini tidak berbagi dengan musuh lain
-	if stats:
-		stats = stats.create_instance() as EnemyStats
-		stats_ui.stats = stats
-		
-		# [TAMBAHAN] Hubungkan sinyal perubahan status untuk sistem Reactive Intent
-		# Jika HP musuh berubah akibat diserang player, ia akan mengecek ulang aksinya
-		stats.stats_changed.connect(_on_stats_changed)
 	
-	# 2. Sembunyikan indikator panah target di awal pertempuran
+	# Sembunyikan indikator panah target di awal pertempuran
 	if arrow:
 		arrow.visible = false
 	
 	if sprite:
-		sprite.play("idle")
+		base_sprite_scale = sprite.scale
+		base_modulate = sprite.modulate
+		play_animation("idle")
 	
-	# 3. Hubungkan sinyal internal Area2D untuk sistem hover aiming kartu
+	# Hubungkan sinyal internal Area2D untuk sistem hover aiming kartu
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
+
+# Setter aman untuk stats (berfungsi baik sebelum maupun sesudah _ready)
+func set_enemy_stats(value: EnemyStats) -> void:
+	if stats and stats.stats_changed.is_connected(_on_stats_changed):
+		stats.stats_changed.disconnect(_on_stats_changed)
+		
+	if value:
+		stats = value.create_instance() as EnemyStats
+	else:
+		stats = null
+	
+	turns_taken = 0
+		
+	if not is_node_ready():
+		await ready
+		
+	update_stats()
+	setup_ai()
+
+func update_stats() -> void:
+	if not stats:
+		return
+		
+	if not stats.stats_changed.is_connected(_on_stats_changed):
+		stats.stats_changed.connect(_on_stats_changed)
+		
+	if stats_ui:
+		stats_ui.stats = stats
+		stats_ui.update_hud()
+		
+	_update_visuals()
+
+func setup_ai() -> void:
+	if stats and stats.ai:
+		if enemy_action_picker:
+			remove_child(enemy_action_picker)
+			enemy_action_picker.queue_free()
+		var new_picker := stats.ai.instantiate() as EnemyActionPicker
+		if new_picker:
+			add_child(new_picker)
+			enemy_action_picker = new_picker
+	elif not enemy_action_picker:
+		enemy_action_picker = get_node_or_null("EnemyActionPicker") as EnemyActionPicker
+		
+	if enemy_action_picker:
+		enemy_action_picker.enemy = self
+		enemy_action_picker.target = _get_player_node()
+		enemy_action_picker.setup_actions()
 
 # --- MANAJEMEN VISUAL ---
 
 func _update_visuals() -> void:
-	if stats:
-		if sprite and stats.art:
-			sprite.texture = stats.art
-		if stats_ui:
-			stats_ui.update_hud() 
+	if not stats:
+		return
+	if sprite:
+		var has_frames := sprite.sprite_frames != null and sprite.sprite_frames.get_animation_names().size() > 0
+		if has_frames:
+			play_animation("idle")
+		elif stats.art:
+			if "texture" in sprite:
+				sprite.texture = stats.art
+			elif sprite is AnimatedSprite2D:
+				var fallback_frames := SpriteFrames.new()
+				fallback_frames.add_animation("idle")
+				fallback_frames.add_frame("idle", stats.art)
+				sprite.sprite_frames = fallback_frames
+				sprite.play("idle")
+	if stats_ui:
+		stats_ui.update_hud()
 
 # [MODIFIKASI] Dipanggil otomatis saat sinyal stats_changed aktif
 func _on_stats_changed() -> void:
@@ -71,6 +129,8 @@ func play_animation(anim_name: String) -> void:
 # Koreografi fisik serangan (Tween + Animasi Frame)
 func play_attack_animation(target_offset: Vector2, on_impact_callback: Callable) -> void:
 	if not sprite:
+		if on_impact_callback.is_valid():
+			on_impact_callback.call()
 		return
 		
 	var original_pos = global_position
@@ -105,18 +165,19 @@ func play_buff_animation() -> void:
 		return
 		
 	var rage_color = Color.from_string("ffd043", Color.ORANGE)
+	base_modulate = rage_color
 	var tween = create_tween().set_parallel(true)
 	tween.bind_node(self)
 	
 	# 1. Ubah warna modulate sprite secara permanen
-	tween.tween_property(sprite, "modulate", rage_color, 0.35)\
+	tween.tween_property(sprite, "modulate", base_modulate, 0.35)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		
 	# 2. Denyut membesar singkat (Juice Effect)
 	var scale_tween = create_tween()
 	scale_tween.bind_node(self)
-	scale_tween.tween_property(sprite, "scale", Vector2(1.2, 1.2), 0.15)
-	scale_tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.15)
+	scale_tween.tween_property(sprite, "scale", base_sprite_scale * 1.2, 0.15)
+	scale_tween.tween_property(sprite, "scale", base_sprite_scale, 0.15)
 	
 	# Tunggu animasi selesai agar aksi tidak terputus prematur
 	await scale_tween.finished
@@ -128,8 +189,8 @@ func play_block_animation() -> void:
 		
 	var tween = create_tween()
 	tween.bind_node(self)
-	tween.tween_property(sprite, "scale", Vector2(1.15, 1.15), 0.1)
-	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_property(sprite, "scale", base_sprite_scale * 1.15, 0.1)
+	tween.tween_property(sprite, "scale", base_sprite_scale, 0.1)
 	
 	await tween.finished
 
@@ -160,64 +221,53 @@ func take_damage(amount: int) -> void:
 	_play_hit_effect()
 	
 	if stats.health <= 0:
-		died.emit(self)
+		died.emit()
 		queue_free()
 
 func _play_hit_effect() -> void:
 	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color.RED, 0.1)
-	tween.tween_property(sprite, "modulate", Color.WHITE, 0.1)
+	tween.tween_property(sprite, "modulate", base_modulate, 0.1)
 
 func add_block(amount: int) -> void:
 	if not stats:
 		return
 		
-	# Tambahkan nilai block ke dalam stats musuh
+	# Memodifikasi stats.block otomatis memancarkan sinyal stats_changed ke StatsUI
 	stats.block += amount
-	
-	# Berikan sedikit feedback visual (misal: efek bergetar/skala membesar singkat)
-	_play_block_effect()
-	
-	# Memicu pembaruan UI secara manual jika diperlukan 
-	# (Jika stats_changed tidak otomatis terpicu saat variabel .block berubah)
-	_on_stats_changed()
 
 # Efek visual sederhana saat musuh menambah pertahanan/block
-func _play_block_effect() -> void:
-	var tween = create_tween()
-	# Membuat sprite membesar sedikit lalu kembali normal untuk memberi kesan memompa pertahanan
-	tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.1)
-	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
 
 # --- TURNS & AI LOGIC (CO-ROUTINE FRIENDLY) ---
 
 # [MODIFIKASI TOTAL] Menggunakan arsitektur EnemyAction baru
-# enemy.gd
 func do_turn() -> void:
 	if not enemy_action_picker or not current_action:
 		return
-		
-	var players = get_tree().get_nodes_in_group("player")
-	var target_player = players[0] if not players.is_empty() else null
+	
+	turns_taken += 1
+	var target_player = _get_player_node()
 	
 	# --- MEKANISME FAILSAFE MENGGUNAKAN REFERENCE ---
 	# Menggunakan Dictionary agar lambda bisa memodifikasi nilainya secara eksternal
 	var flags = { "action_done": false }
-	var failsafe_timer = get_tree().create_timer(1.5)
+	var failsafe_timer = get_tree().create_timer(3.0)
 	
-	# Hubungkan sinyal selesai yang asli ke lambda
+	# Hubungkan sinyal selesai yang asli ke lambda (one-shot agar tidak menumpuk antar turn)
 	current_action.enemy_action_completed.connect(func():
 		flags["action_done"] = true
-	)
+	, CONNECT_ONE_SHOT)
 	
 	# Eksekusi aksi musuh
 	current_action.perform_action(self, target_player)
 	
 	# Tunggu mana yang lebih cepat: Aksi selesai secara normal, ATAU waktu failsafe habis
 	while not flags["action_done"]:
+		if not is_instance_valid(self) or not is_inside_tree():
+			return
 		await get_tree().process_frame
 		if failsafe_timer.time_left <= 0:
-			print("WARNING: Aksi musuh ", stats.enemy_name, " macet! Failsafe dipicu.")
+			print("WARNING: Aksi musuh ", stats.enemy_name if stats else name, " macet! Failsafe dipicu.")
 			break
 	
 	# --- PEMBERSIHAN ---

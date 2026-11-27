@@ -10,6 +10,6 @@ metadata/_custom_type_script = "uid://bqb0lvm81tlkn"
 
 [resource]
 script = ExtResource("1_mgplt")
-weapon_slot = ExtResource("3_kb2rv")
+default_weapon = ExtResource("3_kb2rv")
 potion_slots = Array[ExtResource("2_kb2rv")]([SubResource("Resource_mgplt")])
 metadata/_custom_type_script = "uid://d34gg6su0m7nc"

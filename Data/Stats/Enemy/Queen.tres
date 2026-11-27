@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3 uid="uid://by16oveg0kcl6"]
+
+[ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="1_76vnl"]
+[ext_resource type="Texture2D" uid="uid://fofxc1od4j6k" path="res://Resources/Entity/Enemy/Queen.png" id="1_bq3av"]
+[ext_resource type="PackedScene" uid="uid://dy2fwsme4w6ps" path="res://Scene/Components/Entity/Enemy/queen.tscn" id="2_fryiv"]
+[ext_resource type="PackedScene" path="res://Scene/Components/Entity/Enemy/QueenAI.tscn" id="3_queen_ai"]
+
+[resource]
+script = ExtResource("1_76vnl")
+enemy_name = "Queen"
+enemy_scene = ExtResource("2_fryiv")
+ai = ExtResource("3_queen_ai")
+max_health = 999999
+art = ExtResource("1_bq3av")
+metadata/_custom_type_script = "uid://dyhlscpnv4y2a"

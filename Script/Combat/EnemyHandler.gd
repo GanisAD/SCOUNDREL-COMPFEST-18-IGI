@@ -1,97 +1,122 @@
+# enemy_handler.gd
 class_name EnemyHandler
-extends Node
+extends Node2D
 
-# Signal untuk memberi tahu Battle Manager tentang status pertempuran
 signal enemy_turn_ended
 signal all_enemies_defeated
 
-# Array statis ber-tipe untuk melacak musuh yang masih hidup di arena
+# Masukkan base scene Enemy.tscn di Inspector sebagai fallback
+@export var default_enemy_scene: PackedScene
+# Jarak horizontal antar musuh saat di-spawn otomatis
+@export var enemy_spacing: float = 160.0
+
 var active_enemies: Array[Enemy] = []
 
 func _ready() -> void:
-	# Inisialisasi awal saat pertempuran dimulai
-	_update_active_enemies()
-	_setup_enemy_signals()
-
-# Fungsi internal untuk mendata ulang musuh yang aktif di bawah Node ini
-func _update_active_enemies() -> void:
-	active_enemies.clear()
+	# Daftarkan ke group agar EnemyAction (Summon/Split) mudah menemukan handler ini
+	add_to_group("enemy_handler")
+	
+	# Tetap dukung jika ada musuh yang ditaruh manual di editor untuk testing
 	for child in get_children():
 		if child is Enemy:
-			active_enemies.append(child)
+			_register_enemy(child)
 
-# Menghubungkan signal kematian dari setiap musuh
-func _setup_enemy_signals() -> void:
-	for enemy in active_enemies:
-		# Menggunakan signal kustom 'died' dari musuh agar lebih aman sebelum queue_free
-		if enemy.has_signal("died") and not enemy.died.is_connected(_on_enemy_died):
-			enemy.died.connect(_on_enemy_died.bind(enemy))
+# --- 1. INISIALISASI ENCOUNTER (MULTIPLE ENEMIES) ---
 
+# Dipanggil oleh Battle/Combat Manager saat masuk ruangan Club
+func setup_encounter(enemy_roster: Array[EnemyStats]) -> void:
+	clear_all_enemies()
+	
+	var count = enemy_roster.size()
+	if count == 0:
+		return
+		
+	# Hitung posisi tengah agar formasi musuh selalu simetris di battlefield
+	var total_width = (count - 1) * enemy_spacing
+	var start_x = -total_width / 2.0
+	
+	for i in range(count):
+		var spawn_pos = Vector2(start_x + (i * enemy_spacing), 0)
+		spawn_enemy(enemy_roster[i], spawn_pos)
 
-func set_enemy_stats_for_all(new_stats: EnemyStats) -> void:
-	_update_active_enemies()
+# --- 2. SINGLE ENTRY-POINT SPAWNER (UNTUK ENCOUNTER, SUMMON, & SPLIT) ---
+
+func spawn_enemy(stats: EnemyStats, local_pos: Vector2) -> Enemy:
+	if not stats:
+		push_error("EnemyHandler: stats belum diisi!")
+		return null
+		
+	var scene_to_spawn: PackedScene = stats.enemy_scene if stats.enemy_scene else default_enemy_scene
+	if not scene_to_spawn:
+		push_error("EnemyHandler: stats.enemy_scene dan default_enemy_scene belum diisi!")
+		return null
+		
+	var new_enemy = scene_to_spawn.instantiate() as Enemy
+	new_enemy.position = local_pos
+	add_child(new_enemy)
+	
+	# Inject stats (otomatis menduplikasi resource & setup AI di setter Enemy)
+	new_enemy.stats = stats
+	new_enemy.update_intent()
+	
+	_register_enemy(new_enemy)
+	return new_enemy
+
+# Memastikan setiap musuh (awal maupun summon) terdaftar dan terhubung signal-nya
+func _register_enemy(enemy: Enemy) -> void:
+	if enemy not in active_enemies:
+		active_enemies.append(enemy)
+		
+	if enemy.has_signal("died") and not enemy.died.is_connected(_on_enemy_died):
+		enemy.died.connect(_on_enemy_died.bind(enemy))
+
+func clear_all_enemies() -> void:
 	for enemy in active_enemies:
 		if is_instance_valid(enemy):
-			# Memanggil setter internal musuh agar me-refresh instance stats & AI controller-nya
-			enemy.stats = new_stats
+			enemy.queue_free()
+	active_enemies.clear()
 
-# Mengganti EnemyStats untuk satu musuh spesifik berdasarkan indeksnya
-func set_enemy_stats_at(index: int, new_stats: EnemyStats) -> void:
-	_update_active_enemies()
-	if index >= 0 and index < active_enemies.size():
-		var enemy = active_enemies[index]
-		if is_instance_valid(enemy):
-			enemy.stats = new_stats
+# --- 3. LOGIKA TURN-BASED AMAN DARI MUTASI ---
 
-# --- LOGIKA TURN-BASED (SEKUENSAL) ---
-
-# Dipanggil oleh Battle Manager saat giliran Player selesai
 func start_enemy_turn() -> void:
 	Events.enemy_turn_started.emit()
-	_update_active_enemies()
+	_cleanup_invalid_enemies()
 	
 	if active_enemies.is_empty():
 		all_enemies_defeated.emit()
 		return
 	
-	# Iterasi musuh satu per satu secara berurutan agar visual terlihat rapi
-	for enemy in active_enemies:
-		if is_instance_valid(enemy):
-			# Menunggu aksi musuh selesai (misal: animasi serang, kalkulasi damage ke player)
-			# Pastikan fungsi do_turn() di skrip Enemy kamu mengembalikan coroutine (await)
+	# PENTING: Duplikasi array sebagai snapshot antrean giliran!
+	# Musuh hasil summon/split di tengah turn tidak akan mengacaukan loop
+	# dan baru akan bertindak pada turn berikutnya (standar Slay the Spire).
+	var turn_queue: Array[Enemy] = active_enemies.duplicate()
+	
+	for enemy in turn_queue:
+		# Cek ulang validitas karena musuh bisa saja mati oleh efek racun/split
+		if is_instance_valid(enemy) and enemy in active_enemies:
 			await enemy.do_turn()
-			
-			# Jeda singkat sebelum musuh berikutnya menyerang untuk memberikan efek dramatis
 			await get_tree().create_timer(0.4).timeout
 	
-	# Beritahu Battle Manager bahwa seluruh musuh selesai bertindak
 	enemy_turn_ended.emit()
 
-# --- UTILITY & MAINTENANCE ---
+# --- 4. UTILITY & CLEANUP ---
 
-# Dipanggil di awal giliran Player atau giliran Enemy untuk mereset armor/block musuh
 func reset_enemy_blocks() -> void:
-	_update_active_enemies()
+	_cleanup_invalid_enemies()
 	for enemy in active_enemies:
-		if is_instance_valid(enemy) and enemy.stats:
-			enemy.stats.block = 0
+		if enemy.stats:
+			enemy.stats.reset_block()
 
-# Meminta setiap musuh merencanakan dan menampilkan aksi mereka berikutnya (Intent)
-# Biasanya dipanggil di awal Turn Player agar Player bisa menyusun strategi
 func update_enemy_intents() -> void:
-	_update_active_enemies()
+	_cleanup_invalid_enemies()
 	for enemy in active_enemies:
-		if is_instance_valid(enemy):
-			enemy.update_intent()
+		enemy.update_intent()
 
-# --- PENANGANAN KEMATIAN MUSUH ---
+func _cleanup_invalid_enemies() -> void:
+	active_enemies = active_enemies.filter(func(e): return is_instance_valid(e))
 
-# Callback saat ada musuh yang mati
 func _on_enemy_died(enemy: Enemy) -> void:
-	if enemy in active_enemies:
-		active_enemies.erase(enemy)
+	active_enemies.erase(enemy)
 	
-	# Cek apakah ini musuh terakhir yang mati di arena
 	if active_enemies.is_empty():
-		# Pemicu kemenangan untuk Battle Manager!
 		all_enemies_defeated.emit()

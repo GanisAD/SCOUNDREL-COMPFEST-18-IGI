@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CardPile" format=3 uid="uid://hmg03dw4vs8b"]
+
+[ext_resource type="Script" uid="uid://pyfgi1lxe2mu" path="res://Script/Card/CardData.gd" id="1_q7yo5"]
+[ext_resource type="Script" uid="uid://biv3qhf8i5vce" path="res://Script/Card/pile/cardPile.gd" id="2_3m2jc"]
+[ext_resource type="Resource" uid="uid://buw1bba313mob" path="res://Data/Weapon/Club/Card/Attack/bash.tres" id="2_c51f3"]
+[ext_resource type="Resource" uid="uid://31d7d6rhanjq" path="res://Data/Weapon/Club/Card/Buff/charge.tres" id="3_5yyrr"]
+[ext_resource type="Resource" uid="uid://dew0c8a6mltws" path="res://Data/Weapon/GuardSword/Card/Block/shield.tres" id="4_vvraf"]
+
+[resource]
+script = ExtResource("2_3m2jc")
+cards = Array[ExtResource("1_q7yo5")]([ExtResource("2_c51f3"), ExtResource("3_5yyrr"), ExtResource("4_vvraf")])
+metadata/_custom_type_script = "uid://biv3qhf8i5vce"

@@ -13,6 +13,9 @@ func _ready() -> void:
 
 # Fungsi utama yang dipanggil oleh Enemy ketika rencana aksinya ditentukan atau diperbarui
 func update_intent(intent_or_action: Variant, enemy: Enemy = null) -> void:
+	if not is_node_ready():
+		await ready
+		
 	if not intent_or_action:
 		hide()
 		return
@@ -35,13 +38,17 @@ func update_intent(intent_or_action: Variant, enemy: Enemy = null) -> void:
 		return
 		
 	# 1. Update Ikon Visual
-	if icon and intent_data.icon:
-		icon.texture = intent_data.icon
+	if icon:
+		if intent_data.icon:
+			icon.texture = intent_data.icon
+			icon.visible = true
+		else:
+			icon.visible = false
 		
 	# 2. Update Label Angka (Damage/Shield)
 	if number:
 		if display_text.strip_edges() == "":
-			# Sembunyikan label angka jika teksnya kosong (misal: saat Buff/Debuff)
+			# Hanya sembunyikan label angka jika teksnya kosong (misal: saat Buff/Debuff)
 			number.visible = false
 		else:
 			number.text = display_text

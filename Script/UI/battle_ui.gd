@@ -17,6 +17,7 @@ extends CanvasLayer
 ## Komponen Dynamic HBox untuk Debuff
 @onready var debuff_container: DebuffContainer = get_node_or_null("DebuffContainer")
 
+var input_blocker: Control
 # (Opsional) Referensi untuk komponen UI lainnya di masa depan
 # @onready var mana_ui: Control = $ManaUI
 # @onready var draw_pile_label: Label = $DrawPileButton/Label
@@ -24,6 +25,7 @@ extends CanvasLayer
 
 func _ready() -> void:
 	add_to_group("ui_layer")
+	_setup_input_blocker()
 	
 	# Hubungkan sinyal klik tombol End Turn
 	if end_turn_button:
@@ -55,17 +57,31 @@ func initialize_inventory(inventory_data: InventoryData) -> void:
 		debuff_container.inventory = inventory_data
 
 func show_turn_banner(text: String) -> void:
+	# 1. Blokir seluruh input mouse
+	if input_blocker:
+		input_blocker.visible = true
+		
 	turn_label.text = text
 	turn_label.modulate.a = 0.0
 	turn_label.visible = true
 
 	var tween = create_tween()
+	tween.bind_node(self)
 	# Animasi muncul (Fade in)
 	tween.tween_property(turn_label, "modulate:a", 1.0, 0.3)
 	# Diam sebentar
 	tween.tween_interval(0.5)
 	# Animasi menghilang (Fade out)
 	tween.tween_property(turn_label, "modulate:a", 0.0, 0.3)
+	
+	# 2. Tunggu seluruh rangkaian animasi banner benar-benar selesai
+	await tween.finished
+	
+	turn_label.visible = false
+	
+	# 3. Buka kembali akses mouse player
+	if input_blocker:
+		input_blocker.visible = false
 
 # --- MANAJEMEN GILIRAN (TURN MANAGEMENT) ---
 
@@ -87,3 +103,11 @@ func _on_player_turn_started() -> void:
 	# Saat Enemy selesai menyerang dan giliran kembali ke Player, aktifkan lagi tombolnya
 	if end_turn_button:
 		end_turn_button.disabled = false
+
+func _setup_input_blocker() -> void:
+	input_blocker = Control.new()
+	input_blocker.name = "InputBlocker"
+	input_blocker.set_anchors_preset(Control.PRESET_FULL_RECT)
+	input_blocker.mouse_filter = Control.MOUSE_FILTER_STOP
+	input_blocker.visible = false
+	add_child(input_blocker)

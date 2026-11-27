@@ -13,6 +13,9 @@ var stats: Stats : set = set_stats
 @onready var hp_label: Label = get_node_or_null("HPLabel") if has_node("HPLabel") else (get_node_or_null("HPBar/HPLabel") if has_node("HPBar/HPLabel") else null)
 @onready var block_container: Control = get_node_or_null("BlockContainer")
 @onready var block_label: Label = get_node_or_null("BlockContainer/BlockLabel") if has_node("BlockContainer/BlockLabel") else get_node_or_null("BlockLabel")
+@onready var strength_label: Label = find_child("StrengthLabel", true, false) as Label
+@onready var weakness_label: Label = find_child("WeaknessLabel", true, false) as Label
+@onready var charge_label: Label = find_child("ChargeLabel", true, false) as Label
 
 func _ready() -> void:
 	# Memastikan UI diperbarui begitu node siap di Scene Tree
@@ -60,3 +63,12 @@ func update_hud() -> void:
 		if mana_label:
 			var max_mana_val = stats.max_mana if "max_mana" in stats else 3
 			mana_label.text = "Mana: %d / %d" % [stats.mana, max_mana_val]
+			
+	if strength_label and "strength_stacks" in stats:
+		strength_label.text = "Strength: %d" % stats.strength_stacks
+		
+	if weakness_label and "weakened_stacks" in stats:
+		weakness_label.text = "Weakness: %d" % stats.weakened_stacks
+		
+	if charge_label and "charge_stacks" in stats:
+		charge_label.text = "Charge: %d" % stats.charge_stacks

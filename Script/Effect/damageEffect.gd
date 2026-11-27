@@ -23,3 +23,6 @@ func execute(targets: Array[Node], player: Node) -> void:
 
 				var final_damage = DamageCalculator.calculate_damage(amount, attacker_stats, receiver_stats)
 				target.take_damage(final_damage)
+
+	if attacker_stats and attacker_stats.has_method("consume_charge"):
+		attacker_stats.consume_charge()

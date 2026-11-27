@@ -84,6 +84,9 @@ signal player_mana_changed(new_mana: int)
 @warning_ignore("unused_signal")
 signal player_died
 
+# events.gd
+@warning_ignore("unused_signal")
+signal weapon_broken(weapon: WeaponData)
 
 # ==========================================
 # EVENT STATUS MUSUH & PERTEMPURAN

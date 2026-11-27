@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dy2fwsme4w6ps"]
+
+[ext_resource type="PackedScene" path="res://Scene/Components/Entity/Enemy/Enemy.tscn" id="1_apgqh"]
+[ext_resource type="Texture2D" uid="uid://fofxc1od4j6k" path="res://Resources/Entity/Enemy/Queen.png" id="2_ikb1d"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bq3av"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ikb1d")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Queen" unique_id=801021251 instance=ExtResource("1_apgqh")]
+
+[node name="Sprite2D" parent="." index="2"]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_bq3av")

@@ -34,6 +34,7 @@ var active_doors_states: Array[Door.State] = []
 
 # --- DATA RUANGAN AKTIF ---
 var current_room_data: RoomData = null
+var current_encounter: Array[EnemyStats] = []
 
 func _ready() -> void:
 	if room_pool_manager == null:
@@ -95,6 +96,7 @@ func advance_floor() -> bool:
 	Events.floor_changed.emit(current_floor, MAX_FLOOR)
 	Events.room_exploration_changed.emit(explored_room, MIN_EXPLORED_ROOM_PER_FLOOR)
 	Events.forfeit_state_changed.emit(can_forfeit(), get_remaining_forfeits())
+
 	return true
 
 ## Dipanggil saat memulai permainan/run baru dari awal
@@ -106,6 +108,8 @@ func start_new_run() -> void:
 	player_hp = max_hp
 	player_gold = 0
 	current_room_data = null
+
+	PlayerHandler.inventory_data.clear_inventory()
 	
 	if room_pool_manager == null:
 		room_pool_manager = RoomPoolManager.new()
@@ -116,6 +120,8 @@ func start_new_run() -> void:
 	Events.floor_changed.emit(current_floor, MAX_FLOOR)
 	Events.room_exploration_changed.emit(explored_room, MIN_EXPLORED_ROOM_PER_FLOOR)
 	Events.forfeit_state_changed.emit(can_forfeit(), get_remaining_forfeits())
+
+	Events.player_died.connect(player_died_gameover)
 	print("New Run Started with Room Pooling!")
 
 ## Menyimpan data ruangan terpilih dan berpindah ke scene tujuan
@@ -175,12 +181,34 @@ func forfeit_current_room() -> bool:
 	return_to_dungeon_overworld()
 	return true
 
-func enter_battle_scene(Enemy:EnemyStats) -> void:
-	Events.combat_start.emit(Enemy)
+func enter_battle_scene(encounter: Variant) -> void:
+	current_encounter.clear()
+	
+	if encounter is Array:
+		for enemy in encounter:
+			if enemy is EnemyStats:
+				current_encounter.append(enemy)
+	elif encounter is EnemyStats:
+		current_encounter.append(encounter)
+	elif encounter != null and encounter.get("enemies") is Array:
+		# Dukungan opsional jika menggunakan custom Resource EncounterData
+		for enemy in encounter.enemies:
+			if enemy is EnemyStats:
+				current_encounter.append(enemy)
+	
+	if current_encounter.is_empty():
+		push_error("GameManager: enter_battle_scene dipanggil tanpa data EnemyStats yang valid!")
+		return
+	
+	var enemy_names = current_encounter.map(func(e: EnemyStats): return e.enemy_name)
+	print("Player melawan : ", ", ".join(enemy_names))
+	
 	SceneManager.change_scene(SceneManager.SceneID.COMBAT)
-	print("Player melawan : ", Enemy.enemy_name)
 
 ## Dipanggil setelah pertempuran/event ruangan selesai untuk kembali ke pemilihan pintu
 func return_to_dungeon_overworld() -> void:
 	current_room_data = null
 	SceneManager.change_scene(SceneManager.SceneID.EXPLORE)
+
+func player_died_gameover() -> void:
+	SceneManager.change_scene(SceneManager.SceneID.GAME_OVER)
