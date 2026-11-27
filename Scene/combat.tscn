@@ -5,12 +5,13 @@
 [ext_resource type="Resource" uid="uid://daylwn61mgfv2" path="res://Data/Stats/Player/playerStats.tres" id="2_xmftx"]
 [ext_resource type="Texture2D" uid="uid://djyy6r8jhskyh" path="res://Resources/Room/bg.png" id="3_d54dn"]
 [ext_resource type="Script" uid="uid://dyhlscpnv4y2a" path="res://Script/Entity/Stats/EnemyStats.gd" id="3_lmfrp"]
+[ext_resource type="Resource" uid="uid://ctyv7o3p8ytxn" path="res://Data/Stats/Enemy/Golem.tres" id="4_lmfrp"]
 [ext_resource type="Script" uid="uid://guxpg23u7455" path="res://Script/UI/battle_ui.gd" id="4_miqix"]
 [ext_resource type="Resource" uid="uid://bo7ypbto4afgd" path="res://Data/Stats/Enemy/Skeleton(1).tres" id="4_uy1wb"]
 [ext_resource type="Script" uid="uid://y16iugdkfvbt" path="res://Script/Combat/EnemyHandler.gd" id="5_70aft"]
 [ext_resource type="PackedScene" uid="uid://qktecrlgg11n" path="res://Scene/Components/Card/card.tscn" id="6_2rx4k"]
 [ext_resource type="Script" uid="uid://c5bwrfkctlenp" path="res://Script/UI/stats_ui.gd" id="6_70aft"]
-[ext_resource type="PackedScene" uid="uid://pfhymlbd8c6s" path="res://Scene/Components/Entity/Enemy/Skeleton.tscn" id="7_kgncc"]
+[ext_resource type="PackedScene" path="res://Scene/Components/Entity/Enemy/Enemy.tscn" id="7_kgncc"]
 [ext_resource type="PackedScene" uid="uid://c4mlymrvbisoi" path="res://Scene/PauseMenu.tscn" id="7_ptk6s"]
 [ext_resource type="Texture2D" uid="uid://gt74ft4pohgp" path="res://Resources/UI/healthbar-empty.png" id="8_1blk7"]
 [ext_resource type="Script" uid="uid://cjrpc50x7qmek" path="res://Script/UI/card_pile_label.gd" id="9_1blk7"]
@@ -65,7 +66,7 @@ tags = {
 [node name="Combat" type="Node2D" unique_id=257909120]
 script = ExtResource("1_2bktl")
 character_stats = ExtResource("2_xmftx")
-debug_encounter = Array[ExtResource("3_lmfrp")]([ExtResource("4_uy1wb"), ExtResource("4_uy1wb")])
+debug_encounter = Array[ExtResource("3_lmfrp")]([ExtResource("4_lmfrp"), ExtResource("4_uy1wb")])
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1397372145]
 offset_right = 1920.0
@@ -75,7 +76,7 @@ texture = ExtResource("3_d54dn")
 [node name="EnemyHandler" type="Node2D" parent="." unique_id=981918265]
 position = Vector2(969, 540)
 script = ExtResource("5_70aft")
-enemy_scene = ExtResource("7_kgncc")
+default_enemy_scene = ExtResource("7_kgncc")
 enemy_spacing = 320.0
 
 [node name="CardDropArea" type="Area2D" parent="." unique_id=1434359423]
@@ -137,6 +138,40 @@ offset_right = 387.0
 offset_bottom = 111.0
 text = "0/0"
 label_settings = SubResource("LabelSettings_44v7a")
+
+[node name="StatusPanel" type="Panel" parent="BattleUI/PlayerStatsUI" unique_id=1998703801]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 205.0
+offset_right = 256.0
+offset_bottom = 345.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BattleUI/PlayerStatsUI/StatusPanel" unique_id=1998703802]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = -8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StrengthLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703803]
+layout_mode = 2
+text = "Strength: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="WeaknessLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703804]
+layout_mode = 2
+text = "Weakness: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
+
+[node name="ChargeLabel" type="Label" parent="BattleUI/PlayerStatsUI/StatusPanel/VBoxContainer" unique_id=1998703805]
+layout_mode = 2
+text = "Charge: 0"
+label_settings = SubResource("LabelSettings_2rx4k")
 
 [node name="CardPileUI" type="Panel" parent="BattleUI" unique_id=1576485403]
 offset_left = 38.0

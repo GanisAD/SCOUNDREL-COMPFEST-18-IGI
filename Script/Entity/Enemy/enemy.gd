@@ -12,14 +12,15 @@ signal died
 
 # [TAMBAHAN] Menyimpan aksi aktif yang direncanakan untuk giliran ini
 var current_action: EnemyAction : set = _set_current_action
+var turns_taken: int = 0
 
 # Onready variables untuk memetakan node child di Scene musuh
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 @onready var arrow: Sprite2D = $Arrow
 @onready var stats_ui = $StatsUI  # Menghubungkan ke UI HP & Block musuh
 
-# [TAMBAHAN] Ambil referensi picker AI musuh
-@onready var enemy_action_picker: EnemyActionPicker = $EnemyActionPicker
+# [TAMBAHAN] Ambil referensi picker AI musuh (opsional jika menggunakan stats.ai)
+@onready var enemy_action_picker: EnemyActionPicker = get_node_or_null("EnemyActionPicker") as EnemyActionPicker
 @onready var intent_ui = $IntentUI # Asumsi node IntentUI ditempel di scene musuh
 
 var base_sprite_scale: Vector2 = Vector2.ONE
@@ -50,6 +51,8 @@ func set_enemy_stats(value: EnemyStats) -> void:
 		stats = value.create_instance() as EnemyStats
 	else:
 		stats = null
+	
+	turns_taken = 0
 		
 	if not is_node_ready():
 		await ready
@@ -73,6 +76,7 @@ func update_stats() -> void:
 func setup_ai() -> void:
 	if stats and stats.ai:
 		if enemy_action_picker:
+			remove_child(enemy_action_picker)
 			enemy_action_picker.queue_free()
 		var new_picker := stats.ai.instantiate() as EnemyActionPicker
 		if new_picker:
@@ -89,11 +93,23 @@ func setup_ai() -> void:
 # --- MANAJEMEN VISUAL ---
 
 func _update_visuals() -> void:
-	if stats:
-		if sprite and stats.art and "texture" in sprite:
-			sprite.texture = stats.art
-		if stats_ui:
-			stats_ui.update_hud() 
+	if not stats:
+		return
+	if sprite:
+		var has_frames := sprite.sprite_frames != null and sprite.sprite_frames.get_animation_names().size() > 0
+		if has_frames:
+			play_animation("idle")
+		elif stats.art:
+			if "texture" in sprite:
+				sprite.texture = stats.art
+			elif sprite is AnimatedSprite2D:
+				var fallback_frames := SpriteFrames.new()
+				fallback_frames.add_animation("idle")
+				fallback_frames.add_frame("idle", stats.art)
+				sprite.sprite_frames = fallback_frames
+				sprite.play("idle")
+	if stats_ui:
+		stats_ui.update_hud()
 
 # [MODIFIKASI] Dipanggil otomatis saat sinyal stats_changed aktif
 func _on_stats_changed() -> void:
@@ -113,6 +129,8 @@ func play_animation(anim_name: String) -> void:
 # Koreografi fisik serangan (Tween + Animasi Frame)
 func play_attack_animation(target_offset: Vector2, on_impact_callback: Callable) -> void:
 	if not sprite:
+		if on_impact_callback.is_valid():
+			on_impact_callback.call()
 		return
 		
 	var original_pos = global_position
@@ -226,13 +244,14 @@ func add_block(amount: int) -> void:
 func do_turn() -> void:
 	if not enemy_action_picker or not current_action:
 		return
-		
+	
+	turns_taken += 1
 	var target_player = _get_player_node()
 	
 	# --- MEKANISME FAILSAFE MENGGUNAKAN REFERENCE ---
 	# Menggunakan Dictionary agar lambda bisa memodifikasi nilainya secara eksternal
 	var flags = { "action_done": false }
-	var failsafe_timer = get_tree().create_timer(1.5)
+	var failsafe_timer = get_tree().create_timer(3.0)
 	
 	# Hubungkan sinyal selesai yang asli ke lambda (one-shot agar tidak menumpuk antar turn)
 	current_action.enemy_action_completed.connect(func():
