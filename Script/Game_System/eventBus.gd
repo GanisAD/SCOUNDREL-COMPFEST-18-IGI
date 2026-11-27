@@ -193,3 +193,7 @@ signal golem_hurt(golem: Enemy)
 ## Dipanggil saat Golem dikalahkan.
 @warning_ignore("unused_signal")
 signal golem_defeated(golem: Enemy)
+
+## Dipanggil saat Golem melakukan aksi shield.
+@warning_ignore("unused_signal")
+signal golem_shield_used(golem: Enemy)

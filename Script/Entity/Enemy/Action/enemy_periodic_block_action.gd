@@ -21,10 +21,12 @@ func get_intent_value(_enemy: Enemy = null) -> String:
 	return "%dx%d" % [base_block, multiplier]
 
 func perform_action(p_enemy: Enemy, _player: Node) -> void:
+	if p_enemy and p_enemy.stats and p_enemy.stats.enemy_name == "Golem":
+		Events.golem_shield_used.emit(p_enemy)
+
 	for i in range(multiplier):
 		if not is_instance_valid(p_enemy) or not p_enemy.is_inside_tree():
 			break
-		Events.enemy_shield_used.emit()
 		p_enemy.add_block(base_block)
 		await p_enemy.play_block_animation()
 	

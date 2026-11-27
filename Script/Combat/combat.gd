@@ -85,7 +85,7 @@ func _start_player_turn() -> void:
 	# Musuh merencanakan & menampilkan Intent baru di atas kepala mereka
 	enemy_handler.update_enemy_intents()
 	
-	await battle_ui.show_turn_banner("PLAYER TURN")
+	battle_ui.show_turn_banner("PLAYER TURN")
 	battle_ui._on_player_turn_started()
 	
 	# Player reset block & mana, lalu menarik kartu
@@ -111,6 +111,7 @@ func _on_victory() -> void:
 	if is_battle_over:
 		return
 	is_battle_over = true
+	GameManager.current_encounter = []
 	
 	print("Victory! Semua musuh telah dikalahkan.")
 	if current_battle_stats:

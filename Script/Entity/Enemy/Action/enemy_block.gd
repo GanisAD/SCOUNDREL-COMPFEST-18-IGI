@@ -8,7 +8,10 @@ func get_intent_value(_enemy: Enemy = null) -> String:
 	return str(block_amount)
 
 func perform_action(p_enemy: Enemy, _player: Node) -> void:
-	Events.enemy_shield_used.emit()
+	if p_enemy and p_enemy.stats and p_enemy.stats.enemy_name == "Golem":
+		Events.golem_shield_used.emit(p_enemy)
+	else:
+		Events.enemy_shield_used.emit()
 	# 1. Aturan Gameplay: Tambahkan nilai block ke stats musuh
 	p_enemy.add_block(block_amount)
 	

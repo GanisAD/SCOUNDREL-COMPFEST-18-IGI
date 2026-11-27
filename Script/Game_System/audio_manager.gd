@@ -72,12 +72,19 @@ extends Node
 ## Suara Golem saat dikalahkan.
 @export var sfx_golem_defeat: AudioStream
 
+## Suara Golem saat menggunakan aksi shield.
+@export var sfx_golem_shield: AudioStream
+
 @export_subgroup("Golem Pitch")
 @export_range(0.5, 2.0, 0.01) var golem_attack_pitch_min: float = 0.88
 @export_range(0.5, 2.0, 0.01) var golem_attack_pitch_max: float = 0.98
 @export_range(0.5, 2.0, 0.01) var golem_hurt_pitch_min: float = 0.82
 @export_range(0.5, 2.0, 0.01) var golem_hurt_pitch_max: float = 0.92
 @export_range(0.5, 2.0, 0.01) var golem_defeat_pitch: float = 0.78
+
+@export_subgroup("Golem Shield Pitch")
+@export_range(0.5, 2.0, 0.01) var golem_shield_pitch_min: float = 0.75
+@export_range(0.5, 2.0, 0.01) var golem_shield_pitch_max: float = 0.85
 
 @export_group("Weapon Attack SFX")
 ## Suara serangan Wooden Club.
@@ -168,6 +175,10 @@ func _connect_event_bus() -> void:
 	Events.golem_defeated.connect(func(_golem: Enemy):
 		play_sfx(sfx_golem_defeat, golem_defeat_pitch)
 	)
+	Events.golem_shield_used.connect(func(_golem: Enemy):
+		var shield_stream: AudioStream = sfx_golem_shield if sfx_golem_shield else sfx_shield
+		play_sfx(shield_stream, randf_range(golem_shield_pitch_min, golem_shield_pitch_max))
+	)
 	
 		
 # ==========================================
@@ -181,7 +192,7 @@ func _connect_event_bus() -> void:
 func play_sfx(stream: AudioStream, pitch_scale: float = 1.0, volume_db: float = 0.0) -> void:
 	if not stream:
 		return
-		
+
 	# Cari player di dalam pool yang sedang menganggur
 	for player in _sfx_players:
 		if not player.playing:
@@ -190,7 +201,7 @@ func play_sfx(stream: AudioStream, pitch_scale: float = 1.0, volume_db: float = 
 			player.volume_db = volume_db
 			player.play()
 			return
-			
+
 	# Jika semua player sedang sibuk, pinjam player pertama
 	var fallback_player = _sfx_players[0]
 	fallback_player.stream = stream
